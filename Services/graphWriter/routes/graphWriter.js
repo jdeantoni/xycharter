@@ -10,7 +10,7 @@ graphWriterRouter.post('/graph', [body('type').isString()]
          return res.status(400).json({ errors: errors.array() });
       }
 
-      graphWriterController.graphCreation();
+      graphWriterController.graphCreation(req.body.type);
 
       res.status(201).send();
 

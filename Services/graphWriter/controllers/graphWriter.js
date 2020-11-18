@@ -6,11 +6,11 @@ const db = low(adapter)
 db.defaults({ graph: [] })
     .write()
 
-const graphCreation = () => {
+const graphCreation = (graphType) => {
     var id = '_' + Math.random().toString(36).substr(2, 9);
     const type = "couille";
 
-    db.get("graph").push({"id": id, "type": type}).write();
+    db.get("graph").push({"id": id, "type": graphType}).write();
 }
 
 
