@@ -7,7 +7,7 @@ db.defaults({ graph: [] })
     .write()
 
 const graphCreation = () => {
-    const id = 1;
+    var id = '_' + Math.random().toString(36).substr(2, 9);
     const type = "couille";
 
     db.get("graph").push({"id": id, "type": type}).write();
