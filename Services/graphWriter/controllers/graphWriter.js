@@ -11,6 +11,8 @@ const graphCreation = (graphType) => {
     const type = "couille";
 
     db.get("graph").push({"id": id, "type": graphType}).write();
+
+    return id;
 }
 
 
