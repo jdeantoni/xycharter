@@ -1,13 +1,20 @@
 const express = require('express');
 const graphWriterRouter = express.Router();
 const graphWriterController = require('../controllers/graphWriter');
+const { body, validationResult } = require('express-validator');
 
-
-graphWriterRouter.get('/graphWriter'
+graphWriterRouter.post('/graph', [body('type').isString()]
    , (req, res, next) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+         return res.status(400).json({ errors: errors.array() });
+      }
 
-      graphWriterController.fonction();
+      graphWriterController.graphCreation();
 
+      res.status(201).send();
+
+      next();
    });
 
 
