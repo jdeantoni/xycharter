@@ -6,7 +6,8 @@ const db = low(adapter)
 db.defaults({ graph: [] })
     .write()
 
-const graphCreation = (graphType) => {
+const graphCreation = async (graphType) => {
+    await db.read()
     var id = '_' + Math.random().toString(36).substr(2, 9);
 
     db.get("graph").push({"id": id, "type": graphType}).write();

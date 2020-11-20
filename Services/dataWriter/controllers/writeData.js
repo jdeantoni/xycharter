@@ -5,7 +5,7 @@ const db = low(adapter)
 var uniqid = require('uniqid');
 
 const writeDataOnDatabase = async (points) => {
-
+    await db.read()
     const id = uniqid()
     
     await db.get("graphPoints").push({ "id": id, "points": points }).write();
