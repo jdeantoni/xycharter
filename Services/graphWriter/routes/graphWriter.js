@@ -1,7 +1,7 @@
 const express = require('express');
 const graphWriterRouter = express.Router();
 const graphWriterController = require('../controllers/graphWriter');
-const { body, validationResult } = require('express-validator');
+const { body,param, validationResult } = require('express-validator');
 
 graphWriterRouter.post('/graph', [body('type').matches(
    "histogramme"
