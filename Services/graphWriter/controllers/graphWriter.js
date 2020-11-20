@@ -7,8 +7,9 @@ var uniqid = require('uniqid');
 db.defaults({ graph: [] })
     .write()
 
-const graphCreation = (graphType) => {
+const graphCreation = async (graphType) => {
     var id = uniqid();
+    await db.read()
 
     db.get("graph")
         .push({ "id": id, "type": graphType, "datasId": [] })
