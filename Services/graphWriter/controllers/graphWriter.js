@@ -10,7 +10,7 @@ db.defaults({ graph: [] })
 const graphCreation = (graphType) => {
     var id = uniqid();
 
-    db.get("graph").push({"id": id, "type": graphType}).write();
+    db.get("graph").push({"id": id, "type": graphType, "datasId": []}).write();
 
     return id;
 }
