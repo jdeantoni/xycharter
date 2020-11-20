@@ -18,33 +18,27 @@ import xycharter.render.HistogramPointRenderer;
 
 import java.awt.*;
 import java.io.*;
+import java.util.Objects;
 
 @RestController
 public class Renderer {
 
     @RequestMapping(value = "/graph/{id}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getGraph(@PathVariable int id,@RequestParam OutputGraph type){
+    public @ResponseBody byte[] getGraph(@PathVariable String id,@RequestParam OutputGraph type){
 
         JSONObject graphe = getGraphFromDB(id);
         if (graphe != null){
-            JSONArray points = (JSONArray) graphe.get("points");
-            final Figure figure = new Figure();
-
-            addPoints(figure,points);
+            JSONArray dataSet = (JSONArray) graphe.get("datasId");
             Plot plot = new Plot();
-            TypeGraph typeGraph = TypeGraph.HISTOGRAM;
-            switch (typeGraph){
-
-                case HISTOGRAM:
-                    figure.rendererList.add(new HistogramPointRenderer((x,
-                                                                        y) -> new Color(0, 141, 255, 102)));
-                    break;
-                case CONNECTEDLINE:
-                    figure.rendererList.add(new ConnectedLineFigureRenderer());
-                    break;
+            for (Object o : dataSet) {
+                JSONArray pointsArray = getData((String) o);
+                if (pointsArray!=null){
+                    Figure figure = new Figure();
+                    addPoints(figure,pointsArray);
+                    initializeRenderer(figure,graphe);
+                    plot.addFigure(figure);
+                }
             }
-
-            plot.addFigure(figure);
             switch(type){
                 case PNG:
                     JPEGPlotter jpegPlotter = new JPEGPlotter();
@@ -55,24 +49,41 @@ public class Renderer {
                 default:
                     return "Error, type not supported".getBytes();
             }
-
-
         }else {
             return "Error: ID not found".getBytes();
         }
 
     }
 
-    private JSONObject getGraphFromDB(int id){
+    private JSONObject getGraphFromDB(String id){
         try {
-            FileReader fileReader =new FileReader("GraphDataBase2.json");
+            FileReader fileReader =new FileReader("GraphDataBase.json");
             JSONParser jsonParser = new JSONParser();
             JSONObject database = (JSONObject)jsonParser.parse(fileReader);
-            JSONArray graphs = (JSONArray) database.get("graphes");
+            JSONArray graphs = (JSONArray) database.get("graph");
             for (Object object : graphs) {
                 JSONObject graph = (JSONObject)object;
-                if ((Long) graph.get("id") == id){
+                if (graph.get("id").equals(id) ){
                     return graph;
+                }
+            }
+            return null;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private JSONArray getData(String id){
+        try {
+            FileReader fileReader =new FileReader("GraphDataBase.json");
+            JSONParser jsonParser = new JSONParser();
+            JSONObject database = (JSONObject)jsonParser.parse(fileReader);
+            JSONArray graphPoints = (JSONArray) database.get("graphPoints");
+            for (Object object : graphPoints) {
+                JSONObject data = (JSONObject)object;
+                if (data.get("id").equals(id) ){
+                    return (JSONArray) data.get("points");
                 }
             }
             return null;
@@ -86,6 +97,21 @@ public class Renderer {
         for (Object o : points) {
             JSONObject point = (JSONObject) o;
             figure.addPoint(((Long) point.get("x")).doubleValue(), ((Long) point.get("y")).doubleValue());
+        }
+    }
+
+    private void initializeRenderer(Figure figure, JSONObject graphe){
+        String type = (String)graphe.get("type");
+        TypeGraph typeGraph = TypeGraph.fromString(type);
+        switch (Objects.requireNonNull(typeGraph)){
+
+            case HISTOGRAM:
+                figure.rendererList.add(new HistogramPointRenderer((x,
+                                                                    y) -> new Color(0, 141, 255, 102)));
+                break;
+            case CONNECTEDLINE:
+                figure.rendererList.add(new ConnectedLineFigureRenderer());
+                break;
         }
     }
 
