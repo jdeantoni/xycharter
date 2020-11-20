@@ -1,4 +1,14 @@
 {
-  "graph": [],
+  "graph": [
+    {
+      "id": "71zok9j7yakhq2l308",
+      "type": "histogramme",
+      "datasId": [
+        "myData",
+        "myData2",
+        "myData3"
+      ]
+    }
+  ],
   "graphPoints": []
 }

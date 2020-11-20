@@ -18,7 +18,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
    next();
 });
 
-graphWriterRouter.delete('/graphs/:id', [param('id').exists()], (req, res, next) => {
+graphWriterRouter.delete('/graphs/:id', [param('id').isString()], (req, res, next) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
