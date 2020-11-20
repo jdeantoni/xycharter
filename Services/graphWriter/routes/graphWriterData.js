@@ -11,23 +11,23 @@ graphWriterDataRouter.post('/graphs/:graphId/data/:dataId', [param('graphId').is
    
    graphWriterDataController.graphAddData(req.params.graphId, req.params.dataId);
 
-   res.status(201).send("OK");
+   res.status(201).send("ADDED");
 
    next();
 });
-/*
-graphWriterRouter.delete('/graphs/:id', [param('id').exists()], (req, res, next) => {
+
+graphWriterDataRouter.delete('/graphs/:graphId/data/:dataId', [param('graphId').isString(), param('dataId').isString()], (req, res, next) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
    }
 
-   graphWriterController.graphDelete(req.params.id);
+   graphWriterDataController.graphDeleteData(req.params.graphId, req.params.dataId);
 
    res.status(201).send("DELETED");
 
    next();
-});*/
+});
 
 
 module.exports = graphWriterDataRouter;

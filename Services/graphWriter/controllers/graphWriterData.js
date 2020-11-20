@@ -23,11 +23,24 @@ const graphAddData = (graphId, dataId) => {
         .write();
 }
 
-const graphDelete = (graphId) => {
-    db.get("graph").remove(graph => graph.id == graphId).write();
+const graphDeleteData = (graphId, dataId) => {
+    db.read()
+
+    const graph = db.get("graph")
+        .find({ id: graphId })
+        .value();
+    
+    var datasId = graph.datasId;
+    datasId = datasId.filter(data => data != dataId);
+
+    db.get("graph")
+        .find({ id: graphId })
+        .assign({ datasId: datasId })
+        .write();
 }
+
 
 module.exports = {
     graphAddData,
-    graphDelete
+    graphDeleteData
 }

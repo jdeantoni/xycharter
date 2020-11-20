@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/testGraphWriter.js"
+    "test": "mocha test/tests.js"
   },
   "keywords": [],
   "author": "",
