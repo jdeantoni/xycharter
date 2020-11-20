@@ -2,12 +2,13 @@ const low = require('lowdb')
 const fileSync = require('lowdb/adapters/FileSync')
 const adapter = new fileSync('../../GraphDataBase.json')
 const db = low(adapter)
+var uniqid = require('uniqid');
 
 db.defaults({ graph: [] })
     .write()
 
 const graphCreation = (graphType) => {
-    var id = '_' + Math.random().toString(36).substr(2, 9);
+    var id = uniqid();
 
     db.get("graph").push({"id": id, "type": graphType}).write();
 
