@@ -14,7 +14,11 @@ const graphCreation = (graphType) => {
     return id;
 }
 
+const graphDelete = (graphId) => {
+    db.get("graph").remove(graph => graph.id == graphId).write();
+}
 
 module.exports = {
-    graphCreation
+    graphCreation,
+    graphDelete
 }
