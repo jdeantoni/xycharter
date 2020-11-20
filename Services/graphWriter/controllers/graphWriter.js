@@ -7,16 +7,20 @@ db.defaults({ graph: [] })
     .write()
 
 const graphCreation = async (graphType) => {
+    var id = uniqid();
     await db.read()
-    var id = '_' + Math.random().toString(36).substr(2, 9);
 
-    db.get("graph").push({"id": id, "type": graphType}).write();
+    db.get("graph")
+        .push({ "id": id, "type": graphType, "datasId": [] })
+        .write();
 
     return id;
 }
 
 const graphDelete = (graphId) => {
-    db.get("graph").remove(graph => graph.id == graphId).write();
+    db.get("graph")
+        .remove(graph => graph.id == graphId)
+        .write();
 }
 
 module.exports = {

@@ -1,8 +1,10 @@
 const express = require('express');
 
 const publicRouter = express.Router();
-const lateServiceRoute = require('./routes/graphWriter');
+const graphWriterRoute = require('./routes/graphWriter');
+const graphWriterDataRoute = require('./routes/graphWriterData')
 
-publicRouter.use('/', lateServiceRoute);
+publicRouter.use('/', graphWriterRoute);
+publicRouter.use('/', graphWriterDataRoute);
 
 module.exports = publicRouter;

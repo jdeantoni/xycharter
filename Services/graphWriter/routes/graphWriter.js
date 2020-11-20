@@ -14,10 +14,23 @@ graphWriterRouter.post('/graph', [body('type').matches(
 
       const graphId = await graphWriterController.graphCreation(req.body.type);
 
-      res.status(201).send(graphId);
+   res.status(201).send(graphId);
 
-      next();
-   });
+   next();
+});
+
+graphWriterRouter.delete('/graphs/:id', [param('id').isString()], (req, res, next) => {
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+   }
+
+   graphWriterController.graphDelete(req.params.id);
+
+   res.status(201).send("DELETED");
+
+   next();
+});
 
 
 module.exports = graphWriterRouter;
