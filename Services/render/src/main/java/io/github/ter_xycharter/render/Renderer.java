@@ -55,7 +55,7 @@ public class Renderer {
 
     }
 
-    private JSONObject getGraphFromDB(String id){
+    public JSONObject getGraphFromDB(String id){
         try {
             FileReader fileReader =new FileReader("GraphDataBase.json");
             JSONParser jsonParser = new JSONParser();
@@ -74,7 +74,7 @@ public class Renderer {
         }
     }
 
-    private JSONArray getData(String id){
+    public JSONArray getData(String id){
         try {
             FileReader fileReader =new FileReader("GraphDataBase.json");
             JSONParser jsonParser = new JSONParser();
@@ -93,14 +93,14 @@ public class Renderer {
         }
     }
 
-    private void addPoints(Figure figure,JSONArray points){
+    public void addPoints(Figure figure,JSONArray points){
         for (Object o : points) {
             JSONObject point = (JSONObject) o;
-            figure.addPoint(((Long) point.get("x")).doubleValue(), ((Long) point.get("y")).doubleValue());
+            figure.addPoint(((double) point.get("x")), ((double) point.get("y")));
         }
     }
 
-    private void initializeRenderer(Figure figure, JSONObject graphe){
+    public void initializeRenderer(Figure figure, JSONObject graphe){
         String type = (String)graphe.get("type");
         TypeGraph typeGraph = TypeGraph.fromString(type);
         switch (Objects.requireNonNull(typeGraph)){
@@ -115,7 +115,7 @@ public class Renderer {
         }
     }
 
-    private void addLegend(Plot plot,String legend){
+    public void addLegend(Plot plot,String legend){
         plot.getSpace().getLegend().setText(legend);
     }
 }
