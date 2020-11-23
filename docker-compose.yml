@@ -1,0 +1,22 @@
+version: "3.0"
+services:
+  data-writer:
+    build: ./Services/dataWriter
+    container_name: data-writer
+    ports:
+      - "4020:4020"
+    
+  graph-writer:
+    build: ./Services/graphWriter
+    container_name: graph-writer
+    ports:
+      - "4010:4010"
+
+  render:
+    build: ./render
+    container_name: render
+    ports:
+      - "4040:4040"
+    
+ 
+ 

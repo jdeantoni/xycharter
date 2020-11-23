@@ -9,7 +9,7 @@ const pool = new Pool({
   port: 5432,
 })
 
-const writeData = async (points) => {
+const writeDataSet = async (points) => {
     try {
         const result = await pool.query('INSERT INTO DataSets (DataJSON) VALUES ($1) RETURNING *', [JSON.stringify(points)]);
 
@@ -20,5 +20,5 @@ const writeData = async (points) => {
 }
 
 module.exports = {
-    writeData
+    writeDataSet
 }
