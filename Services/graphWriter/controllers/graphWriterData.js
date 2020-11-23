@@ -1,46 +1,15 @@
-const low = require('lowdb')
-const fileSync = require('lowdb/adapters/FileSync')
-const adapter = new fileSync('../../GraphDataBase.json')
-const db = low(adapter)
-var uniqid = require('uniqid');
+const graphWriterDataSQL = require('../toSQL/graphWriterData')
 
-db.defaults({ graph: [] })
-    .write()
-
-const graphAddData = (graphId, dataId) => {
-    db.read()
-
-    const graph = db.get("graph")
-        .find({ id: graphId })
-        .value();
-    
-    var datasId = graph.datasId;
-    datasId.push(dataId);
-
-    db.get("graph")
-        .find({ id: graphId })
-        .assign({ datasId: datasId })
-        .write();
+const graphAddDataSet = async (graphId, dataSetId) => {
+    return await graphWriterDataSQL.graphAddDataSet(graphId, dataSetId);
 }
 
-const graphDeleteData = (graphId, dataId) => {
-    db.read()
-
-    const graph = db.get("graph")
-        .find({ id: graphId })
-        .value();
-    
-    var datasId = graph.datasId;
-    datasId = datasId.filter(data => data != dataId);
-
-    db.get("graph")
-        .find({ id: graphId })
-        .assign({ datasId: datasId })
-        .write();
+const graphRemoveDataSet = async (graphId, dataSetId) => {
+    return await graphWriterDataSQL.graphRemoveDataSet(graphId, dataSetId);
 }
 
 
 module.exports = {
-    graphAddData,
-    graphDeleteData
+    graphAddDataSet,
+    graphRemoveDataSet
 }

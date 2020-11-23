@@ -1,27 +1,11 @@
-const low = require('lowdb')
-const fileSync = require('lowdb/adapters/FileSync')
-const adapter = new fileSync('../../GraphDataBase.json')
-const db = low(adapter)
-var uniqid = require('uniqid');
-
-db.defaults({ graph: [] })
-    .write()
+const graphWriterSQL = require('../toSQL/graphWriter')
 
 const graphCreation = async (graphType) => {
-    var id = uniqid();
-    await db.read()
-
-    db.get("graph")
-        .push({ "id": id, "type": graphType, "datasId": [] })
-        .write();
-
-    return id;
+    return await graphWriterSQL.createGraph(graphType);
 }
 
-const graphDelete = (graphId) => {
-    db.get("graph")
-        .remove(graph => graph.id == graphId)
-        .write();
+const graphDelete = async (graphId) => {
+    await graphWriterSQL.deleteGraph(graphId);
 }
 
 module.exports = {
