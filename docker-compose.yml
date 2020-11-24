@@ -13,10 +13,17 @@ services:
       - "4010:4010"
 
   render:
-    build: ./render
+    build: ./Services/render
     container_name: render
     ports:
       - "4040:4040"
+
+  influxdb:
+    build: ./influxdb
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+
     
  
  
