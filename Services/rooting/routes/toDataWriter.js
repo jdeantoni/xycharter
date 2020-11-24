@@ -1,24 +1,45 @@
+const { response } = require('express');
 const express = require('express');
 const axios = require('axios').default;
 const graphWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
-const graphWriterService = "http://localhost:4010"
+const dataWriterService = "http://localhost:4020"
 
-graphWriterRouter.post('/graph', [body('type').matches(
-   "histogramme"
-)]
+graphWriterRouter.post('/datawriter', [body("points").isArray()]
    , async(req, res, next) => {
+
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
    }
 
+   try {
+      const reponse = await axios.post(dataWriterService + "/datawriter", req.body )
+      
 
-   const reponse = await axios.post(graphWriterService + "/graphs", {body :{"type": req.body.type}})
-   console.log(reponse)
+      res.status(200).send(reponse.data.toString());
+   } catch (error) {      
+      res.status(501).send(error);
+   }
 
-   res.status(201).send(reponse);
+   next();
+});
+
+graphWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+   
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+   }
+  
+   try {
+      const reponse = await axios.delete(dataWriterService + "/datawriter/" + req.params.id)
+      
+      res.status(200).send(reponse.data.toString());
+   } catch (error) {      
+      res.status(501).send(error);
+   }
 
    next();
 });

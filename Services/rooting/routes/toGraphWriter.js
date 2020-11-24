@@ -16,7 +16,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
    }
 
    try {
-      const reponse = await axios.post(graphWriterService + "/graphs", { "type": req.body.type })
+      const reponse = await axios.post(graphWriterService + "/graphs", req.body)
       
 
       res.status(200).send(reponse.data.toString());
