@@ -1,4 +1,4 @@
-class DataIdNotFoundException extends Error {
+class DataSetIdNotFoundException extends Error {
     constructor() {
       super()
       this.name = 'DATA_ID_NOT_FOUND'
@@ -7,5 +7,5 @@ class DataIdNotFoundException extends Error {
   }
 
   module.exports = {
-    DataIdNotFoundException
+    DataSetIdNotFoundException
   };

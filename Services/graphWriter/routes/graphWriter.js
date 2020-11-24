@@ -3,31 +3,40 @@ const graphWriterRouter = express.Router();
 const graphWriterController = require('../controllers/graphWriter');
 const { body,param, validationResult } = require('express-validator');
 
-graphWriterRouter.post('/graph', [body('type').matches(
+graphWriterRouter.post('/graphs', [body('type').matches(
    "histogramme"
-)]
-   , async(req, res, next) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-         return res.status(400).json({ errors: errors.array() });
-      }
+)], async(req, res, next) => {
 
-      const graphId = await graphWriterController.graphCreation(req.body.type);
-
-   res.status(201).send(graphId);
-
-   next();
-});
-
-graphWriterRouter.delete('/graphs/:id', [param('id').isString()], (req, res, next) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
    }
 
-   graphWriterController.graphDelete(req.params.id);
+   try {
+      const graphId = await graphWriterController.graphCreation(req.body.type);
+   
+      res.status(201).send(graphId);
+   } catch (error) {
+      res.status(500).send(error.message);
+   }
 
-   res.status(201).send("DELETED");
+   next();
+});
+
+graphWriterRouter.delete('/graphs/:id', [param('id').isString()], async (req, res, next) => {
+
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+   }
+
+   try {
+      await graphWriterController.graphDelete(req.params.id);
+   
+      res.status(201).send("DELETED");
+   } catch (error) {
+      res.status(500).send(error.message);
+   }
 
    next();
 });
