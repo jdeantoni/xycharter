@@ -6,7 +6,7 @@ writeDataRouter.delete('/datawriter/:id', async (req, res, next) => {
 
     try{
       await deleteDataSetController.deleteDataSet(req.params.id);
-      return res.status(200).send("The dataSet with id : "+req.params.id + " has been successfully deleted");
+      return res.status(201).send("The dataSet with id : "+req.params.id + " has been successfully deleted");
     }catch(error){
         return res.status(500).send(error.message)
     }

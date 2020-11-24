@@ -5,7 +5,7 @@ const dataWriterController = require('../controllers/dataWriter');
 dataWriterRouter.get('/datawriter'
    , (req, res, next) => {
 
-      return res.status(200).send(dataWriterController.entryPoint());
+      return res.status(201).send(dataWriterController.entryPoint());
 
    });
 
