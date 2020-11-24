@@ -16,14 +16,10 @@ graphWriterRouter.post('/graphs', [body('type').matches(
 
 
    try {
-      const reponse = await axios.post(graphWriterService + "/graphs", {body :{"type": req.body.type}})
+      const reponse = await axios.post(graphWriterService + "/graphs", { "type": req.body.type })
       
-      console.log(reponse)
-
-      res.status(201).send(reponse);
-   } catch (error) {
-      console.log(graphWriterService + "/graphs")
-      
+      res.status(201).send(reponse.data.toString());
+   } catch (error) {      
       res.status(500).send(error);
    }
 
