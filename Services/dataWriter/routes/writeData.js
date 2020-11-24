@@ -1,6 +1,6 @@
 const express = require('express');
 const writeDataRouter = express.Router();
-const writeDataController = require('../controllers/writeData');
+const writeDataSetController = require('../controllers/writeDataSet');
 
 const { body, validationResult } = require('express-validator');
 
@@ -11,7 +11,7 @@ writeDataRouter.post('/datawriter',[body("points").isArray()]
       if (!errors.isEmpty()) {
           return res.status(400).json({ errors: errors.array() });
       }
-      let id = await writeDataController.writeData(req.body.points);
+      let id = await writeDataSetController.writeDataSet(req.body.points);
       return res.status(201).send(id);
 
    });

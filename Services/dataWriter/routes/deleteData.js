@@ -1,14 +1,14 @@
 const express = require('express');
 const writeDataRouter = express.Router();
-const deleteDataController = require('../controllers/deleteData');
+const deleteDataSetController = require('../controllers/deleteDataSet');
 
 writeDataRouter.delete('/datawriter/:id', async (req, res, next) => {
 
     try{
-      await deleteDataController.deleteData(req.params.id);
-      return res.status(200).send("The data with id : "+req.params.id + " has been successfully deleted");
+      await deleteDataSetController.deleteDataSet(req.params.id);
+      return res.status(200).send("The dataSet with id : "+req.params.id + " has been successfully deleted");
     }catch(error){
-        return res.status(404).send(error.name +  " : "+ error.message)
+        return res.status(500).send(error.message)
     }
 
 });

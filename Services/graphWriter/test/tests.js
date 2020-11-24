@@ -1,2 +1,0 @@
-require('./testGraphWriter');
-require('./testGraphWriterData');
