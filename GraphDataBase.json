@@ -1,4 +1,10 @@
 {
-  "graph": [],
+  "graph": [
+    {
+      "id": "71zok9mij2khvxmqa4",
+      "type": "histogramme",
+      "datasId": []
+    }
+  ],
   "graphPoints": []
 }
