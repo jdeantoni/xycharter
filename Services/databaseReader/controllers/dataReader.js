@@ -28,7 +28,7 @@ async function getDataset(idDataset) {
 }
 
 async function getDataForGraph(idGraph) {
-    const resp =  await client.query('SELECT * FROM datasets,linkdatasetgraph WHERE datasets.id = linkdatasetgraph.datasetid and linkdatasetgraph.graphid = $1', [idGraph])
+    const resp =  await client.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.id = linkdatasetgraph.datasetid and linkdatasetgraph.graphid = $1', [idGraph])
     return resp.rows
 }
 
