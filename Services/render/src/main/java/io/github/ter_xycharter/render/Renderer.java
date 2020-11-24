@@ -2,36 +2,41 @@ package io.github.ter_xycharter.render;
 
 
 
+import com.fasterxml.jackson.core.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import xycharter.Figure;
-import xycharter.JPEGPlotter;
-import xycharter.PNGPlotter;
-import xycharter.Plot;
+import xycharter.*;
 import xycharter.render.ConnectedLineFigureRenderer;
 import xycharter.render.HistogramPointRenderer;
 
 
 import java.awt.*;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Objects;
 
 @RestController
 public class Renderer {
 
-    @RequestMapping(value = "/graph/{id}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getGraph(@PathVariable String id,@RequestParam OutputGraph type){
+    @RequestMapping(value = "/graph/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
 
-        JSONObject graphe = getGraphFromDB(id);
+        JSONObject graphe = getGraphFromDB(idGraphe);
+
         if (graphe != null){
-            JSONArray dataSet = (JSONArray) graphe.get("datasId");
-            Plot plot = new Plot();
-            for (Object o : dataSet) {
-                JSONArray pointsArray = getData((String) o);
+            JSONArray dataset = getAllDataForGraph(idGraphe);
+            SwingPlotter swingPlotter = new SwingPlotter();
+            Plot plot = swingPlotter.getPlot();
+            for (Object o : dataset) {
+                JSONObject data = (JSONObject) o;
+                JSONParser jsonParser = new JSONParser();
+                JSONArray pointsArray = (JSONArray) jsonParser.parse((String)data.get("datajson"));
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     addPoints(figure,pointsArray);
@@ -48,6 +53,7 @@ public class Renderer {
                     return pngPlotter.plot(plot);
                 default:
                     return "Error, type not supported".getBytes();
+
             }
         }else {
             return "Error: ID not found".getBytes();
@@ -55,38 +61,43 @@ public class Renderer {
 
     }
 
+
+
     public JSONObject getGraphFromDB(String id){
         try {
-            FileReader fileReader =new FileReader("GraphDataBase.json");
+            URL url = new URL("http://localhost:4030/graph/cara/"+id);
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            urlConnection.getInputStream()));
+            String inputLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null)
+                stringBuilder.append(inputLine);
+            in.close();
             JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject)jsonParser.parse(fileReader);
-            JSONArray graphs = (JSONArray) database.get("graph");
-            for (Object object : graphs) {
-                JSONObject graph = (JSONObject)object;
-                if (graph.get("id").equals(id) ){
-                    return graph;
-                }
-            }
-            return null;
+            JSONArray array = (JSONArray)jsonParser.parse(stringBuilder.toString());
+            return (JSONObject) array.get(0);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public JSONArray getData(String id){
+    public JSONArray getAllDataForGraph(String idGraphe){
         try {
-            FileReader fileReader =new FileReader("GraphDataBase.json");
+            URL url = new URL("http://localhost:4030/datareader/data/" + idGraphe);
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            urlConnection.getInputStream()));
+            String inputLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null)
+                stringBuilder.append(inputLine);
+            in.close();
             JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject)jsonParser.parse(fileReader);
-            JSONArray graphPoints = (JSONArray) database.get("graphPoints");
-            for (Object object : graphPoints) {
-                JSONObject data = (JSONObject)object;
-                if (data.get("id").equals(id) ){
-                    return (JSONArray) data.get("points");
-                }
-            }
-            return null;
+            return (JSONArray)jsonParser.parse(stringBuilder.toString());
         } catch (IOException | ParseException e) {
             e.printStackTrace();
             return null;
@@ -96,7 +107,9 @@ public class Renderer {
     public void addPoints(Figure figure,JSONArray points){
         for (Object o : points) {
             JSONObject point = (JSONObject) o;
-            figure.addPoint(((double) point.get("x")), ((double) point.get("y")));
+            double x = Double.parseDouble(point.get("x").toString());
+            double y = Double.parseDouble(point.get("y").toString());
+            figure.addPoint(x,y);
         }
     }
 
@@ -104,7 +117,6 @@ public class Renderer {
         String type = (String)graphe.get("type");
         TypeGraph typeGraph = TypeGraph.fromString(type);
         switch (Objects.requireNonNull(typeGraph)){
-
             case HISTOGRAM:
                 figure.rendererList.add(new HistogramPointRenderer((x,
                                                                     y) -> new Color(0, 141, 255, 102)));

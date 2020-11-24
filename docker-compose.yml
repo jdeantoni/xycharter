@@ -12,6 +12,12 @@ services:
     ports:
       - "4010:4010"
 
+  database-reader:
+    build: ./Services/databaseReader
+    container_name: database-reader
+    ports:
+      - "4030:4030"
+
   render:
     build: ./Services/render
     container_name: render
