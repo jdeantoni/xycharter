@@ -1,3 +1,4 @@
+const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReader');
 const { Client } = require('pg')
 const client = new Client({
     user: 'postgres',
@@ -28,8 +29,32 @@ async function getDataset(idDataset) {
 }
 
 async function getDataForGraph(idGraph) {
+
+    if(await isGraphTimeSeries(idGraph)){
+        let dataTimeSeries =[]
+        const resp = await getDatasetIdForGraph(idGraph)
+        resp.forEach((dataSetId)=>{
+            const data = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(dataSetId)
+            dataTimeSeries.push(data)
+        });
+
+        return dataTimeSeries
+    }
+    
     const resp =  await client.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.id = linkdatasetgraph.datasetid and linkdatasetgraph.graphid = $1', [idGraph])
     return resp.rows
+}
+
+async function isGraphTimeSeries(idGraph) {
+    const resp =  await client.query('SELECT * FROM graph WHERE id = $1 and type = "timeseries" ', [idGraph])
+    if(resp.rows.length>0) return true
+    return false;
+}
+
+async function getDatasetIdForGraph(idGraph){
+    const resp = await client.query('SELECT datasetid FROM datasets,linkdatasetgraph WHERE datasets.id = linkdatasetgraph.datasetid and linkdatasetgraph.graphid = $1', [idGraph])
+    return resp.rows;
+
 }
 
 module.exports = {
