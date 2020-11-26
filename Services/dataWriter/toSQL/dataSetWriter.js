@@ -20,6 +20,19 @@ const writeDataSet = async (points) => {
     }
 }
 
+const writeDataSetIdTimeSeries = async (isTimeSeries) => {
+    try {
+        const result = await pool.query('INSERT INTO datasets (timeseries) VALUES ($1) RETURNING *',[isTimeSeries]);
+
+        return result.rows[0].iddataset.toString();
+    } catch (err) {
+        console.log("oejfofejofeoj"+err)
+        throw SQLUnknowError(err);
+    }
+}
+
+
 module.exports = {
-    writeDataSet
+    writeDataSet,
+    writeDataSetIdTimeSeries
 }
