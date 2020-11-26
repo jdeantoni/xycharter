@@ -4,8 +4,9 @@ CREATE TABLE Graphs (
 );
 
 CREATE TABLE DataSets (
-      idDataset SERIAL PRIMARY KEY,
-      DataJSON TEXT
+    idDataset SERIAL PRIMARY KEY,
+    timeseries BOOLEAN,
+    DataJSON TEXT
 );
 
 CREATE TABLE LinkDataSetGraph (
