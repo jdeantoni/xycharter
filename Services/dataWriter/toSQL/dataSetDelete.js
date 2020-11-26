@@ -1,6 +1,6 @@
 const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
 const { DataSetIdNotFoundException } = require("../exceptions/DataSetIdNotFoundException")
-const configPostgre = require('../../../PostgreSQL/config.json')
+const configPostgre = require('../postgreConfig.json')
 
 const Pool = require('pg').Pool
 const pool = new Pool({
