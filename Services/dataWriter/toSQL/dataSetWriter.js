@@ -2,11 +2,11 @@ const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
 
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'nom',
-  host: 'localhost',
-  database: 'graphDataBase',
-  password: 'termdp',
-  port: 5432,
+    user: 'testing',
+    host: 'postgres',
+    database: 'graphs',
+    password: 'bla123',
+    port: 5432,
 })
 
 const writeDataSet = async (points) => {
