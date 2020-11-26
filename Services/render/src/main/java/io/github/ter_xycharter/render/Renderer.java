@@ -39,7 +39,7 @@ public class Renderer {
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     addPoints(figure,pointsArray);
-                    initializeRenderer(figure,graphe);
+                    initializeRenderer(figure,idGraphe);
                     plot.addFigure(figure);
                 }
             }
@@ -114,10 +114,11 @@ public class Renderer {
         }
     }
 
-    public void initializeRenderer(Figure figure, JSONObject graphe){
-        String type = (String)graphe.get("type");
-        System.out.println("Type du graphe: "+type);
+    public void initializeRenderer(Figure figure, String idGraph){
+        JSONObject typeJSON = getTypeForGraph(idGraph);
+        String type = typeJSON.get("graphtype").toString();
         TypeGraph typeGraph = TypeGraph.fromString(type);
+        System.out.println("Type du graphe: "+type);
         switch (Objects.requireNonNull(typeGraph)){
             case HISTOGRAM:
                 figure.rendererList.add(new HistogramPointRenderer((x,
@@ -126,6 +127,29 @@ public class Renderer {
             case CONNECTEDLINE:
                 figure.rendererList.add(new ConnectedLineFigureRenderer());
                 break;
+        }
+    }
+
+    public JSONObject getTypeForGraph(String idGraph){
+        try {
+            System.out.println("Demande le type du graphe "+idGraph);
+            URL url = new URL("http://database-reader:4030/graph/type/" + idGraph);
+            URLConnection urlConnection = url.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            urlConnection.getInputStream()));
+            String inputLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null)
+                stringBuilder.append(inputLine);
+            in.close();
+            JSONParser jsonParser = new JSONParser();
+            JSONObject typeJSON = (JSONObject)((JSONArray)jsonParser.parse(stringBuilder.toString())).get(0);
+
+            return typeJSON;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

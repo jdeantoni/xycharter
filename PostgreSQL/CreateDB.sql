@@ -1,6 +1,14 @@
+CREATE TABLE GraphType(
+                          idGraphType  SERIAL PRIMARY KEY,
+                          graphType  VARCHAR(20)
+);
+
 CREATE TABLE Graphs (
-    idGraph SERIAL PRIMARY KEY,
-    Type VARCHAR(20)
+                        idGraph SERIAL PRIMARY KEY,
+                        idGraphType int NOT NULL,
+
+                        CONSTRAINT fk_graphType
+                            FOREIGN KEY (idGraphType) REFERENCES GraphType(idGraphType)
 );
 
 CREATE TABLE DataSets (
@@ -21,3 +29,6 @@ CREATE TABLE LinkDataSetGraph (
       FOREIGN KEY(idGraph)
           REFERENCES Graphs(idGraph)
 );
+
+INSERT INTO graphtype (graphtype) VALUES ('histogramme');
+INSERT INTO graphtype (graphtype) VALUES ('connectedLine');
