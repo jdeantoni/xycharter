@@ -39,6 +39,13 @@ dataReaderRouter.get('/datareader/data/:id'
         return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
 
     });
+//Toute les data pour le graph id
+dataReaderRouter.get('/graph/type/:id'
+    , async(req, res, next) => {
+
+        return res.status(200).send(await dataReaderController.getTypeOfGraph(req.params.id));
+
+    });
 
 
 

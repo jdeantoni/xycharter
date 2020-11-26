@@ -12,7 +12,9 @@ const pool = new Pool({
 
 const createGraph = async (type) => {
     try {
-        const result = await pool.query('INSERT INTO Graphs (Type) VALUES ($1) RETURNING *', [type]);
+        const resultsType = await pool.query('SELECT idgraphtype FROM graphtype WHERE graphtype = $1', [type])
+        const idType = resultsType.rows[0].idgraphtype
+        const result = await pool.query('INSERT INTO Graphs (idgraphtype) VALUES ($1) RETURNING *', [idType]);
         return result.rows[0].idgraph.toString();
     } catch (err) {
         throw SQLUnknowError(err);
