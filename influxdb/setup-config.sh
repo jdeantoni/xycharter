@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## Create basic config in the db
-touch config.json
+touch influxConfig.json 
 
 curl --request POST 'http://localhost:8086/api/v2/setup' \
      --data '{
@@ -11,4 +11,16 @@ curl --request POST 'http://localhost:8086/api/v2/setup' \
                 "bucket": "datagraph",
                 "retentionPeriodHrs": 0
                 }' \
-    >> config.json
+    > influxConfig.json
+
+services_list=$(ls ../Services/)
+mapfile -t services_array <<< "$services_list"
+
+cd ../Services
+
+for i in "${services_array[@]}"
+do
+    cd $i
+    cp ../../influxdb/influxConfig.json ./
+    cd ../
+done
