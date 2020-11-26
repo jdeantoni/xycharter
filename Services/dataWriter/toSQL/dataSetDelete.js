@@ -1,13 +1,14 @@
 const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
 const { DataSetIdNotFoundException } = require("../exceptions/DataSetIdNotFoundException")
+const configPostgre = require('../../../PostgreSQL/config.json')
 
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'nom',
-  host: 'localhost',
-  database: 'graphDataBase',
-  password: 'termdp',
-  port: 5432,
+    user: configPostgre.user,
+    host: configPostgre.host,
+    database: configPostgre.database,
+    password: configPostgre.password,
+    port: configPostgre.port
 })
 
 const deleteDataSet = async (dataSetId) => {

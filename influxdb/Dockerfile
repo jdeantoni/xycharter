@@ -12,7 +12,7 @@ RUN addgroup influxdb && \
         adduser -s /bin/false -G influxdb -S -D influxdb
 
 # Coping scripts
-COPY ./start.sh start.sh
+COPY  ./scripts/start.sh start.sh
 
 # Installing binaries
 RUN tar -C . -xzf influxdb-2.0.2_linux_amd64.tar.gz && \
