@@ -1,9 +1,9 @@
 # ter-xycharter
 TER 2020 équipe 13
 
-## config POSTGRE 
+## Setup the config for databases
  
-sudo sh setup-postgres-config.sh
+sudo sh setup-before-run.sh
 
 ## Pour lancer la demo :
 
