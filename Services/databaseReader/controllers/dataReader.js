@@ -11,25 +11,29 @@ const pool = new Pool({
 
 async function getCaracGraph(idGraph) {
     const resp =  await pool.query('SELECT * FROM graphs WHERE idgraph = $1', [idGraph])
+    console.log("Renvois les caractéristique du graphe "+idGraph)
     return resp.rows
 }
 async function getAllGraphs() {
     const resp =  await pool.query('SELECT idGraph FROM graphs')
+    console.log("Renvois tout les id des graphes")
     return resp.rows
 }
 async function getAllDatasets() {
     const resp =  await pool.query('SELECT idDataset FROM datasets')
+    console.log("Renvois tout les id des datasets")
     return resp.rows
 }
 
 async function getDataset(idDataset) {
     const resp =  await pool.query('SELECT datajson FROM datasets WHERE idDataset = $1',[idDataset])
+    console.log("Renvois les data du dataset "+ idDataset)
     return resp.rows
 }
 
 async function getDataForGraph(idGraph) {
-
     const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
+    console.log("Renvois toute les data associées au graph "+idGraph)
     return resp.rows
 }
 

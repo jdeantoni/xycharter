@@ -4,38 +4,46 @@ services:
     build: ./PostgreSQL
     container_name: postgres
     restart: always
+
     ports:
       - "5342:5432"
 
   data-writer:
     build: ./Services/dataWriter
     container_name: data-writer
+
     ports:
       - "4020:4020"
     
   graph-writer:
     build: ./Services/graphWriter
     container_name: graph-writer
+
     ports:
       - "4010:4010"
 
   database-reader:
     build: ./Services/databaseReader
     container_name: database-reader
+
     ports:
       - "4030:4030"
     links:
       - postgres
 
+
   render:
     build: ./Services/render
     container_name: render
+
     ports:
       - "4040:4040"
+
 
   influxdb:
     build: ./influxdb
     container_name: influxdb
+
     ports:
       - "8086:8086"
 
