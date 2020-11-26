@@ -1,19 +1,19 @@
 const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
+const configPostgre = require('../../../PostgreSQL/config.json')
 
 const Pool = require('pg').Pool
 const pool = new Pool({
-    user: 'testing',
-    host: 'postgres',
-    database: 'graphs',
-    password: 'bla123',
-    port: 5432,
+    user: configPostgre.user,
+    host: configPostgre.host,
+    database: configPostgre.database,
+    password: configPostgre.password,
+    port: configPostgre.port
 })
 
 const createGraph = async (type) => {
     try {
         const result = await pool.query('INSERT INTO Graphs (Type) VALUES ($1) RETURNING *', [type]);
-
-        return result.rows[0].id.toString();
+        return result.rows[0].idgraph.toString();
     } catch (err) {
         throw SQLUnknowError(err);
     }

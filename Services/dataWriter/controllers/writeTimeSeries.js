@@ -2,11 +2,18 @@ const { InfluxDB } = require('@influxdata/influxdb-client')
 const configInflux = require("../../../influxdb/config.json")
 const { Point } = require('@influxdata/influxdb-client')
 
-const token = configInflux.auth.token
-const org = configInflux.org.name
-const bucket = configInflux.bucket.name
-const url = 'http://localhost:8086'
-const client = new InfluxDB({ url: url, token: token })
+var token; var org; var bucket; var url; var client;
+
+if(Object.keys(configInflux).length > 0){
+
+    token = configInflux.auth.token
+    org = configInflux.org.name
+    bucket = configInflux.bucket.name
+    url = 'http://localhost:8086'
+    client = new InfluxDB({ url: url, token: token })
+
+}
+
 
 
 
