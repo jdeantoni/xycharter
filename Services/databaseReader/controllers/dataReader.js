@@ -1,12 +1,11 @@
-
-const dataTimeSeriesReader = require('./dataTimeSeriesReader');
+const postgresConfig = require('../postgreConfig.json')
 const { Pool } = require('pg')
 const pool = new Pool({
-    user: 'testing',
-    host: 'postgres',
-    database: 'graphs',
-    password: 'bla123',
-    port: 5432,
+    user: postgresConfig.user,
+    host: postgresConfig.host,
+    database: postgresConfig.database,
+    password: postgresConfig.password,
+    port: postgresConfig.port,
 })
 
 
@@ -29,19 +28,7 @@ async function getDataset(idDataset) {
 }
 
 async function getDataForGraph(idGraph) {
-    
 
-    /*if(await isGraphTimeSeries(idGraph)){
-        let dataTimeSeries =[]
-        const resp = await getDatasetIdForGraph(idGraph)
-        resp.forEach((dataSetId)=>{
-            const data = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(dataSetId)
-            dataTimeSeries.push(data)
-        });
-
-        return dataTimeSeries
-    }*/
-    
     const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
     return resp.rows
 }
