@@ -114,6 +114,7 @@ public class Renderer {
         }
     }
 
+
     public void initializeRenderer(Figure figure, String idGraph){
         JSONObject typeJSON = getTypeForGraph(idGraph);
         String type = typeJSON.get("graphtype").toString();

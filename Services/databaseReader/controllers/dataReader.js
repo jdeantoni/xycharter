@@ -37,6 +37,7 @@ async function getDataForGraph(idGraph) {
     return resp.rows
 }
 
+
 async function getTypeOfGraph(idGraph){
     const resp =  await pool.query('select graphtype from graphtype where idgraphtype = (select idgraphtype from graphs where idgraph = $1)', [idGraph])
     console.log("Renvois le type du graphe "+idGraph)
@@ -46,6 +47,7 @@ async function getTypeOfGraph(idGraph){
 async function isGraphTimeSeries(idGraph) {
     const resp =  await pool.query('SELECT * FROM graph WHERE id = $1 and type = "timeseries" ', [idGraph])
     return resp.rows.length > 0;
+
 
 }
 
