@@ -28,11 +28,10 @@ public class Renderer {
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
 
         JSONObject graphe = getGraphFromDB(idGraphe);
-
+        System.out.println(graphe);
         if (graphe != null){
             JSONArray dataset = getAllDataForGraph(idGraphe);
-            SwingPlotter swingPlotter = new SwingPlotter();
-            Plot plot = swingPlotter.getPlot();
+            Plot plot = new Plot();
             for (Object o : dataset) {
                 JSONObject data = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
@@ -65,7 +64,8 @@ public class Renderer {
 
     public JSONObject getGraphFromDB(String id){
         try {
-            URL url = new URL("http://localhost:4030/graph/cara/"+id);
+            System.out.println("Demande des caractéristiques du graphe "+id+" auprès de databaseReader");
+            URL url = new URL("http://database-reader:4030/graph/cara/"+id);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
@@ -86,7 +86,8 @@ public class Renderer {
 
     public JSONArray getAllDataForGraph(String idGraphe){
         try {
-            URL url = new URL("http://localhost:4030/datareader/data/" + idGraphe);
+            System.out.println("Demande de toutes les data des différents dataset associé au graphe");
+            URL url = new URL("http://database-reader:4030/datareader/data/" + idGraphe);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
@@ -115,6 +116,7 @@ public class Renderer {
 
     public void initializeRenderer(Figure figure, JSONObject graphe){
         String type = (String)graphe.get("type");
+        System.out.println("Type du graphe: "+type);
         TypeGraph typeGraph = TypeGraph.fromString(type);
         switch (Objects.requireNonNull(typeGraph)){
             case HISTOGRAM:

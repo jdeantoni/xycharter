@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk11-openj9:alpine-slim
-
+RUN apk add --update ttf-dejavu && rm -rf /var/cache/apk/*
 COPY target/render.jar /usr/spring/render.jar
 
 EXPOSE 4040
