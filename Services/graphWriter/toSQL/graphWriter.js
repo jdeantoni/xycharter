@@ -1,5 +1,5 @@
 const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
-const configPostgre = require('../../../PostgreSQL/config.json')
+const configPostgre = require('../postgreConfig.json')
 
 const Pool = require('pg').Pool
 const pool = new Pool({

@@ -2,7 +2,7 @@ const { SQLLinkAlreadyExistException } = require('../exceptions/SQLLinkAlreadyEx
 const { SQLfkDataset } = require('../exceptions/SQLfkDataset');
 const { SQLfkGraph } = require('../exceptions/SQLfkGraph');
 const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
-const configPostgre = require('../../../PostgreSQL/config.json')
+const configPostgre = require('../postgreConfig.json')
 
 const Pool = require('pg').Pool
 const pool = new Pool({
