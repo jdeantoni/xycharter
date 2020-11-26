@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 async function getCaracGraph(idGraph) {
-    const resp =  await pool.query('SELECT * FROM graphs WHERE graphid = $1', [idGraph])
+    const resp =  await pool.query('SELECT * FROM graphs WHERE idgraph = $1', [idGraph])
     return resp.rows
 }
 async function getAllGraphs() {
@@ -53,7 +53,7 @@ async function isGraphTimeSeries(idGraph) {
 }
 
 async function getDatasetIdForGraph(idGraph){
-    const resp = await pool.query('SELECT datasetid FROM datasets,linkdatasetgraph WHERE datasets.id = linkdatasetgraph.datasetid and linkdatasetgraph.graphid = $1', [idGraph])
+    const resp = await pool.query('SELECT datasets.iddataset FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
     return resp.rows;
 
 }
