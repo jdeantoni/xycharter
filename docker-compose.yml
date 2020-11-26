@@ -33,11 +33,6 @@ services:
     ports:
       - "4040:4040"
 
-  influxdb:
-    build: ./influxdb
-    container_name: influxdb
-    ports:
-      - "8086:8086"
 
     
  
