@@ -1,11 +1,9 @@
 const express = require('express');
 const graphWriterRouter = express.Router();
 const graphWriterController = require('../controllers/graphWriter');
-const { body,param, validationResult } = require('express-validator');
+const { param, validationResult } = require('express-validator');
 
-graphWriterRouter.post('/graphs', [body('type').matches(
-   "histogramme"
-)], async(req, res, next) => {
+graphWriterRouter.post('/graphs', async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {

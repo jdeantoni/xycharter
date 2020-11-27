@@ -1,6 +1,10 @@
 # ter-xycharter
 TER 2020 équipe 13
 
+## Setup the config for databases
+ 
+sudo sh setup-before-run.sh
+
 ## Pour lancer la demo :
 
 sudo sh run.sh
