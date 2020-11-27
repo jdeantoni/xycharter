@@ -34,21 +34,33 @@ async function getDataset(idDataset) {
 
 async function getDataForGraph(idGraph) {
     
-    let dataTimeSeries =[]
+
+
     if(await isGraphTimeSeries(idGraph)){
         const resp = await getDatasetIdForGraph(idGraph)
+        let datasets = []
         for(let i =0;i<resp.length;i++){
-            const data = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
-            dataTimeSeries.push(data)
+            let dataTimeSeries =[]
+            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
+            for (let j = 0; j < datas.length; j++) {
+                const data = {
+                    x : j+1,
+                    y : datas[j].value
+                };
+                dataTimeSeries.push(data)
+            }
+            datasets.push({datajson:JSON.stringify(dataTimeSeries)})
         }
-        let dataJson = {dataJson : dataTimeSeries}
-        return dataJson
+
+        console.log(datasets)
+        return datasets
         
 
     }
 
     const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
     console.log("Renvois toute les data associées au graph "+idGraph)
+    console.log(resp.rows)
     return resp.rows
 }
 
