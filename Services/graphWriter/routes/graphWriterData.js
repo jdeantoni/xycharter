@@ -20,7 +20,7 @@ graphWriterDataRouter.post('/graphs/:graphId/dataSet/:dataSetId', [param('graphI
    next();
 });
 
-graphWriterDataRouter.delete('/graphs/:graphId/dataSet/:dataSetId', [param('graphId').isString(), param('dataSetId').isString()], async (req, res, next) => {
+graphWriterDataRouter.delete('/graphs/:graphId/dataSet/:dataSetId', [param('graphId').isInt()(), param('dataSetId').isInt()()], async (req, res, next) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

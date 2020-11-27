@@ -1,12 +1,12 @@
 const { response } = require('express');
 const express = require('express');
 const axios = require('axios').default;
-const graphWriterRouter = express.Router();
+const dataWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
 const dataWriterService = "http://localhost:4020"
 
-graphWriterRouter.post('/datawriter', [body("points").isArray()]
+dataWriterRouter.post('/datawriter', [body("points").isArray()]
    , async(req, res, next) => {
 
    const errors = validationResult(req);
@@ -26,7 +26,7 @@ graphWriterRouter.post('/datawriter', [body("points").isArray()]
    next();
 });
 
-graphWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+dataWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
    
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -45,4 +45,4 @@ graphWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, r
 });
 
 
-module.exports = graphWriterRouter;
+module.exports = dataWriterRouter;
