@@ -1,4 +1,5 @@
 const postgresConfig = require('../postgreConfig.json')
+const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReader');
 const { Pool } = require('pg')
 const pool = new Pool({
     user: postgresConfig.user,
@@ -32,6 +33,20 @@ async function getDataset(idDataset) {
 }
 
 async function getDataForGraph(idGraph) {
+    
+    let dataTimeSeries =[]
+    if(await isGraphTimeSeries(idGraph)){
+        const resp = await getDatasetIdForGraph(idGraph)
+        for(let i =0;i<resp.length;i++){
+            const data = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
+            dataTimeSeries.push(data)
+        }
+        let dataJson = {dataJson : dataTimeSeries}
+        return dataJson
+        
+
+    }
+
     const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
     console.log("Renvois toute les data associées au graph "+idGraph)
     return resp.rows
@@ -45,8 +60,9 @@ async function getTypeOfGraph(idGraph){
 }
 
 async function isGraphTimeSeries(idGraph) {
-    const resp =  await pool.query('SELECT * FROM graph WHERE id = $1 and type = "timeseries" ', [idGraph])
-    return resp.rows.length > 0;
+    const resp =  await pool.query('SELECT timeseries FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
+    
+    return resp.rows[0].timeseries;
 
 
 }
