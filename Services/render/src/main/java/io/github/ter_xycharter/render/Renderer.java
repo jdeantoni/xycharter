@@ -2,7 +2,6 @@ package io.github.ter_xycharter.render;
 
 
 
-import com.fasterxml.jackson.core.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,7 +15,6 @@ import xycharter.render.HistogramPointRenderer;
 
 import java.awt.*;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Objects;
@@ -28,7 +26,6 @@ public class Renderer {
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
 
         JSONObject graphe = getGraphFromDB(idGraphe);
-        System.out.println(graphe);
         if (graphe != null){
             JSONArray dataset = getAllDataForGraph(idGraphe);
             Plot plot = new Plot();
