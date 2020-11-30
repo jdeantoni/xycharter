@@ -1,15 +1,20 @@
 const { InfluxDB } = require('@influxdata/influxdb-client')
-const configInflux = require("../influxConfig.json")
 
-var token;var org; var bucket; var client;
-if(Object.keys(configInflux).length > 0){
+try {
+    const configInflux = require("../influxConfig.json")
 
-    token = configInflux.auth.token
-    org = configInflux.org.name
-    bucket = configInflux.bucket.name
-    url = 'http://influx:8086'
-    client = new InfluxDB({ url: url, token: token })
+    var token;var org; var bucket; var client;
+    if(Object.keys(configInflux).length > 0){
 
+        token = configInflux.auth.token
+        org = configInflux.org.name
+        bucket = configInflux.bucket.name
+        url = 'http://influx:8086'
+        client = new InfluxDB({ url: url, token: token })
+
+    }
+} catch (error) {
+    console.error("config de influx invalide")
 }
 
 

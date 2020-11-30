@@ -1,3 +1,17 @@
+#!/bin/bash
+services_list=$(ls ./Services/)
+mapfile -t services_array <<< "$services_list"
+
+cd ./Services
+for i in "${services_array[@]}"
+do
+    cd $i
+    rm .env
+    cp ../../.env ./.env
+    cd ../
+done
+cd ../
+
 cd PostgreSQL
 sh setup-postgres-config.sh
 cd ../influxdb

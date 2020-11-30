@@ -4,8 +4,6 @@ const axios = require('axios').default;
 const dataGraphWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
-const graphWriterService = "http://localhost:4010"
-const dataWriterService = "http://localhost:4020"
 
 dataGraphWriterRouter.post('/graphs/:graphId/points', [param('graphId').isInt(), body("points").isArray()]
    , async(req, res, next) => {
@@ -16,8 +14,8 @@ dataGraphWriterRouter.post('/graphs/:graphId/points', [param('graphId').isInt(),
    }
 
    try {
-      const dataSetId = await (await axios.post(dataWriterService + "/datawriter", req.body )).data;
-      const reponse = await axios.post(graphWriterService + "/graphs/" + req.params.graphId + "/dataSet/" + dataSetId)
+      const dataSetId = await (await axios.post(process.env.DATAWRITER_ADDR + "/datawriter", req.body )).data;
+      const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.graphId + "/dataSet/" + dataSetId)
       
 
       res.status(200).send(reponse.data.toString());

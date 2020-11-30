@@ -4,10 +4,8 @@ const axios = require('axios').default;
 const graphWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
-const graphWriterService = "http://localhost:4010"
-
 graphWriterRouter.post('/graphs', [body('type').matches(
-   "histogramme"
+   "histogramme|connectedLine"
 )]
    , async(req, res, next) => {
    const errors = validationResult(req);
@@ -16,7 +14,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
    }
 
    try {
-      const reponse = await axios.post(graphWriterService + "/graphs", req.body)
+      const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs", req.body)
       
 
       res.status(200).send(reponse.data.toString());
@@ -35,7 +33,7 @@ graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, 
    }
   
    try {
-      const reponse = await axios.delete(graphWriterService + "/graphs/" + req.params.id)
+      const reponse = await axios.delete(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.id)
       
       res.status(200).send(reponse.data.toString());
    } catch (error) {      
@@ -54,7 +52,7 @@ graphWriterRouter.post('/graphs/:graphId/dataSet/:dataSetId', [param('graphId').
    }
 
    try {
-      const reponse = await axios.post(graphWriterService + "/graphs/" + req.params.graphId + "/dataSet/" + req.params.dataSetId)
+      const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.graphId + "/dataSet/" + req.params.dataSetId)
       
       res.status(200).send(reponse.data.toString());
    } catch (error) {      
@@ -72,7 +70,7 @@ graphWriterRouter.delete('/graphs/:graphId/dataSet/:dataSetId', [param('graphId'
    }
   
    try {
-      const reponse = await axios.delete(graphWriterService + "/graphs/" + req.params.graphId + "/dataSet/" + req.params.dataSetId)
+      const reponse = await axios.delete(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.graphId + "/dataSet/" + req.params.dataSetId)
       
       res.status(200).send(reponse.data.toString());
    } catch (error) {      

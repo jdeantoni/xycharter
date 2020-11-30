@@ -3,8 +3,6 @@ const axios = require('axios').default;
 const graphWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
-const graphWriterService = "http://localhost:4010"
-
 graphWriterRouter.post('/graph', [body('type').matches(
    "histogramme"
 )]
@@ -15,7 +13,7 @@ graphWriterRouter.post('/graph', [body('type').matches(
    }
 
 
-   const reponse = await axios.post(graphWriterService + "/graphs", {body :{"type": req.body.type}})
+   const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs", {body :{"type": req.body.type}})
    console.log(reponse)
 
    res.status(201).send(reponse);
