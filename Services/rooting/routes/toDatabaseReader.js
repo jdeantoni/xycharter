@@ -1,53 +1,52 @@
-/*const express = require('express');
-const dataReaderRouter = express.Router();
-const dataReaderController = require('../controllers/dataReader');
+const express = require('express');
+const axios = require('axios').default;
+const databaseReaderRouter = express.Router();
+const { body,param, validationResult } = require('express-validator');
 
-// Recupere le type du graph etc
-dataReaderRouter.get('/graph/cara/:id'
-   , async(req, res, next) => {
-
-      return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
-
-   });
 //Tout les ids des graph
-dataReaderRouter.get('/graphs'
+databaseReaderRouter.get('/graphs'
     , async(req, res, next) => {
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs");
 
-        return res.status(200).send(await dataReaderController.getAllGraphs());
+        var tab = [];
+
+        for (var i = 0; i < reponse.data.length; i++){
+            tab.push(reponse.data[i].idgraph);
+        }
+
+        return res.status(200).send(tab);
 
     });
 //Tout ids des jeux de données
-dataReaderRouter.get('/datas'
+databaseReaderRouter.get('/datas'
     , async(req, res, next) => {
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datas");
 
-        return res.status(200).send(await dataReaderController.getAllDatasets());
+        var tab = [];
 
+        for (var i = 0; i < reponse.data.length; i++){
+            tab.push(reponse.data[i].iddataset);
+        }
+
+        return res.status(200).send(tab);
     });
 
 //Jeu de donnée id
-dataReaderRouter.get('/datas/:id'
+databaseReaderRouter.get('/datas/:id'
     , async(req, res, next) => {
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datas/" + req.params.id);
 
-        return res.status(200).send(await dataReaderController.getDataset(req.params.id));
-
+        return res.status(200).send(reponse.data[0].datajson);
     });
 
 //Toute les data pour le graph id
-dataReaderRouter.get('/datareader/data/:id'
+databaseReaderRouter.get('/graphs/:id/datas'
     , async(req, res, next) => {
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + req.params.id);
 
-        return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
-
-    });
-//Toute les data pour le graph id
-dataReaderRouter.get('/graph/type/:id'
-    , async(req, res, next) => {
-
-        return res.status(200).send(await dataReaderController.getTypeOfGraph(req.params.id));
-
+        return res.status(200).send(reponse.data);
     });
 
 
 
-module.exports = dataReaderRouter;
-*/
+module.exports = databaseReaderRouter;

@@ -10,7 +10,7 @@ const toRenderServiceRoute = require('./routes/toRenderService');
 publicRouter.use('/', toGraphWriterRoute);
 publicRouter.use('/', toDataWriterRoute);
 publicRouter.use('/', toDataGraphWriterRoute);
-//publicRouter.use('/', toDatabaseReaderRoute);
+publicRouter.use('/', toDatabaseReaderRoute);
 publicRouter.use('/', toRenderServiceRoute);
 
 module.exports = publicRouter;

@@ -1,4 +1,3 @@
-const { response } = require('express');
 const express = require('express');
 const axios = require('axios').default;
 const renderRouter = express.Router();
@@ -14,10 +13,16 @@ renderRouter.get('/graphs/:id', [query('type').matches(
       return res.status(400).json({ errors: errors.array() });
    }
 
-   const reponse = await axios.get(process.env.RENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
+   if (req.query.type == "JSON"){
+      const reponse = await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + req.params.id);
 
-   res.setHeader("Content-Type", "image/jpg");
-   res.status(201).send(reponse);
+      return res.status(200).send(reponse.data[0].datajson);
+   } else {
+      const reponse = await axios.get(process.env.RENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
+
+      res.setHeader("Content-Type", "image/jpg");
+      res.status(201).send(reponse);
+   }
    next();
 });
 
