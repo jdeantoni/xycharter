@@ -26,7 +26,7 @@ import java.util.Objects;
 public class Renderer {
     private Dotenv dotenv;
 
-    @RequestMapping(value = "/graph/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/graphs/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
         dotenv = Dotenv.configure()
             .directory("./.env")

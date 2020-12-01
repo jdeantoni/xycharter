@@ -1,26 +1,25 @@
-
+const { response } = require('express');
 const express = require('express');
 const axios = require('axios').default;
-const graphWriterRouter = express.Router();
-const { body,param, validationResult } = require('express-validator');
+const renderRouter = express.Router();
+const { param, query, validationResult } = require('express-validator');
 
-graphWriterRouter.post('/graph', [body('type').matches(
-   "histogramme"
-)]
+renderRouter.get('/graphs/:id', [query('type').matches(
+   "PNG|JPG|JSON"
+), param('id').isInt()]
    , async(req, res, next) => {
+
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
    }
 
+   const reponse = await axios.get(process.env.RENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
 
-   const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs", {body :{"type": req.body.type}})
-   console.log(reponse)
-
+   res.setHeader("Content-Type", "image/jpg");
    res.status(201).send(reponse);
-
    next();
 });
 
 
-module.exports = graphWriterRouter;
+module.exports = renderRouter;
