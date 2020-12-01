@@ -2,7 +2,6 @@ package io.github.ter_xycharter.render;
 
 
 
-import com.fasterxml.jackson.core.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,7 +16,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import java.awt.*;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Objects;
