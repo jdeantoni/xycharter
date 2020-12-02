@@ -39,3 +39,11 @@ services:
     ports:
       - "4040:4040"
 
+
+  rooting:
+    build: ./Services/rooting
+    container_name: rooting
+
+    ports:
+      - "4000:4000"
+

@@ -12,6 +12,7 @@ import xycharter.*;
 import xycharter.render.ConnectedLineFigureRenderer;
 import xycharter.render.HistogramPointRenderer;
 
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.awt.*;
 import java.io.*;
@@ -21,11 +22,16 @@ import java.util.Objects;
 
 @RestController
 public class Renderer {
+    private Dotenv dotenv;
 
-    @RequestMapping(value = "/graph/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/graphs/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
+        dotenv = Dotenv.configure()
+            .directory("./.env")
+            .load();
 
         JSONObject graphe = getGraphFromDB(idGraphe);
+        //System.out.println(graphe);
         if (graphe != null){
             JSONArray dataset = getAllDataForGraph(idGraphe);
             Plot plot = new Plot();
@@ -61,8 +67,8 @@ public class Renderer {
 
     public JSONObject getGraphFromDB(String id){
         try {
-            System.out.println("Demande des caractéristiques du graphe "+id+" auprès de databaseReader");
-            URL url = new URL("http://database-reader:4030/graph/cara/"+id);
+            //System.out.println("Demande des caractéristiques du graphe "+id+" auprès de databaseReader");
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graph/cara/"+id);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
@@ -83,8 +89,8 @@ public class Renderer {
 
     public JSONArray getAllDataForGraph(String idGraphe){
         try {
-            System.out.println("Demande de toutes les data des différents dataset associé au graphe");
-            URL url = new URL("http://database-reader:4030/datareader/data/" + idGraphe);
+            //System.out.println("Demande de toutes les data des différents dataset associé au graphe");
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/datareader/data/" + idGraphe);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
@@ -116,7 +122,7 @@ public class Renderer {
         JSONObject typeJSON = getTypeForGraph(idGraph);
         String type = typeJSON.get("graphtype").toString();
         TypeGraph typeGraph = TypeGraph.fromString(type);
-        System.out.println("Type du graphe: "+type);
+        //System.out.println("Type du graphe: "+type);
         switch (Objects.requireNonNull(typeGraph)){
             case HISTOGRAM:
                 figure.rendererList.add(new HistogramPointRenderer((x,
@@ -130,8 +136,8 @@ public class Renderer {
 
     public JSONObject getTypeForGraph(String idGraph){
         try {
-            System.out.println("Demande le type du graphe "+idGraph);
-            URL url = new URL("http://database-reader:4030/graph/type/" + idGraph);
+            //System.out.println("Demande le type du graphe "+idGraph);
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graph/type/" + idGraph);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
