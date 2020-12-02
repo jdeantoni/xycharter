@@ -1,6 +1,8 @@
 #!/bin/bash
-services_list=$(ls ./Services/)
+cd ./Services
+services_list=$(ls -d ./*/)
 mapfile -t services_array <<< "$services_list"
+cd ../
 
 cd ./Services
 for i in "${services_array[@]}"
