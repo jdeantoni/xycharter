@@ -1,7 +1,0 @@
-{
-    "user": "nom",
-    "host": "localhost",
-    "database": "graphDataBase",
-    "password": "termdp",
-    "port": 5432
-}
