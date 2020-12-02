@@ -6,6 +6,7 @@ CREATE TABLE GraphType(
 CREATE TABLE Graphs (
                         idGraph SERIAL PRIMARY KEY,
                         idGraphType int NOT NULL,
+		                characteristics text NOT NULL,
 
                         CONSTRAINT fk_graphType
                             FOREIGN KEY (idGraphType) REFERENCES GraphType(idGraphType)

@@ -1,9 +1,11 @@
 const express = require('express');
 const graphWriterRouter = express.Router();
 const graphWriterController = require('../controllers/graphWriter');
-const { param, validationResult } = require('express-validator');
+const { body, param, validationResult } = require('express-validator');
 
-graphWriterRouter.post('/graphs', async(req, res, next) => {
+graphWriterRouter.post('/graphs', [body('type').matches(
+   "histogramme|connectedLine"
+)], async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -21,7 +23,7 @@ graphWriterRouter.post('/graphs', async(req, res, next) => {
    next();
 });
 
-graphWriterRouter.delete('/graphs/:id', [param('id').isString()], async (req, res, next) => {
+graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
