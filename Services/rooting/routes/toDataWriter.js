@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios').default;
-const dataWriterRouter = express.Router();
+const writeTimeSeriesDataRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
 writeTimeSeriesDataRouter.get('/datas/timeseries', async (req, res, next) => {
@@ -29,4 +29,4 @@ writeTimeSeriesDataRouter.post('/datas/timeseries/:id',[param("id").isString(),b
 });
 
 
-module.exports = dataWriterRouter;
+module.exports = writeTimeSeriesDataRouter;
