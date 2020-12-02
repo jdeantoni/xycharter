@@ -27,12 +27,11 @@ public class Renderer {
     @RequestMapping(value = "/graph/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE) //TODO: Changer en fonction si on demande un jpg ou un png
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestBody String s,@RequestParam OutputGraph type) throws ParseException {
 
-        JSONObject graphe = getGraphFromDB(idGraphe);
+        JSONObject graphe = DBReader.getGraphFromDB(idGraphe);
         if (graphe != null){
-            JSONArray datasets = getAllDataForGraph(idGraphe);
+            JSONArray datasets = DBReader.getAllDataForGraph(idGraphe);
             Plot plot = new Plot();
-
-            GraphConfig graphConfig = getGraphConfigFromDB(idGraphe,s);
+            Graph graph = Graph.createGraph(graphe,plot);
             for (Object o : datasets) {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
@@ -40,9 +39,9 @@ public class Renderer {
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     addPoints(figure,pointsArray);
-                    initializeRenderer(figure,idGraphe);
-                    plot.addFigure(figure);
-                    graphConfig.applyConfigToGraph(plot);
+                    graph.initializeRenderer(figure);
+                    graph.getPlot().addFigure(figure);
+                    graph.getGraphConfig().applyConfigToGraph(plot);
                 }
             }
             switch(type){
@@ -161,7 +160,4 @@ public class Renderer {
         }
     }
 
-    public void addLegend(Plot plot,String legend){
-        plot.getSpace().getLegend().setText(legend);
-    }
 }
