@@ -7,16 +7,19 @@ cd ../
 cd ./Services
 for i in "${services_array[@]}"
 do
-    cd $i
-    rm .env
-    cp ../../.env ./.env
-    cd ../
+    rm ./$i/.env
+    cp ../.env ./$i/.env
 done
+cd ./render
+cp ./.env ./src/main/resources/.env
+mvn clean package
+cd ../
 cd ../
 
 cd PostgreSQL
 sh setup-postgres-config.sh
 cd ../influxdb
+
 docker build --tag influxdb .
 docker run --publish 8086:8086 --detach --name influx influxdb 
 sleep 10

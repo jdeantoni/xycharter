@@ -1,5 +1,6 @@
 package io.github.ter_xycharter.render;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,13 +16,16 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Objects;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class DBReader {
+    private static final Dotenv dotenv = Dotenv.configure()
+            .load();
 
     public static JSONObject getGraphFromDB(String id){
         try {
             System.out.println("Demande des caractéristiques du graphe "+id+" auprès de databaseReader");
-            URL url = new URL("http://database-reader:4030/graph/cara/"+id);
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graph/cara/"+id);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(
@@ -43,7 +47,7 @@ public class DBReader {
     public static JSONArray getAllDataForGraph(String idGraphe){
         try {
             System.out.println("Demande de toutes les data des différents dataset associé au graphe");
-            URL url = new URL("http://database-reader:4030/datareader/data/" + idGraphe);
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/datareader/data/" + idGraphe);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(

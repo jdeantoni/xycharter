@@ -28,6 +28,7 @@ writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("id").isString(),b
         await writeTimeSeries.writeTimeSeries(req.body.id,req.body.timestamp, req.body.value)
         return res.status(201).send()
     } catch (error) {
+        console.log(error)
         return res.status(500).send(error)
     }
 });
