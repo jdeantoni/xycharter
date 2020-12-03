@@ -2,6 +2,8 @@ package io.github.ter_xycharter.render;
 
 
 
+import com.google.gson.Gson;
+import io.github.ter_xycharter.render.config.GraphConfig;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,26 +26,31 @@ import java.util.Objects;
 public class Renderer {
     private Dotenv dotenv;
 
+
     @RequestMapping(value = "/graphs/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
         dotenv = Dotenv.configure()
             .directory("./.env")
             .load();
 
+
         JSONObject graphe = getGraphFromDB(idGraphe);
         //System.out.println(graphe);
         if (graphe != null){
-            JSONArray dataset = getAllDataForGraph(idGraphe);
+            JSONArray datasets = getAllDataForGraph(idGraphe);
             Plot plot = new Plot();
-            for (Object o : dataset) {
-                JSONObject data = (JSONObject) o;
+
+            GraphConfig graphConfig = getGraphConfigFromDB(idGraphe,s);
+            for (Object o : datasets) {
+                JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
-                JSONArray pointsArray = (JSONArray) jsonParser.parse((String)data.get("datajson"));
+                JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     addPoints(figure,pointsArray);
                     initializeRenderer(figure,idGraphe);
                     plot.addFigure(figure);
+                    graphConfig.applyConfigToGraph(plot);
                 }
             }
             switch(type){
@@ -85,6 +92,11 @@ public class Renderer {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public GraphConfig getGraphConfigFromDB(String idGraphe,String s){
+        Gson gson = new Gson();
+        return gson.fromJson(s,GraphConfig.class);
     }
 
     public JSONArray getAllDataForGraph(String idGraphe){
