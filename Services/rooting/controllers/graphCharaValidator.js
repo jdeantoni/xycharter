@@ -10,8 +10,7 @@ const graphCharaValidator = (req) => {
             Object.assign(charasAccepteds, application.constraints);
         }
 
-
-        for (const [key, value] of Object.entries(JSON.parse(req.body.characteristics))) {
+        for (const [key, value] of Object.entries(req.body)) {
             var find = false;
 
             for (var i = 0; i < Object.keys(charasAccepteds).length; i++){

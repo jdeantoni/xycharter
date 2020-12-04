@@ -16,9 +16,8 @@ const modifyCharas = async (graphId, characteristics) => {
         const responseJSON = (await pool.query('SELECT characteristics FROM graphs WHERE idGraph = $1', [graphId])).rows[0].characteristics;
 
         const response = JSON.parse(responseJSON);
-        const changement = JSON.parse(characteristics);
 
-        Object.assign(response, changement);
+        Object.assign(response, characteristics);
 
         await pool.query('UPDATE graphs SET characteristics = \'' + JSON.stringify(response) + '\' WHERE idGraph = $1', [graphId]);
 
