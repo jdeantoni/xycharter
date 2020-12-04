@@ -31,7 +31,7 @@
                     <b-nav-item-dropdown text="Menu" left>
                         <b-dropdown id="dropdown-dropright-1" dropright text="Lines" variant="dark">
                             <b-dropdown-item href="./createGraph.html">Create a graph</b-dropdown-item>
-                            <b-dropdown-item href="./modifyGraph.html">Modify a graph</b-dropdown-item>
+                            <b-dropdown-item href="./modifyGraph.html">View/Modify a graph</b-dropdown-item>
                         </b-dropdown>
                     </b-nav-item-dropdown>
             </b-navbar>
@@ -57,7 +57,6 @@
                             <b-form-checkbox-group v-on:change="show()"  id="checkbox-group-1" v-model="selectedGraphOptions"
                                 :options="options" name="grid-options"></b-form-checkbox-group>
                         </b-form-group>
-                        <div>Selected: <strong>{{ selectedGraphOptions }}</strong></div>
                     </b-col>
                     <b-col md="6">
                         <label for="title">
@@ -65,7 +64,6 @@
                         </label>
                         <b-form-input id="input-small" v-model="titleGraph" v-on:change="addTitle(titleGraph)" size="sm" placeholder="Enter a title">
                         </b-form-input>
-                        <div>Title entered: <strong>{{ titleGraph }}</strong></div>
                     </b-col>
                 </b-row>
                 <b-row>
@@ -75,7 +73,6 @@
                         </label>
                         <b-form-input id="input-small" v-model="legendX" v-on:change="addLegendX(legendX)" size="sm" placeholder="Enter legend">
                         </b-form-input>
-                        <div>Legend entered: <strong>{{ legendX }}</strong></div>
                     </b-col>
                     <b-col md="6">
                         <label for="axeY">
@@ -83,16 +80,46 @@
                         </label>
                         <b-form-input id="input-small" v-model="legendY" v-on:change="addLegendY(legendY)" size="sm" placeholder="Enter legend">
                         </b-form-input>
-                        <div>Legend entered: <strong>{{ legendY }}</strong></div>
                     </b-col>
                 </b-row>
                 <b-row>
                     <b-col md="6">
                         <label for="type-color">
-                            <h2>Color</h2>
+                            <h2>Background Color</h2>
                         </label>
-                        <b-form-input id="type-color" v-model="color" type="color"></b-form-input>
-                        <div>Color entered: <strong>{{ color }}</strong></div>
+                        <b-form-input id="type-color" v-model="color" v-on:change="changeColor(color)" type="color"></b-form-input>
+                        
+                    </b-col>
+                </b-row>
+                
+                <b-row>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>lowerBoundX</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="lowerBoundX" v-on:change="setLowerBoundX(lowerBoundX)" size="sm" placeholder="Enter lower bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>upperBoundX</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="upperBoundX" v-on:change="setUpperBoundX(upperBoundX)" size="sm" placeholder="Enter upper bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>lowerBoundY</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="lowerBoundY" v-on:change="setLowerBoundY(lowerBoundY)" size="sm" placeholder="Enter lower bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>upperBoundY</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="upperBoundY" v-on:change="setUpperBoundY(upperBoundY)" size="sm" placeholder="Enter upperBound">
+                        </b-form-input>
                     </b-col>
                 </b-row>
 
