@@ -5,7 +5,7 @@ const { body,param, validationResult } = require('express-validator');
 const { graphCharaValidator } = require('../controllers/graphCharaValidator.js');
 
 
-graphCharaWriterRouter.put('/graphsChara/:graphId', [param('graphId').isInt(), body('characteristics').isString()], async(req, res, next) => {
+graphCharaWriterRouter.put('/graphsChara/:graphId', [param('graphId').isInt()], async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {

@@ -3,7 +3,7 @@ const graphCharaWriterRouter = express.Router();
 const graphCharaWriterController = require('../controllers/graphCharaWriter');
 const { body, param, validationResult } = require('express-validator');
 
-graphCharaWriterRouter.put('/graphsChara/:graphId', [param('graphId').isInt(), body('characteristics').isString()], async(req, res, next) => {
+graphCharaWriterRouter.put('/graphsChara/:graphId', [param('graphId').isInt()], async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -11,7 +11,7 @@ graphCharaWriterRouter.put('/graphsChara/:graphId', [param('graphId').isInt(), b
    }
 
    try {
-      const graphId = await graphCharaWriterController.modifyCharas(req.params.graphId, req.body.characteristics);
+      const graphId = await graphCharaWriterController.modifyCharas(req.params.graphId, req.body);
    
       res.status(201).send(graphId);
    } catch (error) {
