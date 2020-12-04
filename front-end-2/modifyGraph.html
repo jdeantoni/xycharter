@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>My first BootstrapVue app</title>
+
+    <!-- Required Stylesheets -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="modifyGraph">
+        
+        <div>
+            <b-navbar type="dark" variant="dark">
+                <b-navbar-nav>
+                    <b-nav-item-dropdown text="Menu" left>
+                        <b-dropdown id="dropdown-dropright-1" dropright text="Lines" variant="dark">
+                            <b-dropdown-item href="./createGraph.html">Create a graph</b-dropdown-item>
+                            <b-dropdown-item href="./modifyGraph.html">Modify a graph</b-dropdown-item>
+                        </b-dropdown>
+                    </b-nav-item-dropdown>
+            </b-navbar>
+        </div>
+
+        <div class="input-group md-form form-sm form-1 pl-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text purple lighten-3" id="basic-text1"> </span>
+            </div>
+            <input class="form-control my-0 py-1" v-model="idSearched" placeholder="Please specify an id" v-on:change="searchGraph(idSearched)" type="text" placeholder="Search" aria-label="Search">
+        </div>
+
+        <b-row>
+            <b-col md="5">
+                <b-img style="width:auto" :src="image"  alt="Left image" >
+                </b-img>
+            </b-col>
+            <b-col md="8">
+                <b-row>
+                    <b-col md="6">
+                        <b-form-group label="">
+                            <h2>Grid</h2>
+                            <b-form-checkbox-group v-on:change="show()"  id="checkbox-group-1" v-model="selectedGraphOptions"
+                                :options="options" name="grid-options"></b-form-checkbox-group>
+                        </b-form-group>
+                        <div>Selected: <strong>{{ selectedGraphOptions }}</strong></div>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="title">
+                            <h2>Title</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="titleGraph" v-on:change="addTitle(titleGraph)" size="sm" placeholder="Enter a title">
+                        </b-form-input>
+                        <div>Title entered: <strong>{{ titleGraph }}</strong></div>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>Axe X</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="legendX" v-on:change="addLegendX(legendX)" size="sm" placeholder="Enter legend">
+                        </b-form-input>
+                        <div>Legend entered: <strong>{{ legendX }}</strong></div>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>Axe Y</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="legendY" v-on:change="addLegendY(legendY)" size="sm" placeholder="Enter legend">
+                        </b-form-input>
+                        <div>Legend entered: <strong>{{ legendY }}</strong></div>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="6">
+                        <label for="type-color">
+                            <h2>Color</h2>
+                        </label>
+                        <b-form-input id="type-color" v-model="color" type="color"></b-form-input>
+                        <div>Color entered: <strong>{{ color }}</strong></div>
+                    </b-col>
+                </b-row>
+
+            </b-col>
+        </b-row>
+
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+<script src="modifyGraph.js" ></script>
