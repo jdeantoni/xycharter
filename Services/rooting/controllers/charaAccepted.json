@@ -1,0 +1,25 @@
+[
+    {
+        "applicationName":"XYCharter",
+        "constraints":{
+            "showX":"boolean",
+            "showY":"boolean",
+            "showGrid":"boolean",
+            "xBounds":"other",
+            "yBounds":"other",
+            "xLegend":"string",
+            "yLegend":"string",
+            "graphLegend":"string",
+            "backgroundColor":"other",
+            "gridColor":"other"
+        }
+    },{
+        "applicationName":"Base",
+        "constraints":{
+            "s" : "string",
+            "n": "number",
+            "b" : "boolean",
+            "o" : "other"
+        }
+    }
+]
