@@ -1,9 +1,8 @@
+const { InfluxDB } = require('@influxdata/influxdb-client')
+const configInflux = require("../influxConfig.json")
+const { Point } = require('@influxdata/influxdb-client')
 
 try{
-    const { InfluxDB } = require('@influxdata/influxdb-client')
-    const configInflux = require("../influxConfig.json")
-    const { Point } = require('@influxdata/influxdb-client')
-
     var token; var org; var bucket; var url; var client;
 
     if(Object.keys(configInflux).length > 0){
