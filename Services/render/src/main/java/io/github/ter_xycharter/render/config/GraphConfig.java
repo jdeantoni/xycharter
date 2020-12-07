@@ -33,11 +33,13 @@ public class GraphConfig {
         //X axis
         if (showX!=null)space.getXDimension().getLowerBoundAxis().setVisible(showX);
         if (xBounds!=null)space.getXDimension().setBounds(xBounds.lowerBound-0.125,xBounds.upperBound);
+        else space.getXDimension().setAutoBounds(true);
         if (xLegend!=null)space.getXDimension().getLegend().setText(xLegend);
 
         //Y axis
         if (showY!=null)space.getYDimension().getLowerBoundAxis().setVisible(showY);
         if (yBounds!=null)space.getYDimension().setBounds(yBounds.lowerBound-0.125,yBounds.upperBound);
+        else space.getXDimension().setAutoBounds(true);
         if (yLegend!=null)space.getYDimension().getLegend().setText(yLegend);
 
         //Graph
