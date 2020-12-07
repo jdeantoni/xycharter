@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>My first BootstrapVue app</title>
+
+    <!-- Required Stylesheets -->
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="modifyGraph">
+        
+        <div>
+            <b-navbar type="dark" variant="dark">
+                <b-navbar-nav>
+                    <b-nav-item-dropdown text="Menu" left>
+                        <b-dropdown id="dropdown-dropright-1" dropright text="Lines" variant="dark">
+                            <b-dropdown-item href="./createGraph.html">Create a graph</b-dropdown-item>
+                            <b-dropdown-item href="./modifyGraph.html">View/Modify a graph</b-dropdown-item>
+                        </b-dropdown>
+                    </b-nav-item-dropdown>
+            </b-navbar>
+        </div>
+
+        <div class="input-group md-form form-sm form-1 pl-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text purple lighten-3" id="basic-text1"> </span>
+            </div>
+            <input class="form-control my-0 py-1" v-model="idSearched" placeholder="Please specify an id" v-on:change="searchGraph(idSearched)" type="text" placeholder="Search" aria-label="Search">
+        </div>
+
+        <b-row>
+            <b-col md="5">
+                <b-img style="width:auto" :src="image"  alt="Left image" >
+                </b-img>
+            </b-col>
+            <b-col md="8">
+                <b-row>
+                    <b-col md="6">
+                        <b-form-group label="">
+                            <h2>Grid</h2>
+                            <b-form-checkbox-group v-on:change="show()"  id="checkbox-group-1" v-model="selectedGraphOptions"
+                                :options="options" name="grid-options"></b-form-checkbox-group>
+                        </b-form-group>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="title">
+                            <h2>Title</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="titleGraph" v-on:change="addTitle(titleGraph)" size="sm" placeholder="Enter a title">
+                        </b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>Axe X</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="legendX" v-on:change="addLegendX(legendX)" size="sm" placeholder="Enter legend">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>Axe Y</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="legendY" v-on:change="addLegendY(legendY)" size="sm" placeholder="Enter legend">
+                        </b-form-input>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-col md="6">
+                        <label for="type-color">
+                            <h2>Background Color</h2>
+                        </label>
+                        <b-form-input id="type-color" v-model="color" v-on:change="changeColor(color)" type="color"></b-form-input>
+                        
+                    </b-col>
+                </b-row>
+                
+                <b-row>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>lowerBoundX</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="lowerBoundX" v-on:change="setLowerBoundX(lowerBoundX)" size="sm" placeholder="Enter lower bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeX">
+                            <h2>upperBoundX</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="upperBoundX" v-on:change="setUpperBoundX(upperBoundX)" size="sm" placeholder="Enter upper bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>lowerBoundY</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="lowerBoundY" v-on:change="setLowerBoundY(lowerBoundY)" size="sm" placeholder="Enter lower bound">
+                        </b-form-input>
+                    </b-col>
+                    <b-col md="6">
+                        <label for="axeY">
+                            <h2>upperBoundY</h2>
+                        </label>
+                        <b-form-input id="input-small" v-model="upperBoundY" v-on:change="setUpperBoundY(upperBoundY)" size="sm" placeholder="Enter upperBound">
+                        </b-form-input>
+                    </b-col>
+                </b-row>
+
+            </b-col>
+        </b-row>
+
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+<script src="modifyGraph.js" ></script>
