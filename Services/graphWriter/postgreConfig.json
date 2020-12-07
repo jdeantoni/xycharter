@@ -1,9 +1,0 @@
-{
-	
-    "user" : "testing",
-    "host" : "postgres",
-    "database" : "graphs",
-    "password": "bla123",
-    "port": 5432
-
-}
