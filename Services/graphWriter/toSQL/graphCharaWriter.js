@@ -19,9 +19,17 @@ const modifyCharas = async (graphId, characteristics) => {
 
         Object.assign(response, characteristics);
 
-        await pool.query('UPDATE graphs SET characteristics = \'' + JSON.stringify(response) + '\' WHERE idGraph = $1', [graphId]);
+        var chara = { ...response };
 
-        return response;
+        for (const [key, value] of Object.entries(response)) {
+            if (value == "default"){
+                delete chara[key];
+            }
+        }
+
+        await pool.query('UPDATE graphs SET characteristics = \'' + JSON.stringify(chara) + '\' WHERE idGraph = $1', [graphId]);
+
+        return chara;
     } catch (err) {
         throw SQLUnknowError(err);
     }
