@@ -1,7 +1,23 @@
 const graphWriterSQL = require('../toSQL/graphWriter')
 
-const graphCreation = async (graphType) => {
-    return await graphWriterSQL.createGraph(graphType);
+const graphCreation = async (graph) => {
+    const date = new Date(Date.now()).toISOString();
+
+    graphCara = { ...graph };
+    delete graphCara.name;
+    delete graphCara.description;
+    delete graphCara.type;
+
+    return await graphWriterSQL.createGraph(graph.type, graph.name, graph.description, date, graphCara);
+}
+
+const modifyGraph = async (id, graph) => {
+    graphCara = { ...graph };
+    delete graphCara.name;
+    delete graphCara.description;
+    delete graphCara.type;
+
+    await graphWriterSQL.modifyGraph(id, graph.type, graph.name, graph.description, graphCara);
 }
 
 const graphDelete = async (graphId) => {
@@ -10,5 +26,6 @@ const graphDelete = async (graphId) => {
 
 module.exports = {
     graphCreation,
+    modifyGraph,
     graphDelete
 }
