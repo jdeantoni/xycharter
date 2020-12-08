@@ -44,7 +44,7 @@ databaseReaderRouter.get('/datas/:id'
     , async(req, res, next) => {
         const reponse = await axios.get(process.env.DBREADER_ADDR + "/datas/" + req.params.id);
 
-        return res.status(200).send(reponse.data[0].datajson);
+        return res.status(200).send(reponse.data);
     });
 
 //Toute les data pour le graph id
