@@ -43,6 +43,10 @@ const graphCharaValidator = (req) => {
 }
 
 const validate = (arg, typeRequired) => {
+    if (arg == "default"){
+        return true;
+    }
+
     switch (typeRequired){
         case "other":
             return true;

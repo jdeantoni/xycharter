@@ -25,7 +25,7 @@ public class DBReader {
     public static JSONObject getGraphFromDB(String id){
         try {
             System.out.println("Demande des caractéristiques du graphe "+id+" auprès de databaseReader");
-            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graph/cara/"+id);
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graphs/"+id);
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(

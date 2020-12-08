@@ -27,14 +27,14 @@ new Vue({
 
       },
       addLegendX(legendX) {
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"xLegend\": \" " + legendX + "\"}" }).then(response => {
+        axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"xLegend\": \" " + legendX + "\"}" }).then(response => {
           console.log(response.data);
 
         })
 
       },
       addLegendY(legendY) {
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"yLegend\": \" " + legendY + "\"}" }).then(response => {
+        axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"yLegend\": \" " + legendY + "\"}" }).then(response => {
           console.log(response.data);
 
         })
@@ -43,20 +43,20 @@ new Vue({
       show() {
         this.selectedGraphOptions.forEach(opt => {
           if (opt === "showX") {
-            axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
+            axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
               console.log(response.data);
 
             });
           }
           if (opt === "showY") {
-            axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
+            axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
               console.log(response.data);
 
             });
           }
 
           if (opt === "showGrid") {
-            axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
+            axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"" + opt + "\": \"" + true + "\"}" }).then(response => {
               console.log(response.data);
 
             });
@@ -68,32 +68,32 @@ new Vue({
       },
       addTitle(title) {
 
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched, { "characteristics": "{\"graphLegend\": \" " + title + "\"}" })
+        axios.put("http://localhost:4010/graphs/" + this.idSearched, { "characteristics": "{\"graphLegend\": \" " + title + "\"}" })
 
       },
       setLowerBoundX(lowerBandX) {
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched,
+        axios.put("http://localhost:4010/graphs/" + this.idSearched,
           { "characteristics": "{\"xBounds\": {\"lowerBound\":\"" + lowerBandX + "\",\"upperBound\":\"" + this.upperBoundX + "\"}}" })
           
 
       },
       setUpperBoundX(upperBoundX) {
 
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched,
+        axios.put("http://localhost:4010/graphs/" + this.idSearched,
           { "characteristics": "{\"xBounds\": {\"lowerBound\":\"" + this.lowerBoundX + "\",\"upperBound\":\"" + upperBoundX + "\"}}" })
           
 
       },
       setLowerBoundY(lowerBandY) {
 
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched,
+        axios.put("http://localhost:4010/graphs/" + this.idSearched,
           { "characteristics": "{\"yBounds\": {\"lowerBound\":\"" + lowerBandY + "\",\"upperBound\":\"" + this.upperBoundY + "\"}}" })
           
 
       },
       setUpperBoundY(upperBoundY) {
 
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched,
+        axios.put("http://localhost:4010/graphs/" + this.idSearched,
           { "characteristics": "{\"yBounds\": {\"lowerBound\":\"" + this.lowerBoundY + "\",\"upperBound\":\"" + upperBoundY + "\"}}" })
           
 
@@ -122,7 +122,7 @@ new Vue({
         console.log(rgb)
 
         let chara = { "characteristics": "{\"backgroundColor\": {\"r\":\"" + rgb[0] + "\",\"g\":\"" + rgb[1] + "\",\"b\":\"" + rgb[2] + "\",\"a\":\"" + rgb[3] + "\"}}" }
-        axios.put("http://localhost:4010/graphsChara/" + this.idSearched, chara);
+        axios.put("http://localhost:4010/graphs/" + this.idSearched, chara);
 
       },
       options: [
