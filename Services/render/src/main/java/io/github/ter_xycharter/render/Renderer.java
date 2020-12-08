@@ -1,26 +1,16 @@
 package io.github.ter_xycharter.render;
 
 
-
-import com.google.gson.Gson;
-import io.github.ter_xycharter.render.config.GraphConfig;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import xycharter.*;
-import xycharter.render.ConnectedLineFigureRenderer;
-import xycharter.render.HistogramPointRenderer;
-
-
-
-import java.awt.*;
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Objects;
+import xycharter.Figure;
+import xycharter.JPEGPlotter;
+import xycharter.PNGPlotter;
+import xycharter.Plot;
 
 @RestController
 public class Renderer {
