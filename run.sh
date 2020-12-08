@@ -44,8 +44,8 @@ do
 done
 
 echo "-----------------------"
-echo render
-cd ./render
+echo XYCharter render
+cd ./XYCharterRender
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.9.11-0.fc32.x86_64
 mvn clean package
 mvn spring-boot:run

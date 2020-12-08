@@ -1,7 +1,11 @@
-FROM adoptopenjdk/openjdk11-openj9:alpine-slim
-RUN apk add --update ttf-dejavu && rm -rf /var/cache/apk/*
-COPY target/render.jar /usr/spring/render.jar
+FROM keymetrics/pm2:latest-alpine
 
-EXPOSE 4040
+COPY . ./
+COPY package.json .
+COPY pm2.json .
 
-CMD ["java","-Xscmx50M","-Xmx50m","-Xshareclasses","-Xtune:virtualized","-Xquickstart","-jar", "/usr/spring/render.jar"]
+RUN npm install --production
+
+COPY . ./
+
+CMD [ "pm2-runtime", "start", "pm2.json"]

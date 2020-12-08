@@ -4,7 +4,7 @@ const renderRouter = express.Router();
 const { param, query, validationResult } = require('express-validator');
 
 renderRouter.get('/graphs/:id', [query('type').matches(
-   "PNG|JPG|JSON"
+   "PNG|JPG"
 ), param('id').isInt()]
    , async(req, res, next) => {
 
@@ -13,16 +13,11 @@ renderRouter.get('/graphs/:id', [query('type').matches(
       return res.status(400).json({ errors: errors.array() });
    }
 
-   if (req.query.type == "JSON"){
-      const reponse = await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + req.params.id);
+   const reponse = await axios.get(process.env.XYCHARTERRENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
 
-      return res.status(200).send(reponse.data[0].datajson);
-   } else {
-      const reponse = await axios.get(process.env.XYCHARTERRENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
-
-      res.setHeader("Content-Type", "image/jpg");
-      res.status(201).send(reponse);
-   }
+   res.setHeader("Content-Type", "image/jpg");
+   res.status(201).send(reponse);
+   
    next();
 });
 

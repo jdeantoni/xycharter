@@ -32,9 +32,9 @@ services:
       - postgres
 
 
-  render:
-    build: ./Services/render
-    container_name: render
+  XYCharter-render:
+    build: ./Services/XYCharterRender
+    container_name: XYCharter-render
 
     ports:
       - "4040:4040"
