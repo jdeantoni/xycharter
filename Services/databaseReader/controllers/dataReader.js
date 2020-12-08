@@ -27,9 +27,9 @@ async function getAllDatasets() {
 }
 
 async function getDataset(idDataset) {
-    const resp =  await pool.query('SELECT datajson FROM datasets WHERE idDataset = $1',[idDataset])
+    const resp =  await pool.query('SELECT * FROM datasets WHERE idDataset = $1',[idDataset])
     console.log("Renvois les data du dataset "+ idDataset)
-    return resp.rows
+    return resp.rows[0]
 }
 
 async function getDataForGraph(idGraph) {
