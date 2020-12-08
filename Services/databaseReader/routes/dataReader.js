@@ -3,7 +3,7 @@ const dataReaderRouter = express.Router();
 const dataReaderController = require('../controllers/dataReader');
 
 // Recupere le type du graph etc
-dataReaderRouter.get('/graph/cara/:id'
+dataReaderRouter.get('/graphs/:id'
    , async(req, res, next) => {
 
       return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));

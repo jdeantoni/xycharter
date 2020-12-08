@@ -17,6 +17,14 @@ databaseReaderRouter.get('/graphs'
         return res.status(200).send(tab);
 
     });
+//Toutes les caractéristique d'un grahe
+databaseReaderRouter.get('/graphs/:id'
+, async(req, res, next) => {
+    const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id);
+
+    return res.status(200).send(reponse.data);
+
+});
 //Tout ids des jeux de données
 databaseReaderRouter.get('/datas'
     , async(req, res, next) => {

@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 async function getCaracGraph(idGraph) {
-    const resp =  await pool.query('SELECT idgraph,graphtype.graphtype,characteristics from graphs,graphtype where graphs.idgraphtype = graphtype.idgraphtype AND idgraph = $1', [idGraph])
+    const resp =  await pool.query('SELECT idgraph,name, description, creationDate, graphtype.graphtype, characteristics from graphs,graphtype where graphs.idgraphtype = graphtype.idgraphtype AND idgraph = $1', [idGraph])
     console.log("Renvois les caractéristique du graphe "+idGraph)
     return resp.rows
 }
