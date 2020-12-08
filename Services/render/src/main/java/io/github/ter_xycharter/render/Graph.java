@@ -5,6 +5,8 @@ import io.github.ter_xycharter.render.config.GraphConfig;
 import org.json.simple.JSONObject;
 import xycharter.Figure;
 import xycharter.Plot;
+import xycharter.render.BezierCurveFigureRenderer;
+import xycharter.render.CirclePointRenderer;
 import xycharter.render.ConnectedLineFigureRenderer;
 import xycharter.render.HistogramPointRenderer;
 
@@ -40,6 +42,14 @@ public class Graph {
                 break;
             case CONNECTEDLINE:
                 figure.rendererList.add(new ConnectedLineFigureRenderer());
+                break;
+            case CIRCLEPOINT:
+                figure.rendererList.add(new ConnectedLineFigureRenderer());
+                figure.rendererList.add(new CirclePointRenderer(i -> 5));
+                break;
+            case BEZIERCURVE:
+                figure.rendererList.add(new ConnectedLineFigureRenderer());
+                figure.rendererList.add(new BezierCurveFigureRenderer());
                 break;
         }
     }
