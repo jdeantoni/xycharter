@@ -33,3 +33,5 @@ CREATE TABLE LinkDataSetGraph (
 
 INSERT INTO graphtype (graphtype) VALUES ('histogramme');
 INSERT INTO graphtype (graphtype) VALUES ('connectedLine');
+INSERT INTO graphtype (graphtype) VALUES ('circlePoint');
+INSERT INTO graphtype (graphtype) VALUES ('bezierCurve');
