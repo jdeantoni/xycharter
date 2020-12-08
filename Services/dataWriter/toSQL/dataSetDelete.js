@@ -14,7 +14,7 @@ const pool = new Pool({
 const deleteDataSet = async (dataSetId) => {
     var result;
     try {
-        result = await pool.query('DELETE FROM DataSets WHERE id = ($1)', [dataSetId]);
+        result = await pool.query('DELETE FROM DataSets WHERE idDataset = ($1)', [dataSetId]);
     } catch (err) {
         throw SQLUnknowError(err);
     }
