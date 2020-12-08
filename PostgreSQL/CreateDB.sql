@@ -5,8 +5,11 @@ CREATE TABLE GraphType(
 
 CREATE TABLE Graphs (
                         idGraph SERIAL PRIMARY KEY,
+                        name varchar(20) NOT NULL,
+                        description text NOT NULL,
+                        creationDate timestamp,
                         idGraphType int NOT NULL,
-		                characteristics text NOT NULL,
+                        characteristics text NOT NULL,
 
                         CONSTRAINT fk_graphType
                             FOREIGN KEY (idGraphType) REFERENCES GraphType(idGraphType)
@@ -14,8 +17,12 @@ CREATE TABLE Graphs (
 
 CREATE TABLE DataSets (
     idDataset SERIAL PRIMARY KEY,
+    name varchar(20) NOT NULL,
+    description text NOT NULL,
+    creationDate timestamp,
     timeseries BOOLEAN,
     DataJSON TEXT
+
 );
 
 CREATE TABLE LinkDataSetGraph (
