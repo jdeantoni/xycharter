@@ -1,9 +1,7 @@
 const express = require('express');
 const writeTimeSeriesDataRouter = express.Router();
 const writeTimeSeries = require('../controllers/writeTimeSeries');
-
 const writeDataSet = require('../controllers/writeDataSet');
-
 const { body, validationResult } = require('express-validator');
 
 
@@ -17,7 +15,7 @@ writeTimeSeriesDataRouter.get('/datawriter/timeseries', async (req, res, next) =
     }
 });
 
-writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("id").isString(),body("timestamp").isInt(),body("value").isInt()], async (req, res, next) => {
+writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("name").isString(),body("id").isString(),body("timestamp").isInt(),body("value").isInt()], async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -25,7 +23,7 @@ writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("id").isString(),b
     }
     
     try {
-        await writeTimeSeries.writeTimeSeries(req.body.id,req.body.timestamp, req.body.value)
+        await writeTimeSeries.writeTimeSeries(req.body.name,req.body.id,req.body.timestamp, req.body.value)
         return res.status(201).send()
     } catch (error) {
         console.log(error)

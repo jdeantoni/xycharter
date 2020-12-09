@@ -52,11 +52,11 @@ const modifyDataSet = async (id, name, description, points) => {
 
 const writeDataSetIdTimeSeries = async (isTimeSeries) => {
     try {
-        const result = await pool.query('INSERT INTO datasets (timeseries) VALUES ($1) RETURNING *',[isTimeSeries]);
+        const result = await pool.query('INSERT INTO datasets (timeseries,name) VALUES ($1,$2) RETURNING *',[isTimeSeries,""]);
 
         return result.rows[0].iddataset.toString();
     } catch (err) {
-        console.log("oejfofejofeoj"+err)
+        console.log(err)
         throw SQLUnknowError(err);
     }
 }
