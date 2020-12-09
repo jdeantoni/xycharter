@@ -13,7 +13,9 @@ const renderFromQC = async (id, type) => {
         datas.push("\'" + data.value + "\'");
     }
 
-    var qcRequest = "https://quickchart.io/chart?c={type:\'" + graphCharas[0].graphtype + "\',data:{labels:[" + labels + "],datasets:[{data:[" + datas + "]}]},options:{plugins:{doughnutlabel:{}}}}";
+    var qcRequest = "https://quickchart.io/chart?c={type:\'" + graphCharas[0].graphtype + "\',data:{labels:[" + labels + "],datasets:[{data:[" + datas + "]}]},options:{plugins:{doughnutlabel:" + graphCharas[0].characteristics + "}}}";
+
+    console.log(qcRequest);
 
     const reponse = await axios.get(qcRequest);
 
