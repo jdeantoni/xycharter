@@ -3,7 +3,9 @@ package io.github.ter_xycharter.render;
 public enum TypeGraph {
 
     HISTOGRAM("histogramme"),
-    CONNECTEDLINE("connectedLine");
+    CONNECTEDLINE("connectedLine"),
+    CIRCLEPOINT("circlePoint"),
+    BEZIERCURVE("bezierCurve");
 
    final private String type;
 

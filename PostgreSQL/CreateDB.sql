@@ -39,6 +39,13 @@ CREATE TABLE LinkDataSetGraph (
           REFERENCES Graphs(idGraph)
 );
 
+<<<<<<< HEAD
 INSERT INTO graphtype (graphtype,serviceName) VALUES ('histogramme', 'XYCharter');
 INSERT INTO graphtype (graphtype,serviceName) VALUES ('connectedLine', 'XYCharter');
 INSERT INTO graphtype (graphtype,serviceName) VALUES ('doughnut', 'QuickChart');
+=======
+INSERT INTO graphtype (graphtype) VALUES ('histogramme');
+INSERT INTO graphtype (graphtype) VALUES ('connectedLine');
+INSERT INTO graphtype (graphtype) VALUES ('circlePoint');
+INSERT INTO graphtype (graphtype) VALUES ('bezierCurve');
+>>>>>>> dev
