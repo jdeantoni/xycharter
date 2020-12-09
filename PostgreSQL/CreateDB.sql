@@ -41,3 +41,4 @@ CREATE TABLE LinkDataSetGraph (
 
 INSERT INTO graphtype (graphtype,serviceName) VALUES ('histogramme', 'XYCharter');
 INSERT INTO graphtype (graphtype,serviceName) VALUES ('connectedLine', 'XYCharter');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('doughnut', 'QuickChart');

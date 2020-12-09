@@ -13,10 +13,26 @@ renderRouter.get('/graphs/:id', [query('type').matches(
       return res.status(400).json({ errors: errors.array() });
    }
 
-   const reponse = await axios.get(process.env.XYCHARTERRENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
+
+   const renderServiceName = await (await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/renderServiceName")).data;
+
+   var address;
+
+   switch (renderServiceName){
+      case "XYCharter":
+         address = process.env.XYCHARTERRENDER_ADDR;
+         break;
+      case "QuickChart":
+         address = process.env.QUICKCHARTRENDER_ADDR;
+         break;
+      default:
+         res.status(500).send("Render inconnu")
+   }
+
+   const reponse = await axios.get(address + "/graphs/" + req.params.id + "?type=" + req.query.type)
 
    res.setHeader("Content-Type", "image/jpg");
-   res.status(201).send(reponse);
+   res.status(201).send(reponse.data);
    
    next();
 });
