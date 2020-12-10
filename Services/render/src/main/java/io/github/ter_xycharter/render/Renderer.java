@@ -28,6 +28,7 @@ public class Renderer {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
                 JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
+                System.out.println(pointsArray);
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     addPoints(figure,pointsArray);

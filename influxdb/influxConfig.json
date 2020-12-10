@@ -1,1 +1,278 @@
-404 page not found
+{
+	"user": {
+		"links": {
+			"self": "/api/v2/users/06bde9b237b74000"
+		},
+		"id": "06bde9b237b74000",
+		"name": "admin",
+		"status": "active"
+	},
+	"bucket": {
+		"id": "8116f5316acb7a15",
+		"orgID": "aa146c02d439cb4b",
+		"type": "user",
+		"name": "datagraph",
+		"retentionRules": [],
+		"createdAt": "2020-12-09T13:20:52.5611229Z",
+		"updatedAt": "2020-12-09T13:20:52.5611231Z",
+		"links": {
+			"labels": "/api/v2/buckets/8116f5316acb7a15/labels",
+			"members": "/api/v2/buckets/8116f5316acb7a15/members",
+			"org": "/api/v2/orgs/aa146c02d439cb4b",
+			"owners": "/api/v2/buckets/8116f5316acb7a15/owners",
+			"self": "/api/v2/buckets/8116f5316acb7a15",
+			"write": "/api/v2/write?org=aa146c02d439cb4b\u0026bucket=8116f5316acb7a15"
+		},
+		"labels": []
+	},
+	"org": {
+		"links": {
+			"buckets": "/api/v2/buckets?org=data-org",
+			"dashboards": "/api/v2/dashboards?org=data-org",
+			"labels": "/api/v2/orgs/aa146c02d439cb4b/labels",
+			"logs": "/api/v2/orgs/aa146c02d439cb4b/logs",
+			"members": "/api/v2/orgs/aa146c02d439cb4b/members",
+			"owners": "/api/v2/orgs/aa146c02d439cb4b/owners",
+			"secrets": "/api/v2/orgs/aa146c02d439cb4b/secrets",
+			"self": "/api/v2/orgs/aa146c02d439cb4b",
+			"tasks": "/api/v2/tasks?org=data-org"
+		},
+		"id": "aa146c02d439cb4b",
+		"name": "data-org",
+		"description": "",
+		"createdAt": "2020-12-09T13:20:52.5306485Z",
+		"updatedAt": "2020-12-09T13:20:52.5306489Z"
+	},
+	"auth": {
+		"id": "06bde9b256b74000",
+		"token": "Lseopy1w6MSwNXjFWK0WqzazTM-Wle2VmZDGYvvNaRlzIjQpcaPv_Im4Jr70e5FZYkk654nlrdbh9wJezf3COg==",
+		"status": "active",
+		"description": "admin's Token",
+		"orgID": "aa146c02d439cb4b",
+		"userID": "06bde9b237b74000",
+		"permissions": [
+			{
+				"action": "read",
+				"resource": {
+					"type": "authorizations"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "authorizations"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "buckets"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "buckets"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "dashboards"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "dashboards"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "orgs"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "orgs"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "sources"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "sources"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "tasks"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "tasks"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "telegrafs"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "telegrafs"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "users"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "users"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "variables"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "variables"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "scrapers"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "scrapers"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "secrets"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "secrets"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "labels"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "labels"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "views"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "views"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "documents"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "documents"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "notificationRules"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "notificationRules"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "notificationEndpoints"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "notificationEndpoints"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "checks"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "checks"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "dbrp"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "dbrp"
+				}
+			}
+		],
+		"createdAt": "2020-12-09T13:20:52.570525Z",
+		"updatedAt": "2020-12-09T13:20:52.570525Z",
+		"links": {
+			"self": "/api/v2/authorizations/06bde9b256b74000",
+			"user": "/api/v2/users/06bde9b237b74000"
+		}
+	}
+}
