@@ -1,5 +1,6 @@
 const { InfluxDB } = require('@influxdata/influxdb-client')
 const { Point } = require('@influxdata/influxdb-client')
+const dataSetWriterSQL=  require('../toSQL/dataSetWriter')
 var configInflux;
 
 try{
@@ -21,8 +22,8 @@ try{
 }
 
 
-const writeTimeSeries = async (id,timestamp,value) => {
-    
+const writeTimeSeries = async (name,id,timestamp,value) => {
+    dataSetWriterSQL.modifyDataSet(id,name)
     const writeApi = client.getWriteApi(org, bucket)
     writeApi.useDefaultTags({ id: id })
     const point = new Point('point')
