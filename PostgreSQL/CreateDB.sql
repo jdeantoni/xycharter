@@ -1,6 +1,7 @@
 CREATE TABLE GraphType(
                           idGraphType  SERIAL PRIMARY KEY,
-                          graphType  VARCHAR(20)
+                          graphType  VARCHAR(20),
+                          serviceName VARCHAR(40)
 );
 
 CREATE TABLE Graphs (
@@ -38,7 +39,8 @@ CREATE TABLE LinkDataSetGraph (
           REFERENCES Graphs(idGraph)
 );
 
-INSERT INTO graphtype (graphtype) VALUES ('histogramme');
-INSERT INTO graphtype (graphtype) VALUES ('connectedLine');
-INSERT INTO graphtype (graphtype) VALUES ('circlePoint');
-INSERT INTO graphtype (graphtype) VALUES ('bezierCurve');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('histogramme', 'XYCharter');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('connectedLine', 'XYCharter');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('circlePoint', 'XYCharter');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('bezierCurve', 'XYCharter');
+INSERT INTO graphtype (graphtype,serviceName) VALUES ('doughnut', 'QuickChart');

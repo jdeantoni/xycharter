@@ -20,5 +20,10 @@
             "description": "string",
             "type" : "string"
         }
+    },{
+        "applicationName":"QuickChart",
+        "constraints":{
+            "labels" : "other"
+        }
     }
 ]

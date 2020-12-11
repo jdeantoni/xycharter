@@ -15,6 +15,11 @@ async function getCaracGraph(idGraph) {
     console.log("Renvois les caractéristique du graphe "+idGraph)
     return resp.rows
 }
+async function getRenderServiceNameGraph(idGraph) {
+    const resp =  await pool.query('SELECT serviceName from graphs,graphtype where graphs.idgraphtype = graphtype.idgraphtype AND idgraph = $1', [idGraph])
+    console.log("Renvois le nom du renderService utilise pour ce graphe "+idGraph)
+    return resp.rows[0].servicename;
+}
 async function getAllGraphs() {
     const resp =  await pool.query('SELECT idGraph FROM graphs')
     console.log("Renvois tout les id des graphes")
@@ -103,12 +108,12 @@ async function getDataForGraph(idGraph) {
         //return datasets
         return "cool"
 
+    } else {
+        const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
+        console.log("Renvois toute les data associées au graph "+idGraph)
+        console.log(resp.rows)
+        return resp.rows
     }
-
-    const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
-    console.log("Renvois toute les data associées au graph "+idGraph)
-    console.log(resp.rows)
-    return resp.rows
 }
 
 
@@ -134,6 +139,7 @@ async function getDatasetIdForGraph(idGraph){
 
 module.exports = {
     getCaracGraph,
+    getRenderServiceNameGraph,
     getAllDatasets,
     getAllGraphs,
     getDataForGraph,
