@@ -5,7 +5,7 @@ const { body, param, validationResult } = require('express-validator');
 
 //Création d'un graph
 graphWriterRouter.post('/graphs', [body('type').matches(
-   "histogramme|connectedLine|circlePoint|bezierCurve"
+   "histogramme|connectedLine|doughnut|circlePoint|bezierCurve"
 )], async(req, res, next) => {
 
    const errors = validationResult(req);
@@ -34,7 +34,7 @@ graphWriterRouter.put('/graphs/:id', [param('id').isInt()], async (req, res, nex
 
    try {
       await graphWriterController.modifyGraph(req.params.id, req.body);
-   
+
       res.status(201).send("MODIFY");
    } catch (error) {
       res.status(500).send(error.message);
