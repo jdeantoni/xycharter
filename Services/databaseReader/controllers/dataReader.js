@@ -55,7 +55,7 @@ async function getDataForGraph(idGraph) {
                 };
                 dataTimeSeries.push(data)
             }
-            datasets.push({datajson:JSON.stringify(dataTimeSeries)})
+            datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
         }
 
 
@@ -86,7 +86,7 @@ async function isGraphTimeSeries(idGraph) {
 }
 
 async function getDatasetIdForGraph(idGraph){
-    const resp = await pool.query('SELECT datasets.iddataset FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
+    const resp = await pool.query('SELECT datasets.iddataset,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
     return resp.rows;
 
 }

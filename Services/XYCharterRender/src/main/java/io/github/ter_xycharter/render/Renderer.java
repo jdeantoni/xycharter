@@ -16,7 +16,6 @@ import xycharter.Plot;
 public class Renderer {
 
 
-
     @RequestMapping(value = "/graphs/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
         JSONObject graphe = DBReader.getGraphFromDB(idGraphe);
@@ -28,8 +27,10 @@ public class Renderer {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
                 JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
+                String nameDataSet = (String) dataset.get("name");
                 if (pointsArray!=null){
                     Figure figure = new Figure();
+                    figure.name= nameDataSet.toString();
                     addPoints(figure,pointsArray);
                     graph.initializeRenderer(figure);
                     graph.getPlot().addFigure(figure);

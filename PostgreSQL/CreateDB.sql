@@ -7,7 +7,7 @@ CREATE TABLE GraphType(
 CREATE TABLE Graphs (
                         idGraph SERIAL PRIMARY KEY,
                         name varchar(20) NOT NULL,
-                        description text NOT NULL,
+                        description text,
                         creationDate timestamp,
                         idGraphType int NOT NULL,
                         characteristics text NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Graphs (
 CREATE TABLE DataSets (
     idDataset SERIAL PRIMARY KEY,
     name varchar(20) NOT NULL,
-    description text NOT NULL,
+    description text,
     creationDate timestamp,
     timeseries BOOLEAN,
     DataJSON TEXT
