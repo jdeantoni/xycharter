@@ -5,7 +5,7 @@ const { body,param, validationResult } = require('express-validator');
 const { graphCharaValidator } = require('../controllers/graphCharaValidator.js');
 
 graphWriterRouter.post('/graphs', [body('type').matches(
-   "histogramme|connectedLine|doughnut"
+   "histogramme|connectedLine|circlePoint|bezierCurve|doughnut"
 )]
    , async(req, res, next) => {
    const errors = validationResult(req);
