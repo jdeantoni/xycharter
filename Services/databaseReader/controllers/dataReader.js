@@ -1,5 +1,5 @@
 const postgresConfig = require('../postgreConfig.json')
-const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReader');
+const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReaderCP');
 const { Pool } = require('pg')
 const pool = new Pool({
     user: postgresConfig.user,
@@ -32,30 +32,76 @@ async function getDataset(idDataset) {
     return resp.rows[0]
 }
 
+function minMax(datasetsSet){
+    var min = undefined, max = undefined
+    for (var dataSets of datasetsSet){
+        for (var datas of dataSets){
+            if ((typeof datas.value) == "number"){
+                if (min == undefined || datas.value < min){
+                    min = datas.value;
+                }
+                if (max == undefined || datas.value > max){
+                    max = datas.value;
+                }
+            }
+        }
+    }
+
+    if (min == undefined){
+        min = 0;
+    }
+    if (max == undefined){
+        max = 1;
+    }
+    return [min, max]
+}
+
 async function getDataForGraph(idGraph) {
     
 
 
-    if(await isGraphTimeSeries(idGraph)){
-        const resp = await getDatasetIdForGraph(idGraph)
+    //if(await isGraphTimeSeries(idGraph)){
+    if (true){
+        //const resp = await getDatasetIdForGraph(idGraph)
+        const resp = [{iddataset : 0, name : "pasbool"},{iddataset : 0, name : "bool"}]
+
+        let datasetsSet = []
+        for(let i =0;i<resp.length;i++){
+            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset,i+2)
+            datasetsSet.push(datas)
+        }
+
+        const [min, max] = minMax(datasetsSet);
+
         let datasets = []
         for(let i =0;i<resp.length;i++){
             let dataTimeSeries =[]
-            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
+            const datas = datasetsSet[i]
             let initialTime = datas.length === 0 ? 0 : Date.parse(datas[0].time)/1000
             for (let j = 0; j < datas.length; j++) {
-                const data = {
-                    x : Date.parse(datas[j].time)/1000 - initialTime,
-                    y : datas[j].value
-                };
+                var data;
+                if ((typeof datas[j].value) == "number"){
+                    data = {
+                        x : Date.parse(datas[j].time)/1000 - initialTime,
+                        y : datas[j].value
+                    };
+                } else {
+                    data = {
+                        x : Date.parse(datas[j].time)/1000 - initialTime,
+                        y : ((datas[j].value == false) ? min : max)
+                    };
+                }
+
                 dataTimeSeries.push(data)
             }
+            console.log({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
             datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
         }
 
 
-        return datasets
-        
+
+        //return datasets
+        return "cool"
 
     }
 
