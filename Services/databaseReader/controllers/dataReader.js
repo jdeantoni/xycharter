@@ -21,12 +21,12 @@ async function getRenderServiceNameGraph(idGraph) {
     return resp.rows[0].servicename;
 }
 async function getAllGraphs() {
-    const resp =  await pool.query('SELECT idGraph FROM graphs')
+    const resp =  await pool.query('SELECT * FROM graphs')
     console.log("Renvois tout les id des graphes")
     return resp.rows
 }
 async function getAllDatasets() {
-    const resp =  await pool.query('SELECT idDataset FROM datasets')
+    const resp =  await pool.query('SELECT * FROM datasets')
     console.log("Renvois tout les id des datasets")
     return resp.rows
 }
@@ -39,8 +39,6 @@ async function getDataset(idDataset) {
 
 async function getDataForGraph(idGraph) {
     
-
-
     if(await isGraphTimeSeries(idGraph)){
         const resp = await getDatasetIdForGraph(idGraph)
         let datasets = []
@@ -77,6 +75,11 @@ async function getTypeOfGraph(idGraph){
     return resp.rows
 }
 
+async function getAllTypeOfGraph(){
+    const resp =  await pool.query('select * from graphtype')
+    return resp.rows
+}
+
 async function isGraphTimeSeries(idGraph) {
     const resp =  await pool.query('SELECT timeseries FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
     
@@ -98,5 +101,6 @@ module.exports = {
     getAllGraphs,
     getDataForGraph,
     getDataset,
-    getTypeOfGraph
+    getTypeOfGraph,
+    getAllTypeOfGraph
 }

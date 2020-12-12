@@ -6,7 +6,7 @@ const { body, param, validationResult } = require('express-validator');
 //Création d'un graph
 graphWriterRouter.post('/graphs', [body('type').matches(
    "histogramme|connectedLine|doughnut|circlePoint|bezierCurve"
-)], async(req, res, next) => {
+),body("name").isString()], async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {

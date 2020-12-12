@@ -4,12 +4,12 @@ const dataReaderController = require('../controllers/dataReader');
 
 // Recupere le type du graph etc
 dataReaderRouter.get('/graphs/:id'
-   , async(req, res, next) => {
+    , async (req, res, next) => {
 
-      return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
+        return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
 
    });
-   // Recupere le type du graph etc
+// Recupere le type du graph etc
 dataReaderRouter.get('/graphs/:id/renderServiceName'
 , async(req, res, next) => {
 
@@ -18,14 +18,14 @@ dataReaderRouter.get('/graphs/:id/renderServiceName'
 });
 //Tout les ids des graph
 dataReaderRouter.get('/graphs'
-    , async(req, res, next) => {
+    , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getAllGraphs());
 
     });
 //Tout ids des jeux de données
 dataReaderRouter.get('/datas'
-    , async(req, res, next) => {
+    , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getAllDatasets());
 
@@ -33,7 +33,7 @@ dataReaderRouter.get('/datas'
 
 //Jeu de donnée id
 dataReaderRouter.get('/datas/:id'
-    , async(req, res, next) => {
+    , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getDataset(req.params.id));
 
@@ -41,16 +41,26 @@ dataReaderRouter.get('/datas/:id'
 
 //Toute les data pour le graph id
 dataReaderRouter.get('/datareader/data/:id'
-    , async(req, res, next) => {
+    , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
 
     });
-//Toute les data pour le graph id
+
+//Toute les data pour le type graph id
 dataReaderRouter.get('/graph/type/:id'
-    , async(req, res, next) => {
+    , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getTypeOfGraph(req.params.id));
+
+    });
+
+
+//Toute les types de graphes
+dataReaderRouter.get('/graph/types'
+    , async (req, res, next) => {
+
+        return res.status(200).send(await dataReaderController.getAllTypeOfGraph());
 
     });
 

@@ -69,7 +69,7 @@ dataWriterRouter.get('/datas/timeseries', async (req, res, next) => {
 
 
 
-dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString(),body("timestamp").isInt(),body("data").isInt()], async (req, res, next) => {
+dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString()], async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
