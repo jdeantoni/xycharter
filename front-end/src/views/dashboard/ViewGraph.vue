@@ -184,9 +184,9 @@ export default {
         axios
           .get("http://localhost:4000/graphs/" + idSearched + "/render?type=JPG")
           .then((response) => {
-            this.image = response.data;
+            console.log(response.data.data)
+            this.image = response.data.data;
           });
-        //this.image = "http://localhost:4040/graphs/" + new Date().getTime() + "/" + idSearched + "?type=JPG"
       }, 1000);
     },
     setGraphId(idGraph) {

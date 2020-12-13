@@ -6,7 +6,7 @@
       </v-btn>
     </v-row>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="submit">
+      <form>
         <v-text-field
           v-model="name"
           :rules="nameRules"
