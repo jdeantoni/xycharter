@@ -32,12 +32,24 @@ services:
       - postgres
 
 
+
+  xycharter-render:
+    build: ./Services/xyCharterRenderer
+    container_name: xycharter-render
+    ports:
+      - "4040:4040"
+
+  quickchart-render:
+    build: ./Services/quickChartRender
+    container_name: quickchart-render
+    ports:
+      - "4050:4050"
+
   render:
     build: ./Services/render
     container_name: render
-
     ports:
-      - "4040:4040"
+      - "4060:4060"
 
 
   rooting:

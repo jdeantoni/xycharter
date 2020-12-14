@@ -14,12 +14,16 @@
             "gridColor":"other"
         }
     },{
-        "applicationName":"Base",
+        "applicationName":"MetaData",
         "constraints":{
-            "s" : "string",
-            "n": "number",
-            "b" : "boolean",
-            "o" : "other"
+            "name" : "string",
+            "description": "string",
+            "type" : "string"
+        }
+    },{
+        "applicationName":"QuickChart",
+        "constraints":{
+            "labels" : "other"
         }
     }
 ]

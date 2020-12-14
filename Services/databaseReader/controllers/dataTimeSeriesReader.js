@@ -1,9 +1,11 @@
 const { InfluxDB } = require('@influxdata/influxdb-client')
 
-try {
-    const configInflux = require("../influxConfig.json")
+var configInflux = null;
+var token;var org; var bucket; var client;
 
-    var token;var org; var bucket; var client;
+try {
+    configInflux = require("../influxConfig.json")
+
     if(Object.keys(configInflux).length > 0){
 
         token = configInflux.auth.token

@@ -10,7 +10,7 @@ do
     rm ./$i/.env
     cp ../.env ./$i/.env
 done
-cd ./render
+cd ./xyCharterRender
 cp ./.env ./src/main/resources/.env
 mvn clean package
 cd ../
