@@ -20,21 +20,74 @@
         </v-col>
         <v-card-text class="px-0 pb-0">
           <v-container fluid>
-            <v-img :max-height="width" :max-width="width" :src="image"></v-img>
-
+            <v-col offset-md="5">
+              <v-dialog v-model="dialog" scrollable max-width="300px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    @click="viewGraphs(graphs)"
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon> {{ viewIcon }}</v-icon>
+                    View Graphs
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>Select Graphs</v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text style="height: 300px">
+                    <v-checkbox
+                      v-model="graphsSelected"
+                      v-for="graph in graphs"
+                      :key="graph"
+                      :label="graph"
+                      color="blue"
+                      :value="graph"
+                      hide-details
+                    ></v-checkbox>
+                  </v-card-text>
+                  <v-divider></v-divider>
+                  <v-card-actions>
+                    <v-btn color="blue darken-1" text @click="dialog = false">
+                      Close
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="
+                        dialog = false;
+                        saveGraphSelected(graphsSelected);
+                      "
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-col>
+            <v-row>
+              <v-img
+                v-for="graph in showImageGraphSelected"
+                :key="graph.id"
+                :max-height="width"
+                :max-width="width"
+                :src="graph.img"
+              ></v-img>
+            </v-row>
             <v-divider></v-divider>
             <v-btn
               color="success"
               @click="
                 reveal = !reveal;
-                reveal ? (width = 300) : (width = 800);
+                reveal ? (width = 300) : (width = 600);
                 reveal ? (labelEdit = 'Close options') : (labelEdit = 'Modify options');
               "
               block
             >
-              {{ labelEdit }}
-
               <v-icon>{{ editIcon }}</v-icon>
+              {{ labelEdit }}
             </v-btn>
 
             <v-card v-if="reveal" elevation="11" tile>
@@ -90,7 +143,7 @@
                         :thumb-color="blue"
                         thumb-label="always"
                       ></v-slider>
-                      
+
                       <v-slider
                         v-model="maxX"
                         label="Max"
@@ -101,7 +154,7 @@
                     </v-col>
                     <v-col cols="12" sm="4" md="4">
                       <h2>Y Bounds</h2>
-                      
+
                       <v-slider
                         v-model="minY"
                         label="MinY"
@@ -109,7 +162,7 @@
                         :thumb-color="blue"
                         thumb-label="always"
                       ></v-slider>
-                      
+
                       <v-slider
                         v-model="maxY"
                         label="MaxY"
@@ -137,7 +190,7 @@
 </template>
 
 <script>
-import { mdiAccount, mdiPencil, mdiShareVariant, mdiDelete } from "@mdi/js";
+import { mdiAccount, mdiChartLine, mdiPencil, mdiShareVariant, mdiDelete } from "@mdi/js";
 const axios = require("axios");
 
 const gradients = [
@@ -148,6 +201,9 @@ const gradients = [
   ["#00c6ff", "#F0F", "#FF0"],
   ["#f72047", "#ffd200", "#1feaea"],
 ];
+
+var graphsSel = [];
+var allGraphs = [];
 export default {
   name: "View graphs",
   data: () => ({
@@ -169,25 +225,39 @@ export default {
     legendY: "",
     reveal: false,
     editIcon: mdiPencil,
+    viewIcon: mdiChartLine,
     labelEdit: "Modify options",
+    graphs: [],
+    graphsSelected: [],
+    showImageGraphSelected: [],
+    graphsS: [],
     padding: 8,
     radius: 10,
+    dialogm1: "",
+    dialog: false,
     color: "",
-    value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-    width: 800,
+    width: 600,
     title: "",
-    async searchGraph(idSearched) {
-      if (this.handle !== undefined) {
-        clearInterval(this.handle);
-      }
-      this.handle = setInterval(() => {
-        axios
-          .get("http://localhost:4000/graphs/" + idSearched + "/render?type=JPG")
-          .then((response) => {
-            console.log(response.data.data)
-            this.image = response.data.data;
-          });
-      }, 1000);
+    searchGraph(listGraphSearched) {
+      listGraphSearched.forEach(async (graph) => {
+        let handle = setInterval(
+          async () =>
+            await axios
+              .get("http://localhost:4000/graphs/" + graph.idgraph + "/render?type=JPG")
+              .then((response) => {
+                if (
+                  !graphsSel.includes(graphsSel.find((el) => el.id === graph.idgraph))
+                ) {
+                  graphsSel.push({ id: graph.idgraph, img: response.data.data });
+                  this.showImageGraphSelected = Array.from(graphsSel);
+                }
+                (graphsSel.find((el) => el.id === graph.idgraph)).img=response.data.data
+
+              }),
+
+          1000
+        );
+      });
     },
     setGraphId(idGraph) {
       this.idGraph = idGraph;
@@ -285,7 +355,9 @@ export default {
     },
     async addMinX(minX) {
       const minXD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { xBounds: {lowerBound:this.minX, upperBound:this.maxX} })
+        .put("http://localhost:4000/graphs/" + this.idGraph, {
+          xBounds: { lowerBound: this.minX, upperBound: this.maxX },
+        })
         .then((response) => {
           console.log(response.data);
         });
@@ -293,7 +365,9 @@ export default {
     },
     async addMinY(minY) {
       const minYD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { yBounds: {lowerBound:this.minY, upperBound:this.maxY} })
+        .put("http://localhost:4000/graphs/" + this.idGraph, {
+          yBounds: { lowerBound: this.minY, upperBound: this.maxY },
+        })
         .then((response) => {
           console.log(response.data);
         });
@@ -307,12 +381,30 @@ export default {
       await this.showYGrid(this.showY);
       await this.showCGrid(this.showGrid);
       await this.addTitle(this.title);
-      await this.addMinX(this.minX)
-      
-      await this.addMinY(this.minY)
+      await this.addMinX(this.minX);
+
+      await this.addMinY(this.minY);
       //await this.addColor(this.color);
     },
-    
+    async viewGraphs(graphs) {
+      await axios.get("http://localhost:4000/graphs").then((response) => {
+        const graphsSet = new Set();
+        const allGraphsSet = new Set();
+        response.data.forEach((graph) => {
+          graphsSet.add(graph.name);
+          this.graphs = [...graphsSet];
+          allGraphsSet.add(graph);
+          allGraphs = [...allGraphsSet];
+        });
+      });
+    },
+    async saveGraphSelected(graphsSelected) {
+      this.graphsS = allGraphs.filter((graph) =>
+        this.graphsSelected.includes(graph.name)
+      );
+      console.log(this.graphsS);
+      this.searchGraph(this.graphsS);
+    },
   }),
 };
 </script>
