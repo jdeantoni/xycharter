@@ -3,20 +3,6 @@
     <v-row>
       <v-col cols="12">
         <v-col offset-md="10">
-          <v-text-field
-            label="Search by id"
-            v-model="idGraph"
-            v-on:change="setGraphId(idGraph)"
-            color="secondary"
-            hide-details
-            style="max-width: 165px"
-          >
-            <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:append-outer>
-              <v-btn @click="searchGraph(idGraph)" class="mt-n2" elevation="1" fab small>
-                <v-icon>mdi-magnify</v-icon>
-              </v-btn>
-            </template>
-          </v-text-field>
         </v-col>
         <v-card-text class="px-0 pb-0">
           <v-container fluid>
