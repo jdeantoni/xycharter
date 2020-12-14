@@ -20,7 +20,7 @@ const writeDataSet = async (name, description, date, points) => {
     }
 
     try {
-        const result = await pool.query('INSERT INTO datasets (name, description, creationDate, datajson) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, date, JSON.stringify(points)]);
+        const result = await pool.query('INSERT INTO datasets (name, description, creationDate,timeseries, datajson) VALUES ($1, $2, $3, $4,$5) RETURNING *', [name, description, date,false, JSON.stringify(points)]);
 
         return result.rows[0].iddataset.toString();
     } catch (err) {

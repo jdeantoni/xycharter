@@ -5,7 +5,7 @@ const writeDataSetController = require('../controllers/writeDataSet');
 const { body, param, validationResult } = require('express-validator');
 
 //Création d'un jeux de donnée
-writeDataRouter.post('/datawriter',[body("points").isArray()]
+writeDataRouter.post('/datawriter',[body("name").isString(),body("points").isArray()]
    , async (req, res, next) => {
 
    const errors = validationResult(req);
