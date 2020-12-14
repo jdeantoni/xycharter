@@ -34,11 +34,17 @@ renderRouter.get('/graphs/:id', [query('type').matches(
       }).then(response => {
 
          const responseBase64 = Buffer.from(response.data, 'binary').toString('base64')
-         res.status(201).send({data :`data:${response.headers['content-type'].toLowerCase()};base64,${responseBase64}` });
+         res.status(201).send({ data: `data:${response.headers['content-type'].toLowerCase()};base64,${responseBase64}` });
          next();
       });
 
    });
 
+renderRouter.get('/ping'
+   , async (req, res, next) => {
+
+      return res.status(200).send("ok");
+
+   });
 
 module.exports = renderRouter;

@@ -54,9 +54,9 @@ public class Renderer {
 
     }
 
-    @RequestMapping(value = "/graphs/{timestamp}/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type,@PathVariable String timestamp) throws ParseException {
-        return getGraph(idGraphe, type);
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    public @ResponseBody String ping() throws ParseException {
+        return "ok";
 
     }
 

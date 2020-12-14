@@ -1,4 +1,4 @@
 docker-compose build
 docker-compose up &
-sleep 10
+sh healthcheck.sh
 docker network connect ter-xycharter_default influx
