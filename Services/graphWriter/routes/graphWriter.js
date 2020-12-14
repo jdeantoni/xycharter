@@ -34,7 +34,7 @@ graphWriterRouter.put('/graphs/:id', [param('id').isInt()], async (req, res, nex
 
    try {
       await graphWriterController.modifyGraph(req.params.id, req.body);
-   
+
       res.status(201).send("MODIFY");
    } catch (error) {
       res.status(500).send(error.message);
