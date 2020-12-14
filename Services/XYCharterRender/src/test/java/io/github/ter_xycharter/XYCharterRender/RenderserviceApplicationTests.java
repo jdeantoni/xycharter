@@ -1,4 +1,4 @@
-package io.github.ter_xycharter.render;
+package io.github.ter_xycharter.XYCharterRender;
 
 
 import io.cucumber.spring.CucumberContextConfiguration;
