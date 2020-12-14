@@ -18,16 +18,9 @@ renderRouter.get('/graphs/:id/render', [query('type').matches(
 
          return res.status(200).send(reponse.data[0].datajson);
       } else {
-         await axios.get(process.env.RENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type, {
-            responseType: 'arraybuffer'
-
-         }).then(response => {
-            
-            const responseBase64 = Buffer.from(response.data, 'binary').toString('base64')
-            res.status(201).send(`data:${response.headers['content-type'].toLowerCase()};base64,${responseBase64}`);
-         });
+         const response = await axios.get(process.env.RENDER_ADDR + "/graphs/" + req.params.id + "?type=" + req.query.type)
+         return res.status(200).send(response.data);
       }
-      next();
    });
 
 
