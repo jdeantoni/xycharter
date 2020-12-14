@@ -63,7 +63,6 @@ function minMax(datasetsSet){
 
 async function getDataForGraph(idGraph) {
     
-    
     if(await isGraphTimeSeries(idGraph)){
         const resp = await getDatasetIdForGraph(idGraph)
 
