@@ -72,7 +72,7 @@ async function getDataForGraph(idGraph) {
 
         let datasetsSet = []
         for(let i =0;i<resp.length;i++){
-            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset,i+2)
+            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset,i)
             datasetsSet.push(datas)
         }
 
@@ -91,6 +91,12 @@ async function getDataForGraph(idGraph) {
                         y : datas[j].value
                     };
                 } else {
+                    if (j != 0 && (datas[j - 1].value != (datas[j].value))){
+                        dataTimeSeries.push({
+                            x : Date.parse(datas[j].time)/1000 - initialTime - ((Date.parse(datas[j].time) - Date.parse(datas[j-1].time)) / 1000000),
+                            y : ((datas[j - 1].value == false) ? min : max)
+                        });
+                    }
                     data = {
                         x : Date.parse(datas[j].time)/1000 - initialTime,
                         y : ((datas[j].value == false) ? min : max)
@@ -105,8 +111,7 @@ async function getDataForGraph(idGraph) {
 
 
 
-        //return datasets
-        return "cool"
+        return datasets
 
     } else {
         const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
