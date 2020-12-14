@@ -93,6 +93,13 @@
             <v-card v-if="reveal" elevation="11" tile>
               <v-card-text>
                 <v-container fluid>
+                  <v-select
+                    :items="graphsSelected"
+                    label="Select a graph to modify"
+                    data-vv-name="select graph"
+                    v-on:change="setGraphId()"
+                    v-model="graphNameSelected"
+                  ></v-select>
                   <v-row>
                     <v-col cols="12" sm="4" md="4">
                       <h3>Background color</h3>
@@ -212,6 +219,7 @@ export default {
     gradient: gradients[4],
     gradients,
     idGraph: "",
+    graphNameSelected: undefined,
     image: "",
     showX: false,
     showY: false,
@@ -251,16 +259,17 @@ export default {
                   graphsSel.push({ id: graph.idgraph, img: response.data.data });
                   this.showImageGraphSelected = Array.from(graphsSel);
                 }
-                (graphsSel.find((el) => el.id === graph.idgraph)).img=response.data.data
-
+                graphsSel.find((el) => el.id === graph.idgraph).img = response.data.data;
               }),
-
           1000
         );
       });
     },
-    setGraphId(idGraph) {
-      this.idGraph = idGraph;
+    setGraphId() {
+      if (this.graphNameSelected !== undefined) {
+        this.idGraph = allGraphs.find((el) => el.name === this.graphNameSelected).idgraph;
+        console.log(this.idGraph)
+      }
     },
     async showXGrid(showXGrid) {
       const showX = await axios
@@ -402,7 +411,6 @@ export default {
       this.graphsS = allGraphs.filter((graph) =>
         this.graphsSelected.includes(graph.name)
       );
-      console.log(this.graphsS);
       this.searchGraph(this.graphsS);
     },
   }),

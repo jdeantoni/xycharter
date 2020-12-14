@@ -8,14 +8,14 @@ dataReaderRouter.get('/graphs/:id'
 
         return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
 
-   });
+    });
 // Recupere le type du graph etc
 dataReaderRouter.get('/graphs/:id/renderServiceName'
-, async(req, res, next) => {
+    , async (req, res, next) => {
 
-   return res.status(200).send(await dataReaderController.getRenderServiceNameGraph(req.params.id));
+        return res.status(200).send(await dataReaderController.getRenderServiceNameGraph(req.params.id));
 
-});
+    });
 //Tout les ids des graph
 dataReaderRouter.get('/graphs'
     , async (req, res, next) => {
@@ -43,7 +43,12 @@ dataReaderRouter.get('/datas/:id'
 dataReaderRouter.get('/datareader/data/:id'
     , async (req, res, next) => {
 
-        return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
+        try {
+
+            return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
+        } catch (error) {
+            return res.status(404).send(error)
+        }
 
     });
 
