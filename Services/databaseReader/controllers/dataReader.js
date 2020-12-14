@@ -1,5 +1,5 @@
 const postgresConfig = require('../postgreConfig.json')
-const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReaderCP');
+const dataTimeSeriesReader = require('../controllers/dataTimeSeriesReader');
 const { Pool } = require('pg')
 const pool = new Pool({
     user: postgresConfig.user,
@@ -65,10 +65,8 @@ async function getDataForGraph(idGraph) {
     
 
 
-    //if(await isGraphTimeSeries(idGraph)){
-    if (true){
-        //const resp = await getDatasetIdForGraph(idGraph)
-        const resp = [{iddataset : 0, name : "pasbool"},{iddataset : 0, name : "bool"}]
+    if(await isGraphTimeSeries(idGraph)){
+        const resp = await getDatasetIdForGraph(idGraph)
 
         let datasetsSet = []
         for(let i =0;i<resp.length;i++){
