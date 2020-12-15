@@ -15,29 +15,50 @@ import xycharter.Plot;
 @RestController
 public class Renderer {
 
+    /**
+     * Generate a graph thanks to data stored in database (Influx or Postgresql)
+     * Graph can be a JPEG/PNG image or JSON (with all the characteristics of the graph)
+     *
+     * @param idGraph id of the graph you want to display
+     * @param type Media type of the graph (JPEG, PNG, JSON)
+     * @return Return the graph with the proper type
+     * @throws ParseException Thrown if no "datajson" in the datasets of the graph
+     *
+     * @author Fabrice SIMON
+     */
+    @RequestMapping(value = "/graphs/{idGraph}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getGraph(@PathVariable String idGraph,@RequestParam OutputGraph type) throws ParseException {
+        //Get the graph from the databases
+        JSONObject graphJSON = DBReader.getGraphFromDB(idGraph);
 
-    @RequestMapping(value = "/graphs/{idGraphe}", method = RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getGraph(@PathVariable String idGraphe,@RequestParam OutputGraph type) throws ParseException {
-        JSONObject graphe = DBReader.getGraphFromDB(idGraphe);
-        if (graphe != null){
-            JSONArray datasets = DBReader.getAllDataForGraph(idGraphe);
+        if (graphJSON != null){
+            //Get all the datasets associate to the graph
+            JSONArray datasets = DBReader.getAllDataForGraph(idGraph);
+
             Plot plot = new Plot();
-            Graph graph = Graph.createGraph(graphe,plot);
+            //Create a new graph from the graph JSON
+            Graph graph = Graph.createGraph(graphJSON);
+
             for (Object o : datasets) {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
+                //Parse all the points of the dataset
                 JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
+                //Parse the name of the datasate
                 String nameDataSet = (String) dataset.get("name");
                 if (pointsArray!=null){
                     Figure figure = new Figure();
-                    figure.name= nameDataSet.toString();
-                    addPoints(figure,pointsArray);
-                    graph.initializeRenderer(figure);
-                    graph.getPlot().addFigure(figure);
-                    graph.getGraphConfig().applyConfigToGraph(plot);
+                    //Associate the name to the figure (VERY IMPORTANT TO ASSOCIATE A NAME TO A FIGURE TO HAVE MULTIPLE DATASETS ON THE SAME GRAPH)
+                    figure.name= nameDataSet;
+                    addPoints(figure,pointsArray); //Add all the points of the dataset to the figure
+                    graph.initializeRenderer(figure); //Add the renderer to the figure
+                    plot.addFigure(figure); //Add the figure to the plot
+                    graph.getGraphConfig().applyConfigToGraph(plot); //Apply the graph configuration to the graph
                 }
             }
+
             switch(type){
+                //The PNG and JPG plotters are inverted in the XYCharter library
                 case PNG:
                     JPEGPlotter jpegPlotter = new JPEGPlotter();
                     return jpegPlotter.plot(plot);
@@ -54,6 +75,7 @@ public class Renderer {
 
     }
 
+
     @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public @ResponseBody String ping() throws ParseException {
         return "ok";
@@ -61,6 +83,12 @@ public class Renderer {
     }
 
 
+    /**
+     *
+     * @param figure Figure of the graph
+     * @param points Array of all the points to add to the figure
+     * @author Fabrice SIMON
+     */
     public void addPoints(Figure figure,JSONArray points){
         for (Object o : points) {
             JSONObject point = (JSONObject) o;
