@@ -14,6 +14,8 @@
           required
         ></v-text-field>
 
+        <v-text-field v-model="description" label="Description"> </v-text-field>
+
         <validation-provider v-slot="{ errors }" name="select" rules="required">
           <v-select
             :items="itemsTypeGraph"
@@ -50,13 +52,11 @@
         </v-btn>
         <v-btn @click="clear"> clear </v-btn>
 
-        <v-snackbar color="success" v-model="snackbar" :timeout="timeout">
+        <v-snackbar :color="textBackground" v-model="snackbar" :timeout="timeout">
           {{ text }}
 
-          <template v-slot:action="{ attrs }">
-            <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-              Close
-            </v-btn>
+          <template>
+            <v-btn :color="textBackground" text @click="snackbar = false"> Close </v-btn>
           </template>
         </v-snackbar>
       </form>
@@ -105,6 +105,7 @@ export default {
     typeGraphSelected: undefined,
     snackbar: false,
     text: "New graph " + name + " added...",
+    textBackground: "green",
     timeout: 1500,
     itemsTypeGraph: itemTypeG,
     itemsDataSet: itemD,
@@ -112,11 +113,14 @@ export default {
     clear: "",
     editIcon: mdiPencil,
     name: "",
-    nameRules: [(v) => !!v || "Name is required"],
+    description: "",
+    nameRules: [
+      (value) => (value || "").length <= 20 || "Max 20 characters",
+      (v) => !!v || "Name is required",
+    ],
     labelEdit: "Modify options",
     padding: 8,
     radius: 10,
-    value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
     width: 800,
     save: async function (typeGraphSelected, dataSetSelected, name) {
       const graphCreation = {
@@ -124,29 +128,52 @@ export default {
         name: name,
         description: "No description available",
       };
-      axios.post("http://localhost:4000/graphs", graphCreation).then((response) => {
-        axios.get("http://localhost:4000/graphs").then((response) => {
-          response.data.forEach((graph) => {
-            let name = graph.name;
-            let id = graph.idgraph;
-            itemGraph.push({ name: name, id: id });
-          });
-          let idDataSet=[]
-          
-          if (dataSetSelected !== undefined) {
-            idDataSet = idItemD.filter(dataset => dataSetSelected.indexOf(dataset.name) !== -1);
-          }
-          let idGraph = itemGraph.find(graph => graph.name === name)
-          
-          if (dataSetSelected !== undefined) {
-            for (let i = 0; i < idDataSet.length; i++) {
-               axios.post(
-                "http://localhost:4000/graphs/" + idGraph.id + "/dataSet/" + idDataSet[i].id
+      try {
+        const graphCreated = await axios.post(
+          "http://localhost:4000/graphs",
+          graphCreation
+        );
+        this.text = "New graph " + name + " added...";
+        this.textBackground = "success";
+        const datasets = await axios
+          .get("http://localhost:4000/graphs")
+          .then((response) => {
+            response.data.forEach((graph) => {
+              let name = graph.name;
+              let id = graph.idgraph;
+              itemGraph.push({ name: name, id: id });
+            });
+            let idDataSet = [];
+
+            if (dataSetSelected !== undefined) {
+              idDataSet = idItemD.filter(
+                (dataset) => dataSetSelected.indexOf(dataset.name) !== -1
               );
             }
-          }
-        });
-      });
+            let idGraph = itemGraph.find((graph) => graph.name === name);
+
+            if (dataSetSelected !== undefined) {
+              for (let i = 0; i < idDataSet.length; i++) {
+                let addDataSetsGraph = async () => {
+                  await axios.post(
+                    "http://localhost:4000/graphs/" +
+                      idGraph.id +
+                      "/dataSet/" +
+                      idDataSet[i].id
+                  );
+                };
+              }
+            }
+          });
+      } catch (error) {
+        this.text = error;
+        this.textBackground = "red darken-4";
+      }
+
+      this.name = "";
+      this.description = "";
+      this.typeGraphSelected = "";
+      this.dataSetSelected = [];
     },
   }),
 };
