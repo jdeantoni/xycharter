@@ -23,6 +23,11 @@ graphWriterDataRouter.post('/graphs/:graphId/dataSet/:dataSetId', [param('graphI
    
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+            /*
+         #swagger.responses[400] = {
+            description: 'Return the validation error array from express validator'
+         }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
    
@@ -71,6 +76,11 @@ graphWriterDataRouter.delete('/graphs/:graphId/dataSet/:dataSetId', [param('grap
    
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+            /*
+         #swagger.responses[400] = {
+            description: 'Return the validation error array from express validator'
+         }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
 

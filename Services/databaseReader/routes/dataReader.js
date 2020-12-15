@@ -5,13 +5,48 @@ const dataReaderController = require('../controllers/dataReader');
 // Recupere le type du graph etc
 dataReaderRouter.get('/graphs/:id'
    , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get all information about a graph'
+    #swagger.parameters['id'] = {
+        in: 'param',
+        description: 'The id of the graph',
+        required: true,
+        type: 'integer'
+        }
+    #swagger.tags = ['Graphs']
+    */
 
-      return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
 
-   });
-   // Recupere le type du graph etc
+    /*
+    #swagger.responses[200] = {
+        description: 'Return the graph charas',
+        schema: { $ref: "#/definitions/graph" }
+    }
+    */
+    return res.status(200).send(await dataReaderController.getCaracGraph(req.params.id));
+
+});
+
 dataReaderRouter.get('/graphs/:id/renderServiceName'
 , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get the name of the service to use to render the graph'
+    #swagger.parameters['id'] = {
+        in: 'param',
+        description: 'The id of the graph',
+        required: true,
+        type: 'integer'
+        }
+    #swagger.tags = ['Graphs']
+    */
+
+
+    /*
+    #swagger.responses[200] = {
+        description: 'Return the name of the service to use to render the graph ',
+        type: 'string'
+    }
+    */
 
    return res.status(200).send(await dataReaderController.getRenderServiceNameGraph(req.params.id));
 
@@ -19,40 +54,91 @@ dataReaderRouter.get('/graphs/:id/renderServiceName'
 //Tout les ids des graph
 dataReaderRouter.get('/graphs'
     , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get the id of all graphs'
+    #swagger.tags = ['Graphs']
+    */
 
-        return res.status(200).send(await dataReaderController.getAllGraphs());
+    /*
+    #swagger.responses[200] = {
+        description: 'Return the id of all graphs',
+        schema: { $ref: "#/definitions/graphIds" }
+    }
+    */
 
-    });
+    return res.status(200).send(await dataReaderController.getAllGraphs());
+
+});
 //Tout ids des jeux de données
 dataReaderRouter.get('/datas'
     , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get the id of all dataSets'
+    #swagger.tags = ['DataSets']
+    */
 
-        return res.status(200).send(await dataReaderController.getAllDatasets());
 
-    });
+    /*
+    #swagger.responses[200] = {
+        description: 'Return the id of all dataSets',
+        schema: { $ref: "#/definitions/dataSetIds" }
+    }
+    */
+
+    return res.status(200).send(await dataReaderController.getAllDatasets());
+
+});
 
 //Jeu de donnée id
 dataReaderRouter.get('/datas/:id'
     , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get all information about a dataSet'
+    #swagger.parameters['id'] = {
+        in: 'param',
+        description: 'The id of the dataSet',
+        required: true,
+        type: 'integer'
+        }
+    #swagger.tags = ['DataSets']
+    */
 
-        return res.status(200).send(await dataReaderController.getDataset(req.params.id));
 
-    });
+    /*
+    #swagger.responses[200] = {
+        description: 'Return all information about a dataSet',
+        schema: { $ref: "#/definitions/dataSet" }
+    }
+    */
+
+    return res.status(200).send(await dataReaderController.getDataset(req.params.id));
+
+});
 
 //Toute les data pour le graph id
 dataReaderRouter.get('/datareader/data/:id'
     , async(req, res, next) => {
+    /* 
+    #swagger.description = 'Get all data of dataSets of a graph'
+    #swagger.parameters['id'] = {
+        in: 'param',
+        description: 'The id of the graph',
+        required: true,
+        type: 'integer'
+        }
+    #swagger.tags = ['Graphs', 'DataSets']
+    */
 
-        return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
+    /*
+    #swagger.responses[200] = {
+        description: 'Return all data of dataSets of the graph',
+        schema: { $ref: "#/definitions/allDatas" }
+    }
+    */
 
-    });
-//Toute les data pour le graph id
-dataReaderRouter.get('/graph/type/:id'
-    , async(req, res, next) => {
+    return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
 
-        return res.status(200).send(await dataReaderController.getTypeOfGraph(req.params.id));
-
-    });
+});
 
 
 

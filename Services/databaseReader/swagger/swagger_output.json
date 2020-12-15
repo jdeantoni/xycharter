@@ -1,0 +1,263 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DataReader",
+    "description": "This service is use to read datas from database (influx and postgre)"
+  },
+  "host": "localhost:3030",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/graphs/{id}": {
+      "get": {
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Get all information about a graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the graph charas",
+            "schema": {
+              "$ref": "#/definitions/graph"
+            }
+          }
+        }
+      }
+    },
+    "/graphs/{id}/renderServiceName": {
+      "get": {
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Get the name of the service to use to render the graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the name of the service to use to render the graph ",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "/graphs": {
+      "get": {
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Get the id of all graphs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return the id of all graphs",
+            "schema": {
+              "$ref": "#/definitions/graphIds"
+            }
+          }
+        }
+      }
+    },
+    "/datas": {
+      "get": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Get the id of all dataSets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return the id of all dataSets",
+            "schema": {
+              "$ref": "#/definitions/dataSetIds"
+            }
+          }
+        }
+      }
+    },
+    "/datas/{id}": {
+      "get": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Get all information about a dataSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the dataSet",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return all information about a dataSet",
+            "schema": {
+              "$ref": "#/definitions/dataSet"
+            }
+          }
+        }
+      }
+    },
+    "/datareader/data/{id}": {
+      "get": {
+        "tags": [
+          "Graphs",
+          "DataSets"
+        ],
+        "description": "Get all data of dataSets of a graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return all data of dataSets of the graph",
+            "schema": {
+              "$ref": "#/definitions/allDatas"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "graph": {
+      "type": "object",
+      "properties": {
+        "idgraph": {
+          "type": "number",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "Super graph !"
+        },
+        "description": {
+          "type": "string",
+          "example": "A super graph"
+        },
+        "creationdate": {
+          "type": "string",
+          "example": "2020-12-09T13:11:59.165Z"
+        },
+        "graphtype": {
+          "type": "string",
+          "example": "doughnut"
+        },
+        "characteristics": {
+          "type": "string",
+          "example": "{\"labels\":[{\"text\":\"550\",\"font\":{\"size\":20}},{\"text\":\"total\"}]}"
+        }
+      },
+      "xml": {
+        "name": "graph"
+      }
+    },
+    "graphIds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "idgraph": {
+            "type": "number",
+            "example": 3
+          }
+        }
+      },
+      "xml": {
+        "name": "graphIds"
+      }
+    },
+    "dataSet": {
+      "type": "object",
+      "properties": {
+        "iddataset": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "myDataSet"
+        },
+        "description": {
+          "type": "string",
+          "example": "It's my dataSet"
+        },
+        "creationdate": {
+          "type": "string",
+          "example": "2020-12-10T08:02:06.680Z"
+        },
+        "datajson": {
+          "type": "string",
+          "example": "[{\"label\":\"January\",\"value\":20},{\"label\":\"February\",\"value\":60},{\"label\":\"March\",\"value\":70},{\"label\":\"April\",\"value\":180},{\"label\":\"May\",\"value\":290}]"
+        }
+      },
+      "xml": {
+        "name": "dataSet"
+      }
+    },
+    "dataSetIds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iddataset": {
+            "type": "number",
+            "example": 5
+          }
+        }
+      },
+      "xml": {
+        "name": "dataSetIds"
+      }
+    },
+    "allDatas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datajson": {
+            "type": "string",
+            "example": "[{\"label\":\"June\",\"value\":20},{\"label\":\"February\",\"value\":60},{\"label\":\"March\",\"value\":70},{\"label\":\"April\",\"value\":180},{\"label\":\"May\",\"value\":290}]"
+          }
+        }
+      },
+      "xml": {
+        "name": "allDatas"
+      }
+    }
+  }
+}

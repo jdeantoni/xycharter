@@ -19,6 +19,11 @@ graphWriterRouter.post('/graphs', [body('type').matches(
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+            /*
+         #swagger.responses[400] = {
+            description: 'Return the validation error array from express validator'
+         }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
 
@@ -46,7 +51,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
 
 graphWriterRouter.put('/graphs/:id', [param('id').isInt()], async (req, res, next) => {
    /* 
-      #swagger.description = 'Modification of a specific graph'
+      #swagger.description = 'Modify a specific graph'
       #swagger.parameters['id'] = {
          in: 'param',
          description: 'The id of the graph',
@@ -65,6 +70,11 @@ graphWriterRouter.put('/graphs/:id', [param('id').isInt()], async (req, res, nex
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+            /*
+         #swagger.responses[400] = {
+            description: 'Return the validation error array from express validator'
+         }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
 
@@ -108,6 +118,11 @@ graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, 
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+            /*
+         #swagger.responses[400] = {
+            description: 'Return the validation error array from express validator'
+         }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
 

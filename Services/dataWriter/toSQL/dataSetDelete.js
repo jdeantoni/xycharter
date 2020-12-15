@@ -14,6 +14,9 @@ const pool = new Pool({
 const deleteDataSet = async (dataSetId) => {
     var result;
     try {
+        //Suppression de tout les liens en lien avec ce dataSet
+        await pool.query('DELETE FROM LinkDataSetGraph WHERE iddataset = ($1)', [dataSetId]);
+
         result = await pool.query('DELETE FROM DataSets WHERE idDataset = ($1)', [dataSetId]);
     } catch (err) {
         throw SQLUnknowError(err);

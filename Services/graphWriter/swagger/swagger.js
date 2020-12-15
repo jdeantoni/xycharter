@@ -11,9 +11,9 @@ const doc = {
     info: {
         version: "1.0.0",
         title: "Graph Writer",
-        description: "This service is use to write in the database the information about graphs and link beetween graphs and datasets"
+        description: "This service is use to write in the database (postgre) the information about graphs and link beetween graphs and datasets"
     },
-    host: "localhost:3000",
+    host: "localhost:3010",
     basePath: "/",
     schemes: ['http'],
     consumes: ['application/json'],
@@ -39,7 +39,7 @@ swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
     const swaggerFile = require('./swagger_output.json')
     
     http.createServer(app).listen(3000)
-    console.log("Listening at:// port:%s (HTTP)", 3000)
+    console.log("Listening at:// port:%s (HTTP)", 3010)
     
     app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 })

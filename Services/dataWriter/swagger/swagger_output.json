@@ -1,0 +1,205 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Data Writer",
+    "description": "This service is use to write in the database (postgre and influx) the information about datas"
+  },
+  "host": "localhost:3020",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/datawriter/{idd}": {
+      "delete": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Suppression of a specific dataSet",
+        "parameters": [
+          {
+            "name": "idd",
+            "in": "param",
+            "required": true,
+            "description": "The id of the dataSet",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Return \"The dataSet with id : {id} has been successfully deleted\""
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/datawriter": {
+      "post": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Create a dataSet",
+        "parameters": [
+          {
+            "name": "points",
+            "in": "body",
+            "description": "Point of the dataSet",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/points"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Return the id of the new dataSet"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/datawriter/{id}": {
+      "put": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Modify a specific dataSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the dataSet to modify",
+            "type": "integer"
+          },
+          {
+            "name": "information to modify",
+            "in": "body",
+            "description": "Element of the dataSet to modify",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/dataSet"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "MODIFY"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/datawriter/timeseries": {
+      "get": {
+        "tags": [
+          "DataSets TimeSeries"
+        ],
+        "description": "Create a timeSerie dataSet",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Return the id of the dataSet created"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "degeu a refaire !",
+        "parameters": [],
+        "responses": {
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "example": 750
+          },
+          "y": {
+            "type": "number",
+            "example": 602
+          }
+        }
+      },
+      "xml": {
+        "name": "points"
+      }
+    },
+    "dataSet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "dataSet name"
+        },
+        "description": {
+          "type": "string",
+          "example": "dataSet description"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "example": "May"
+              },
+              "value": {
+                "type": "number",
+                "example": 190
+              }
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "dataSet"
+      }
+    }
+  }
+}
