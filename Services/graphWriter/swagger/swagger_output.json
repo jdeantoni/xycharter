@@ -1,0 +1,70 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/graphs": {
+      "post": {
+        "tags": [],
+        "description": "Creation of a graph",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "body",
+            "description": "Type of graph created",
+            "required": true,
+            "type": "string",
+            "format": "histogramme|connectedLine|doughnut|circlePoint|bezierCurve"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/graphs/{id}": {
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/graphs/{graphId}/dataSet/{dataSetId}": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "graphId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "dataSetId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}

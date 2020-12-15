@@ -4,9 +4,22 @@ const graphWriterController = require('../controllers/graphWriter');
 const { body, param, validationResult } = require('express-validator');
 
 //Création d'un graph
+/**
+ * @swagger
+ * 
+ */
 graphWriterRouter.post('/graphs', [body('type').matches(
    "histogramme|connectedLine|doughnut|circlePoint|bezierCurve"
 )], async(req, res, next) => {
+   // #swagger.description = 'Creation of a graph'
+
+   /* #swagger.parameters['type'] = {
+               in: 'body',
+               description: 'Type of graph created',
+               required: true,
+               type: 'string',
+               format: 'histogramme|connectedLine|doughnut|circlePoint|bezierCurve'
+        } */
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {

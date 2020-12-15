@@ -4,9 +4,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const routes = require('./routes'); //Importe le fichier routes.js
 const dotenv = require('dotenv');
-const http = require('http')
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
 
 const PORT = 4000;
 
