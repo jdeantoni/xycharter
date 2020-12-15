@@ -13,7 +13,7 @@ key="$1"
 
 case $key in
     -h|--host)
-    retentionPeriodHrs="$2"
+    host="$2"
     shift 
     shift 
     ;;
