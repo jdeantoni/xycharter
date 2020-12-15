@@ -1,6 +1,7 @@
 const { InfluxDB } = require('@influxdata/influxdb-client')
 const { Point } = require('@influxdata/influxdb-client')
 const dataSetWriterSQL = require('../toSQL/dataSetWriter')
+const axios = require('axios').default;
 var configInflux;
 
 try {
@@ -23,6 +24,14 @@ try {
 
 
 const writeTimeSeries = async (name, id, timestamp, value) => {
+
+    await axios.get(process.env.DBREADER_ADDR + "/datas").then(response => {
+        const arrayData = response.data
+        for(let i=0;i<arrayData.length;i++){
+            if(arrayData[i].name===name) throw new Error("Dataset name already exist in database")
+        }
+    })
+
     dataSetWriterSQL.modifyDataSet(id, name)
     const writeApi = client.getWriteApi(org, bucket)
     writeApi.useDefaultTags({ id: id })

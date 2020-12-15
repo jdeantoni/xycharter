@@ -12,7 +12,12 @@ writeDataRouter.post('/datawriter',[body("name").isString(),body("points").isArr
    if (!errors.isEmpty()) {
          return res.status(400).json({ errors: errors.array() });
    }
-   let id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points);
+   let id=undefined;
+   try{
+      id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points);
+   }catch(error){
+      return res.status(501).send(error.message)
+   }
    return res.status(201).send(id);
 
 });

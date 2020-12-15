@@ -1,7 +1,15 @@
 const graphWriterSQL = require('../toSQL/graphWriter')
+const axios = require('axios').default;
 
 const graphCreation = async (graph) => {
     const date = new Date(Date.now()).toISOString();
+
+    await axios.get(process.env.DBREADER_ADDR + "/graphs").then(response => {
+        const arrayData = response.data
+        for(let i=0;i<arrayData.length;i++){
+            if(arrayData[i].name===graph.name) throw new Error("Graph name already exist in database")
+        }
+    })
 
     graphCara = { ...graph };
     delete graphCara.name;

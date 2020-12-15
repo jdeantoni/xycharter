@@ -9,13 +9,13 @@ writeTimeSeriesDataRouter.get('/datawriter/timeseries', async (req, res, next) =
 
     try {
         const id = await writeDataSet.writeDataSetIdTimeSeries(true)
-        return res.status(201).send(id)
+        res.status(201).send(id)
     } catch (error) {
-        return res.status(500).send(error)
+        res.status(500).send(error)
     }
 });
 
-writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("name").isString(),body("id").isString(),body("timestamp").isInt()||body("value").isInt()], async (req, res, next) => {
+writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("name").isString(),body("id").isString(),body("timestamp").isInt(),body("value").isInt()], async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
