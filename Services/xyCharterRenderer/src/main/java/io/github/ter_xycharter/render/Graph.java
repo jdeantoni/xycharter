@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import io.github.ter_xycharter.render.config.GraphConfig;
 import org.json.simple.JSONObject;
 import xycharter.Figure;
-import xycharter.Plot;
 import xycharter.render.BezierCurveFigureRenderer;
 import xycharter.render.CirclePointRenderer;
 import xycharter.render.ConnectedLineFigureRenderer;
@@ -12,27 +11,44 @@ import xycharter.render.HistogramPointRenderer;
 
 import java.awt.*;
 
+/**
+ * Store all the information of a graph
+ * @author Fabrice SIMON
+ */
 public class Graph {
+
     private String idGraph;
     private GraphConfig graphConfig;
     private TypeGraph typeGraph;
-    private Plot plot;
 
-
-    public Graph(String idGraph, GraphConfig graphConfig, TypeGraph typeGraph, Plot plot) {
+    /**
+     * Constructor of a graph
+     * @param idGraph The ID of the graph
+     * @param graphConfig The config of the graph (all characteristics)
+     * @param typeGraph The type of the graph (histogram, connectedLine...)
+     */
+    public Graph(String idGraph, GraphConfig graphConfig, TypeGraph typeGraph) {
         this.idGraph = idGraph;
         this.graphConfig = graphConfig;
         this.typeGraph = typeGraph;
-        this.plot = plot;
     }
 
-    public static Graph createGraph(JSONObject graphe, Plot plot){
+    /**
+     * Create a new graph from a JSON object and associate a plot to it
+     * @param graphe The JSON object with all the graph data
+     * @return The graph created
+     */
+    public static Graph createGraph(JSONObject graphe){
         String idGraph = graphe.get("idgraph").toString();
         GraphConfig graphConfig = createGraphConfig(graphe.get("characteristics").toString());
         TypeGraph typeGraph = TypeGraph.fromString(graphe.get("graphtype").toString());
-        return new Graph(idGraph,graphConfig,typeGraph,plot);
+        return new Graph(idGraph,graphConfig,typeGraph);
     }
 
+    /**
+     * Associate a renderer to the figure of the graph
+     * @param figure XYCharter figure of the graph (figure == dataset)
+     */
     public void initializeRenderer(Figure figure){
 
         switch (typeGraph){
@@ -78,13 +94,6 @@ public class Graph {
         this.typeGraph = typeGraph;
     }
 
-    public Plot getPlot() {
-        return plot;
-    }
-
-    public void setPlot(Plot plot) {
-        this.plot = plot;
-    }
 
     private static GraphConfig createGraphConfig(String characteristics){
         Gson gson = new Gson();
