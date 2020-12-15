@@ -104,15 +104,16 @@ async function getDataForGraph(idGraph) {
             datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
         }
 
-
-
         return datasets
 
     } else {
-        const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
+        let datasets=[]
+        const resp =  await pool.query('SELECT datasets.datajson,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
         console.log("Renvois toute les data associées au graph "+idGraph)
-        console.log(resp.rows)
-        return resp.rows
+        for(i=0;i<resp.rows.length;i++){
+            datasets.push({name:resp.rows[i].name,datajson:resp.rows[i].datajson})
+        }
+        return datasets
     }
 }
 
@@ -130,14 +131,16 @@ async function getAllTypeOfGraph(){
 
 async function isGraphTimeSeries(idGraph) {
     const resp =  await pool.query('SELECT timeseries FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
-    
-    return resp.rows[0].timeseries;
-
+    if(resp!==undefined){
+        return resp.rows[0].timeseries;
+    }
+    return false
 
 }
 
 async function getDatasetIdForGraph(idGraph){
     const resp = await pool.query('SELECT datasets.iddataset,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
+    
     return resp.rows;
 
 }
