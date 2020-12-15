@@ -58,11 +58,11 @@ const modifyGraph = async (id, type, name, description, chara) => {
 
 const deleteGraph = async (graphId) => {
     try {
-        //Suppression de tout les graphs
-        await pool.query('DELETE FROM Graphs WHERE idgraph = ($1)', [graphId]);
-
         //Suppression de tout les liens en lien avec ce graph
         await pool.query('DELETE FROM LinkDataSetGraph WHERE idgraph = ($1)', [graphId]);
+
+        //Suppression de tout les graphs
+        await pool.query('DELETE FROM Graphs WHERE idgraph = ($1)', [graphId]);
 
         return "DELETED";
     } catch (err) {
