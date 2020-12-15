@@ -62,5 +62,11 @@ graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, 
    next();
 });
 
+graphWriterRouter.get('/ping'
+   , async (req, res, next) => {
+
+      return res.status(200).send("ok");
+
+   });
 
 module.exports = graphWriterRouter;

@@ -64,6 +64,12 @@ dataReaderRouter.get('/graph/types'
 
     });
 
+dataReaderRouter.get('/ping'
+    , async (req, res, next) => {
+
+        return res.status(200).send("ok");
+
+    });
 
 
 module.exports = dataReaderRouter;

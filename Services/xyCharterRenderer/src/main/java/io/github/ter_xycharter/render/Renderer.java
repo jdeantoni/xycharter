@@ -76,6 +76,13 @@ public class Renderer {
     }
 
 
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    public @ResponseBody String ping() throws ParseException {
+        return "ok";
+
+    }
+
+
     /**
      *
      * @param figure Figure of the graph
