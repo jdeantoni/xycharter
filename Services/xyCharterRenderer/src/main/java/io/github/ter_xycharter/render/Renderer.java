@@ -1,6 +1,7 @@
 package io.github.ter_xycharter.render;
 
 
+import io.github.ter_xycharter.render.config.DistinctColors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,7 +39,8 @@ public class Renderer {
             Plot plot = new Plot();
             //Create a new graph from the graph JSON
             Graph graph = Graph.createGraph(graphJSON);
-
+            DistinctColors distinctColors = new DistinctColors();
+            int count = 0;
             for (Object o : datasets) {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
@@ -46,15 +48,18 @@ public class Renderer {
                 JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
                 //Parse the name of the datasate
                 String nameDataSet = (String) dataset.get("name");
+                if (nameDataSet==null)nameDataSet = ""+count;
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     //Associate the name to the figure (VERY IMPORTANT TO ASSOCIATE A NAME TO A FIGURE TO HAVE MULTIPLE DATASETS ON THE SAME GRAPH)
                     figure.name= nameDataSet;
                     addPoints(figure,pointsArray); //Add all the points of the dataset to the figure
                     graph.initializeRenderer(figure); //Add the renderer to the figure
+                    figure.setColor(distinctColors.getNextColor());
                     plot.addFigure(figure); //Add the figure to the plot
                     graph.getGraphConfig().applyConfigToGraph(plot); //Apply the graph configuration to the graph
                 }
+                count ++;
             }
 
             switch(type){
