@@ -1,8 +1,10 @@
 const axios = require('axios').default;
 
-const renderFromQC = async (id, charas) => {    
+const renderFromQC = async (id, charas) => {
+    //Get all the data of the graph
     const graphDatas = await (await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + id)).data;
 
+    //Initialization of the labels
     var labels = new Set();
     for (var dataSet of graphDatas){
         var dataSetObj = JSON.parse(dataSet.datajson)
@@ -21,13 +23,13 @@ const renderFromQC = async (id, charas) => {
 
     var labelsArray = Array.from(labels);
     var datasArray = []
-
+    //Initialization of the values
     for (var dataSet of graphDatas){
         var dataSetObj = JSON.parse(dataSet.datajson)
         var data = []
         for (var label of labelsArray){
             for (var points of dataSetObj){
-                if (points.label == label){
+                if (points.label === label){
                     data.push(points.value)
                     break;
                 }
@@ -42,7 +44,7 @@ const renderFromQC = async (id, charas) => {
     for (var label of Array.from(labels)){
         labelsArrayStr.push("\'" + label + "\'");
     }
-
+    //Send the request to Quickchart
     var qcRequest = "https://quickchart.io/chart?c={type:\'doughnut\',data:{labels:[" + labelsArrayStr + "],datasets:" + datasArrayStr + "},options:{plugins:{doughnutlabel:" + charas + "}}}";
 
     console.log(qcRequest);
@@ -56,30 +58,3 @@ module.exports = {
     renderFromQC
 }
 
-/*https://quickchart.io/chart?c=
-{
-    type:'doughnut',
-    data:{
-        labels:[
-            'January','February','March','April','May'
-        ],
-        datasets:[
-            {
-                data:[
-                    50,60,70,180,190
-                ]
-            },{
-                data:[
-                    20,60,70,180,190
-                ]
-            },
-        ]
-    },
-    options:{
-        plugins:{
-            doughnutlabel:{
-
-            }
-        }
-    }
-}*/
