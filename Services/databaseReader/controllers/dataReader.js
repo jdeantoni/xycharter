@@ -21,12 +21,12 @@ async function getRenderServiceNameGraph(idGraph) {
     return resp.rows[0].servicename;
 }
 async function getAllGraphs() {
-    const resp =  await pool.query('SELECT idGraph FROM graphs')
+    const resp =  await pool.query('SELECT * FROM graphs')
     console.log("Renvois tout les id des graphes")
     return resp.rows
 }
 async function getAllDatasets() {
-    const resp =  await pool.query('SELECT idDataset FROM datasets')
+    const resp =  await pool.query('SELECT * FROM datasets')
     console.log("Renvois tout les id des datasets")
     return resp.rows
 }
@@ -37,50 +37,105 @@ async function getDataset(idDataset) {
     return resp.rows[0]
 }
 
+function minMax(datasetsSet){
+    var min = undefined, max = undefined
+    for (var dataSets of datasetsSet){
+        for (var datas of dataSets){
+            if ((typeof datas.value) == "number"){
+                if (min == undefined || datas.value < min){
+                    min = datas.value;
+                }
+                if (max == undefined || datas.value > max){
+                    max = datas.value;
+                }
+            }
+        }
+    }
+
+    if (min == undefined){
+        min = 0;
+    }
+    if (max == undefined){
+        max = 1;
+    }
+    return [min, max]
+}
+
 async function getDataForGraph(idGraph) {
     
-
-
     if(await isGraphTimeSeries(idGraph)){
         const resp = await getDatasetIdForGraph(idGraph)
+
+        let datasetsSet = []
+        for(let i =0;i<resp.length;i++){
+            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
+            datasetsSet.push(datas)
+        }
+
+        const [min, max] = minMax(datasetsSet);
+
         let datasets = []
         for(let i =0;i<resp.length;i++){
             let dataTimeSeries =[]
-            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
+            const datas = datasetsSet[i]
             let initialTime = datas.length === 0 ? 0 : Date.parse(datas[0].time)/1000
             for (let j = 0; j < datas.length; j++) {
-                const data = {
-                    x : Date.parse(datas[j].time)/1000 - initialTime,
-                    y : datas[j].value
-                };
+                var data;
+                if ((typeof datas[j].value) == "number"){
+                    data = {
+                        x : Date.parse(datas[j].time)/1000 - initialTime,
+                        y : datas[j].value
+                    };
+                } else {
+                    if (j != 0 && (datas[j - 1].value != (datas[j].value))){
+                        dataTimeSeries.push({
+                            x : Date.parse(datas[j].time)/1000 - initialTime - ((Date.parse(datas[j].time) - Date.parse(datas[j-1].time)) / 1000000),
+                            y : ((datas[j - 1].value == false) ? min : max)
+                        });
+                    }
+                    data = {
+                        x : Date.parse(datas[j].time)/1000 - initialTime,
+                        y : ((datas[j].value == false) ? min : max)
+                    };
+                }
+
                 dataTimeSeries.push(data)
             }
             datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
         }
 
-
         return datasets
-        
 
     } else {
-        const resp =  await pool.query('SELECT datajson FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
+        let datasets=[]
+        const resp =  await pool.query('SELECT datasets.datajson,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
         console.log("Renvois toute les data associées au graph "+idGraph)
-        console.log(resp.rows)
-        return resp.rows
+        for(i=0;i<resp.rows.length;i++){
+            datasets.push({name:resp.rows[i].name,datajson:resp.rows[i].datajson})
+        }
+        return datasets
     }
 }
 
 
+
+async function getAllTypeOfGraph(){
+    const resp =  await pool.query('select * from graphtype')
+    return resp.rows
+}
+
 async function isGraphTimeSeries(idGraph) {
     const resp =  await pool.query('SELECT timeseries FROM datasets,linkdatasetgraph WHERE datasets.idDataset = linkdatasetgraph.idDataset and linkdatasetgraph.idGraph = $1', [idGraph])
-    
-    return resp.rows[0].timeseries;
-
+    if(resp!==undefined){
+        return resp.rows[0].timeseries;
+    }
+    return false
 
 }
 
 async function getDatasetIdForGraph(idGraph){
     const resp = await pool.query('SELECT datasets.iddataset,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
+    
     return resp.rows;
 
 }
@@ -91,5 +146,6 @@ module.exports = {
     getAllDatasets,
     getAllGraphs,
     getDataForGraph,
-    getDataset
+    getDataset,
+    getAllTypeOfGraph
 }

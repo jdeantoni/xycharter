@@ -32,7 +32,7 @@ writeTimeSeriesDataRouter.get('/datawriter/timeseries', async (req, res, next) =
     }
 });
 
-writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("name").isString(),body("id").isString(),body("timestamp").isInt(),body("value").isInt()], async (req, res, next) => {
+writeTimeSeriesDataRouter.post('/datawriter/timeseries',[body("name").isString(),body("id").isString(),body("timestamp").isInt()||body("value").isInt()], async (req, res, next) => {
 
           /* 
       #swagger.description = 'degeu a refaire !'

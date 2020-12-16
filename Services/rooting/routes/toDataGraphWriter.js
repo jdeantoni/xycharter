@@ -25,4 +25,6 @@ dataGraphWriterRouter.post('/graphs/:graphId/points', [param('graphId').isInt(),
    next();
 });
 
+
+
 module.exports = dataGraphWriterRouter;

@@ -61,4 +61,12 @@ renderRouter.get('/graphs/:id', [query('type').matches(
 });
 
 
+
+renderRouter.get('/ping'
+   , async (req, res, next) => {
+
+      return res.status(200).send("ok");
+
+   });
+
 module.exports = renderRouter;

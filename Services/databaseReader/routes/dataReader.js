@@ -48,9 +48,9 @@ dataReaderRouter.get('/graphs/:id/renderServiceName'
     }
     */
 
-   return res.status(200).send(await dataReaderController.getRenderServiceNameGraph(req.params.id));
+        return res.status(200).send(await dataReaderController.getRenderServiceNameGraph(req.params.id));
 
-});
+    });
 //Tout les ids des graph
 dataReaderRouter.get('/graphs'
     , async(req, res, next) => {
@@ -116,30 +116,50 @@ dataReaderRouter.get('/datas/:id'
 });
 
 //Toute les data pour le graph id
-dataReaderRouter.get('/datareader/data/:id'
+dataReaderRouter.get('/graphs/:id/datas'
     , async(req, res, next) => {
-    /* 
-    #swagger.description = 'Get all data of dataSets of a graph'
-    #swagger.parameters['id'] = {
-        in: 'param',
-        description: 'The id of the graph',
-        required: true,
-        type: 'integer'
+
+    try {
+        /* 
+        #swagger.description = 'Get all data of dataSets of a graph'
+        #swagger.parameters['id'] = {
+            in: 'param',
+            description: 'The id of the graph',
+            required: true,
+            type: 'integer'
+            }
+        #swagger.tags = ['Graphs', 'DataSets']
+        */
+
+        /*
+        #swagger.responses[200] = {
+            description: 'Return all data of dataSets of the graph',
+            schema: { $ref: "#/definitions/allDatas" }
         }
-    #swagger.tags = ['Graphs', 'DataSets']
-    */
+        */
 
-    /*
-    #swagger.responses[200] = {
-        description: 'Return all data of dataSets of the graph',
-        schema: { $ref: "#/definitions/allDatas" }
+        return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
+    } catch (error) {
+        return res.status(404).send(error)
     }
-    */
-
-    return res.status(200).send(await dataReaderController.getDataForGraph(req.params.id));
 
 });
 
+
+//Toute les types de graphes
+dataReaderRouter.get('/graph/types'
+    , async (req, res, next) => {
+
+        return res.status(200).send(await dataReaderController.getAllTypeOfGraph());
+
+    });
+
+dataReaderRouter.get('/ping'
+    , async (req, res, next) => {
+
+        return res.status(200).send("ok");
+
+    });
 
 
 module.exports = dataReaderRouter;

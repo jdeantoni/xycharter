@@ -4,7 +4,7 @@ const writeDataSetController = require('../controllers/writeDataSet');
 
 const { body, param, validationResult } = require('express-validator');
 
-writeDataRouter.post('/datawriter',[body("points").isArray()]
+writeDataRouter.post('/dataSets',[body("points").isArray()]
    , async (req, res, next) => {
       /* 
       #swagger.description = 'Create a dataSet'
@@ -49,7 +49,7 @@ writeDataRouter.post('/datawriter',[body("points").isArray()]
 
 });
 
-writeDataRouter.put('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+writeDataRouter.put('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
       /* 
       #swagger.description = 'Modify a specific dataSet'
       #swagger.parameters['id'] = {

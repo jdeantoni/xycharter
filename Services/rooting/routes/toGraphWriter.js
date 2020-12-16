@@ -6,7 +6,7 @@ const { graphCharaValidator } = require('../controllers/graphCharaValidator.js')
 
 graphWriterRouter.post('/graphs', [body('type').matches(
    "histogramme|connectedLine|circlePoint|bezierCurve|doughnut"
-)]
+),body('name').isString()]
    , async(req, res, next) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -20,7 +20,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
    try {
       const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs", req.body)      
 
-      res.status(200).send(reponse.data.toString());
+      res.status(201).send(reponse.data.toString());
    } catch (error) {      
       res.status(501).send(error);
    }
