@@ -8,14 +8,9 @@ const { body, validationResult } = require('express-validator');
 writeTimeSeriesDataRouter.get('/dataSets/timeseries',
     async (req, res, next) => {
 
-   const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-         return res.status(400).json({ errors: errors.array() });
-   }
-
           /* 
       #swagger.description = 'Create a timeSerie dataSet'
-      #swagger.tags = ['DataSets TimeSeries']
+      #swagger.tags = ['DataSets']
       */
 
     try {
@@ -40,10 +35,31 @@ writeTimeSeriesDataRouter.get('/dataSets/timeseries',
 
 writeTimeSeriesDataRouter.post('/dataSets/timeseries',[body("id").isString(),body("timestamp").isInt(), body("value").isInt() || body("value".isBoolean())], async (req, res, next) => {
 
-          /* 
-      #swagger.description = 'degeu a refaire !'
-      #swagger.tags = ['DataSets']
-      */
+   // #swagger start
+    /* 
+    #swagger.path = '/dataSets/timeseries/'
+    #swagger.method = 'post'
+    #swagger.description = 'Modify a timeSerie dataSet'
+    #swagger.parameters['id'] = {
+      in: 'body',
+      description: 'The id of the dataSet to modify',
+      required: true,
+      type: 'integer'
+    }
+    #swagger.parameters['timestamp'] = {
+      in: 'body',
+      description: 'The timestamp of the data',
+      required: true,
+      type: 'integer'
+    }
+    #swagger.parameters['value'] = {
+      in: 'body',
+      description: 'The value of the data (int or boolean)',
+      required: true,
+      type: 'object'
+    }
+    #swagger.tags = ['DataSets']
+    */
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -58,6 +74,11 @@ writeTimeSeriesDataRouter.post('/dataSets/timeseries',[body("id").isString(),bod
     try {
         console.log("hii"+ req.body.name)
         await writeTimeSeries.writeTimeSeries(req.body.name,req.body.id,req.body.timestamp, req.body.value)
+
+      /*
+         #swagger.responses[201] = {
+         }
+      */
         return res.status(201).json()
     } catch (error) {
 
@@ -68,6 +89,7 @@ writeTimeSeriesDataRouter.post('/dataSets/timeseries',[body("id").isString(),bod
       */
         return res.status(500).send(error.message)
     }
+    // #swagger end
 });
 
 

@@ -14,7 +14,7 @@ graphWriterRouter.post('/graphs', [body('type').matches(
          required: true,
          type: 'string'
         }
-      #swagger.tags = ['Graph']
+      #swagger.tags = ['Graphs']
    */
 
    const errors = validationResult(req);
@@ -65,7 +65,7 @@ graphWriterRouter.put('/graphs/:id', [param('id').isInt()], async (req, res, nex
          type: 'object',
          schema: { $ref: "#/definitions/graph" }
         }
-      #swagger.tags = ['Graph']
+      #swagger.tags = ['Graphs']
    */
 
    const errors = validationResult(req);
@@ -113,7 +113,7 @@ graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, 
          required: true,
          type: 'integer'
         }
-      #swagger.tags = ['Graph']
+      #swagger.tags = ['Graphs']
    */
 
    const errors = validationResult(req);

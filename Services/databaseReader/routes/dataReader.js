@@ -148,6 +148,18 @@ dataReaderRouter.get('/graphs/:id/datas'
 //Toute les types de graphes
 dataReaderRouter.get('/typesOfGraph'
     , async (req, res, next) => {
+        /* 
+        #swagger.description = 'Get all types of graph'
+        #swagger.tags = ['GraphTypes']
+        */
+
+
+        /*
+        #swagger.responses[200] = {
+            description: 'Return all types of graph',
+            schema: { $ref: "#/definitions/graphTypes" }
+        }
+        */
 
         return res.status(200).send(await dataReaderController.getAllTypeOfGraph());
 

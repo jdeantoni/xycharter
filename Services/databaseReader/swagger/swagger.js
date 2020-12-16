@@ -69,7 +69,24 @@ const doc = {
         {
             "datajson": "[{\"label\":\"June\",\"value\":20},{\"label\":\"February\",\"value\":60},{\"label\":\"March\",\"value\":70},{\"label\":\"April\",\"value\":180},{\"label\":\"May\",\"value\":290}]"
         }
-      ]
+      ],
+      graphTypes: [
+        {
+            "idgraphtype": 1,
+            "graphtype": "histogramme",
+            "servicename": "XYCharter"
+        },
+        {
+            "idgraphtype": 2,
+            "graphtype": "connectedLine",
+            "servicename": "XYCharter"
+        },
+        {
+            "idgraphtype": 3,
+            "graphtype": "doughnut",
+            "servicename": "QuickChart"
+        }
+        ]
     }
 }
 

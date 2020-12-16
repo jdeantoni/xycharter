@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "title": "Graph API",
+    "description": "This API can create chart from dataSets"
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -12,144 +12,346 @@
     "http"
   ],
   "securityDefinitions": {},
-  "consumes": [],
-  "produces": [],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/graphs": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
+    "/graphs/": {
+      "post": {
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Creation of a graph",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "body",
+            "description": "Type of graph created : histogramme,connectedLine,doughnut,circlePoint or bezierCurve",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Return the id of the graph created"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "501": {
+            "description": "Return the error message"
           }
         }
       }
     },
-    "/graphsChara/{graphId}": {
+    "/graphs/{id}/": {
       "put": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "graphId",
-            "in": "path",
-            "required": true
-          }
+        "tags": [
+          "Graphs"
         ],
-        "responses": {}
-      }
-    },
-    "/graphs/{id}": {
-      "get": {
-        "tags": [],
-        "description": "",
+        "description": "Modify a specific graph",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          },
+          {
+            "name": "information to modify",
+            "in": "body",
+            "description": "Element of the graph to modify",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/graph"
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "MODIFY"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Suppression of a specific graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "DELETED"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "501": {
+            "description": "Return the error message"
           }
         }
       }
     },
     "/graphs/{graphId}/dataSet/{dataSetId}": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Link"
+        ],
+        "description": "Link a graph and a dataSet",
         "parameters": [
           {
             "name": "graphId",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "Id of the graph to link",
+            "type": "integer"
           },
           {
             "name": "dataSetId",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "Id of the dataSet to link",
+            "type": "integer"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "ADDED"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Link"
+        ],
+        "description": "Delete the link between a graph and a dataSet",
         "parameters": [
           {
             "name": "graphId",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "Id of the graph to unlink",
+            "type": "integer"
           },
+          {
+            "name": "dataSetId",
+            "in": "param",
+            "required": true,
+            "description": "Id of the dataSet to unlink",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "REMOVED"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/dataSets/": {
+      "post": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Create a dataSet",
+        "parameters": [
+          {
+            "name": "points",
+            "in": "body",
+            "description": "Point of the dataSet",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/points"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Return the id of the new dataSet"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/dataSets/{dataSetId}": {
+      "put": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Modify a specific dataSet",
+        "parameters": [
           {
             "name": "dataSetId",
             "in": "path",
             "required": true
+          },
+          {
+            "name": "id",
+            "in": "param",
+            "description": "The id of the dataSet to modify",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "information to modify",
+            "in": "body",
+            "description": "Element of the dataSet to modify",
+            "required": true,
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/dataSet"
+            }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "MODIFY"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
       }
     },
-    "/datawriter": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/datawriter/{id}": {
+    "/dataSets/{id}/": {
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Suppression of a specific dataSet",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true
+          },
+          {
+            "name": "idd",
+            "in": "param",
+            "description": "The id of the dataSet",
+            "required": true,
+            "type": "integer"
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Return \"The dataSet with id : {id} has been successfully deleted\""
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "500": {
+            "description": "Return the error message"
+          }
+        }
       }
     },
-    "/datas/timeseries": {
+    "/dataSets/timeseries": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Create a timeSerie dataSet",
         "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Return the id of the dataSet created"
+          },
+          "501": {
+            "description": "Return the error message"
+          }
+        }
+      }
+    },
+    "/dataSets/timeseries/": {
+      "post": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Modify a timeSerie dataSet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "description": "The id of the dataSet to modify",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "timestamp",
+            "in": "body",
+            "description": "The timestamp of the data",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "description": "The value of the data (int or boolean)",
+            "required": true,
+            "type": "object"
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
           },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
           "501": {
-            "description": "Not Implemented"
+            "description": "Return the error message"
           }
         }
       }
     },
-    "/datas/timeseries/{id}": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/graphs/{graphId}/points": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "DataSets",
+          "Graphs"
+        ],
+        "description": "Create a dataSet and add it to the graph automaticaly",
         "parameters": [
           {
             "name": "graphId",
@@ -157,71 +359,386 @@
             "required": true
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "description": "Return the dataSet id"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          },
+          "501": {
+            "description": "Return the error message"
+          }
+        }
       }
     },
-    "/datas": {
+    "/graphs": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Get the id of all graphs",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Return the id of all graphs in an array"
           }
         }
       }
     },
-    "/datas/{id}": {
+    "/graphs/{graphId}": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Graphs"
+        ],
+        "description": "Get all information about a graph",
         "parameters": [
           {
-            "name": "id",
+            "name": "graphId",
             "in": "path",
             "required": true
+          },
+          {
+            "name": "id",
+            "in": "param",
+            "description": "The id of the graph",
+            "required": true,
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Return the graph charas",
+            "schema": {
+              "$ref": "#/definitions/graph"
+            }
           }
         }
       }
     },
-    "/graphs/{id}/datas": {
+    "/dataSets": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Get the id of all dataSets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return the id of all dataSets"
+          }
+        }
+      }
+    },
+    "/dataSets/{id}": {
+      "get": {
+        "tags": [
+          "DataSets"
+        ],
+        "description": "Get all information about a dataSet",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "The id of the dataSet",
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Return all information about a dataSet",
+            "schema": {
+              "$ref": "#/definitions/dataSetRead"
+            }
+          }
+        }
+      }
+    },
+    "/graphs/{id}/data": {
+      "get": {
+        "tags": [
+          "Graphs",
+          "DataSets"
+        ],
+        "description": "Get all data of dataSets of a graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return all data of dataSets of the graph",
+            "schema": {
+              "$ref": "#/definitions/allDatas"
+            }
+          }
+        }
+      }
+    },
+    "/typesOfGraph": {
+      "get": {
+        "tags": [
+          "GraphTypes"
+        ],
+        "description": "Get all types of graph",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all types of graph",
+            "schema": {
+              "$ref": "#/definitions/graphTypes"
+            }
           }
         }
       }
     },
     "/graphs/{id}/render": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Render"
+        ],
+        "description": "Get a render for the graph",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "type of render (JPG|PNG)",
+            "required": true,
+            "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Return a JSON/PNG/JPG, image is in base64 format"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          }
+        }
       }
     }
   },
-  "definitions": {}
+  "definitions": {
+    "graph": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Super graph !"
+        },
+        "description": {
+          "type": "string",
+          "example": "A super graph"
+        },
+        "type": {
+          "type": "string",
+          "example": "circlePoint"
+        },
+        "showX": {
+          "type": "boolean",
+          "example": true
+        },
+        "showGrid": {
+          "type": "boolean",
+          "example": true
+        },
+        "xBounds": {
+          "type": "object",
+          "properties": {
+            "lowerBound": {
+              "type": "number",
+              "example": 10
+            },
+            "upperBound": {
+              "type": "number",
+              "example": 15.54
+            }
+          }
+        },
+        "xLegend": {
+          "type": "string",
+          "example": "My x axe"
+        },
+        "graphLegend": {
+          "type": "string",
+          "example": "My legend"
+        },
+        "backgroundColor": {
+          "type": "object",
+          "properties": {
+            "r": {
+              "type": "number",
+              "example": 12
+            },
+            "g": {
+              "type": "number",
+              "example": 13
+            },
+            "b": {
+              "type": "number",
+              "example": 14
+            },
+            "a": {
+              "type": "number",
+              "example": 15
+            }
+          }
+        },
+        "gridColor": {
+          "type": "object",
+          "properties": {
+            "r": {
+              "type": "number",
+              "example": 12
+            },
+            "g": {
+              "type": "number",
+              "example": 13
+            },
+            "b": {
+              "type": "number",
+              "example": 14
+            },
+            "a": {
+              "type": "number",
+              "example": 15
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "graph"
+      }
+    },
+    "points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "example": 750
+          },
+          "y": {
+            "type": "number",
+            "example": 602
+          }
+        }
+      },
+      "xml": {
+        "name": "points"
+      }
+    },
+    "dataSet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "dataSet name"
+        },
+        "description": {
+          "type": "string",
+          "example": "dataSet description"
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "example": "May"
+              },
+              "value": {
+                "type": "number",
+                "example": 190
+              }
+            }
+          }
+        }
+      },
+      "xml": {
+        "name": "dataSet"
+      }
+    },
+    "dataSetRead": {
+      "type": "object",
+      "properties": {
+        "iddataset": {
+          "type": "number",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "myDataSet"
+        },
+        "description": {
+          "type": "string",
+          "example": "It's my dataSet"
+        },
+        "creationdate": {
+          "type": "string",
+          "example": "2020-12-10T08:02:06.680Z"
+        },
+        "datajson": {
+          "type": "string",
+          "example": "[{\"label\":\"January\",\"value\":20},{\"label\":\"February\",\"value\":60},{\"label\":\"March\",\"value\":70},{\"label\":\"April\",\"value\":180},{\"label\":\"May\",\"value\":290}]"
+        }
+      },
+      "xml": {
+        "name": "dataSetRead"
+      }
+    },
+    "allDatas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datajson": {
+            "type": "string",
+            "example": "[{\"label\":\"June\",\"value\":20},{\"label\":\"February\",\"value\":60},{\"label\":\"March\",\"value\":70},{\"label\":\"April\",\"value\":180},{\"label\":\"May\",\"value\":290}]"
+          }
+        }
+      },
+      "xml": {
+        "name": "allDatas"
+      }
+    },
+    "graphTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "idgraphtype": {
+            "type": "number",
+            "example": 3
+          },
+          "graphtype": {
+            "type": "string",
+            "example": "doughnut"
+          },
+          "servicename": {
+            "type": "string",
+            "example": "QuickChart"
+          }
+        }
+      },
+      "xml": {
+        "name": "graphTypes"
+      }
+    }
+  }
 }
