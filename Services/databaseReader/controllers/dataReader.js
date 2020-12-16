@@ -37,25 +37,25 @@ async function getDataset(idDataset) {
     return resp.rows[0]
 }
 
-function minMax(datasetsSet){
+function minMax(datasetsSet){ //Generate the min and max value for the boolean dataset
     var min = undefined, max = undefined
     for (var dataSets of datasetsSet){
         for (var datas of dataSets){
             if ((typeof datas.value) == "number"){
-                if (min == undefined || datas.value < min){
+                if (min === undefined || datas.value < min){
                     min = datas.value;
                 }
-                if (max == undefined || datas.value > max){
+                if (max === undefined || datas.value > max){
                     max = datas.value;
                 }
             }
         }
     }
 
-    if (min == undefined){
+    if (min === undefined){
         min = 0;
     }
-    if (max == undefined){
+    if (max === undefined){
         max = 1;
     }
     return [min, max]
@@ -63,15 +63,15 @@ function minMax(datasetsSet){
 
 async function getDataForGraph(idGraph) {
     
-    if(await isGraphTimeSeries(idGraph)){
+    if(await isGraphTimeSeries(idGraph)){ //If the graph is a timeserie
         const resp = await getDatasetIdForGraph(idGraph)
 
-        let datasetsSet = []
+        let datasetsSet = [] //Get all the data of the datasets from the influx database
         for(let i =0;i<resp.length;i++){
             const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
             datasetsSet.push(datas)
         }
-
+        //Generation of the min and max
         const [min, max] = minMax(datasetsSet);
 
         let datasets = []
@@ -86,7 +86,7 @@ async function getDataForGraph(idGraph) {
                         x : Date.parse(datas[j].time)/1000 - initialTime,
                         y : datas[j].value
                     };
-                } else {
+                } else { //Generate JSON of the boolean dataset with the proper value
                     if (j != 0 && (datas[j - 1].value != (datas[j].value))){
                         dataTimeSeries.push({
                             x : Date.parse(datas[j].time)/1000 - initialTime - ((Date.parse(datas[j].time) - Date.parse(datas[j-1].time)) / 1000000),
@@ -98,7 +98,7 @@ async function getDataForGraph(idGraph) {
                         y : ((datas[j].value == false) ? min : max)
                     };
                 }
-
+                //Add the dataset to the list of datasets
                 dataTimeSeries.push(data)
             }
             datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
@@ -108,6 +108,7 @@ async function getDataForGraph(idGraph) {
 
     } else {
         let datasets=[]
+        //Send a SQL query to have all the informations of the datasets linked to the graph
         const resp =  await pool.query('SELECT datasets.datajson,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
         console.log("Renvois toute les data associées au graph "+idGraph)
         for(i=0;i<resp.rows.length;i++){

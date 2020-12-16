@@ -23,6 +23,7 @@ try {
 async function getTimeSeriesByIdDataSet(idDataSet) {
 
     const queryApi = client.getQueryApi(org)
+    //Get the data from the last hour for the specified dataset
     const query = `from(bucket: "${bucket}") |> range(start: -1h)
                    |> filter(fn: (r) => r["id"] == "${idDataSet}")`
     let dataTimeSeries = []

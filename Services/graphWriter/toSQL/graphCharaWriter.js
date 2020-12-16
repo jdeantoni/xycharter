@@ -17,12 +17,12 @@ const modifyCharas = async (graphId, characteristics) => {
 
         const response = JSON.parse(responseJSON);
 
-        Object.assign(response, characteristics);
+        Object.assign(response, characteristics); //Copy the characteristics to the response
 
         var chara = { ...response };
 
         for (const [key, value] of Object.entries(response)) {
-            if (value == "default"){
+            if (value === "default"){
                 delete chara[key];
             }
         }

@@ -3,6 +3,7 @@ const axios = require('axios').default;
 const renderRouter = express.Router();
 const { param, query, validationResult } = require('express-validator');
 
+//Redirect the request to the XYCharterRenderer or the QuickchartRenderer
 renderRouter.get('/graphs/:id', [query('type').matches(
    "PNG|JPG"
 ), param('id').isInt()]
@@ -35,11 +36,12 @@ renderRouter.get('/graphs/:id', [query('type').matches(
       return res.status(400).json({ errors: errors.array() });
    }
 
-
+      //Get the service to use for the graph
       const renderServiceName = await (await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/renderServiceName")).data;
 
       var address;
 
+      //Get the address of the corresponding renderer
       switch (renderServiceName) {
          case "XYCharter":
             address = process.env.XYCHARTERRENDER_ADDR;
