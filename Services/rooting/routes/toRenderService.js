@@ -14,11 +14,7 @@ renderRouter.get('/graphs/:id/render', [query('type').matches(
       }
 
       if (req.query.type === "JSON") {
-<<<<<<< HEAD
          const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/datas");
-=======
-         const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/data");
->>>>>>> dev
 
          return res.status(200).send(reponse.data[0].datajson);
       } else {
