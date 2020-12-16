@@ -80,7 +80,7 @@ var itemD = [];
 var itemTypeG = [];
 var idItemD = [];
 var itemGraph = [];
-axios.get("http://localhost:4000/data").then((response) => {
+axios.get("http://localhost:4000/dataSets").then((response) => {
   response.data.forEach((dataset) => {
     itemD.push(dataset.name);
     let name = dataset.name;

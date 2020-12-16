@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/tests.js"
+    "test": "mocha test/tests.js",
+    "swagger-autogen": "node ./swagger/swagger.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
     "mocha": "^8.2.0",
     "nock": "^13.0.4",
     "pg": "^8.5.1",
-    "uniqid": "^5.2.0"
+    "uniqid": "^5.2.0",
+    "swagger-autogen": "^1.1.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }

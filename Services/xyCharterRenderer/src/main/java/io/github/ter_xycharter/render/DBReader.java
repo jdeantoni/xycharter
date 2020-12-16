@@ -60,7 +60,7 @@ public class DBReader {
         try {
             System.out.println("Demande de toutes les data des différents dataset associé au graphe");
             //Get query to DatabaseReader service
-            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graphs/" + idGraph + "/data");
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graphs/" + idGraph + "/datas");
             URLConnection urlConnection = url.openConnection();
             //Get the response from the DatabaseReader Service
             BufferedReader in = new BufferedReader(

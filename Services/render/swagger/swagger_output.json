@@ -1,0 +1,57 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Render",
+    "description": "This service render a image for graphs"
+  },
+  "host": "localhost:3060",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/jpg",
+    "application/png"
+  ],
+  "paths": {
+    "/graphs/{id}": {
+      "get": {
+        "tags": [
+          "Render"
+        ],
+        "description": "Get a render for the graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "type of render (JPG|PNG)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Return the image in jpg type"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

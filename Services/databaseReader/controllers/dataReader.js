@@ -119,11 +119,6 @@ async function getDataForGraph(idGraph) {
 }
 
 
-async function getTypeOfGraph(idGraph){
-    const resp =  await pool.query('select graphtype from graphtype where idgraphtype = (select idgraphtype from graphs where idgraph = $1)', [idGraph])
-    console.log("Renvois le type du graphe "+idGraph)
-    return resp.rows
-}
 
 async function getAllTypeOfGraph(){
     const resp =  await pool.query('select * from graphtype')
@@ -153,6 +148,5 @@ module.exports = {
     getAllGraphs,
     getDataForGraph,
     getDataset,
-    getTypeOfGraph,
     getAllTypeOfGraph
 }
