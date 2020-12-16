@@ -17,7 +17,7 @@ dataGraphWriterRouter.post('/graphs/:graphId/points', [param('graphId').isInt(),
       await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.graphId + "/dataSet/" + dataSetId)
       
 
-      res.status(200).send(dataSetId);
+      res.status(200).send(dataSetId.toString());
    } catch (error) {      
       res.status(501).send(error);
    }
