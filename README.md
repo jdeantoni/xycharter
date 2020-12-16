@@ -1,4 +1,8 @@
-# XY Charter - TER Equipe 13
+# API XY Charter - TER Equipe 13
+
+# Introduction
+
+This API has been created to be able to render 2D graphs, you can use it to render different type of graphs !
 
 # User Manual
 - [How to create a new chart](#Example-of-how-to-create-a-new-chart) 
@@ -6,6 +10,7 @@
 - [How to create a timeseries data](#Example-of-how-to-add-timeseries-data) 
 - [How to add data in a chart](#Example-of-how-to-add-data-in-a-chart) 
 - [How to visualize a chart](#Example-of-how-to-visualize-a-chart) 
+- [Complete example with a doughnut](#Complete-example-with-a-creation-of-a-doughnut) 
 ##  Chart
 
 There is four different types of chart that you can create with the API 
@@ -127,6 +132,86 @@ We should see in the response "ADDED" to be sure that the datasets has been adde
     ```
     **Response** 
     ```json
-        "{jpg in base64}" 
+        {jpg in base64}  
     ```
 The response will be the image jpg encoded in base 64
+
+## Complete example with a creation of a doughnut
+Learn how to render a graph in only 4 steps !
+
+In this section we will do a complete example with the creation of a doughnut and his data associated, Let's go !
+### 1- Creating a chart of type “doughnut” 
+- **URL**
+    ```json
+        HTTP : POST http://URLAPI/graphs
+    ```
+    **body**
+    ```json
+    {
+        "name" : "graphDoughnut",
+        "type" : "doughnut"
+    }
+    ```
+    **Response** 
+    ```json
+        "1" 
+    ```
+### 2- Creating a dataset for the doughnut 
+- **URL**
+    ```json
+        HTTP : POST http://URLAPI/dataSets
+    ```
+    **body**
+    ```json
+    {
+        "points" :  [
+        {
+          "label": "January",
+          "value": 50
+        },
+        {
+          "label": "February",
+          "value": 60
+        },
+        {
+          "label": "March",
+          "value": 70
+        },
+        {
+          "label": "April",
+          "value": 180
+        },
+        {
+          "label": "May",
+          "value": 190
+        }
+      ]
+
+    }
+    ```
+    **Response** 
+    ```json
+        "1" 
+    ```
+### 3- Associate the dataset and the graph doughnut 
+- **URL**
+    ```json
+        HTTP : POST http://URLAPI//graphs/1/dataSet/1
+    ```
+ 
+    **Response** 
+    ```json
+        "ADDED" 
+    ```
+### 4- Visualize the doughnut !
+- **URL**
+    ```json
+        HTTP : GET /graphs/1/render?type=JPG
+    ```
+ 
+    **Response** 
+    ```json
+        "{jpg in base64}"
+    ```
+    Here is the doughnut that we have created 
+    ![Image](https://quickchart.io/chart?bkg=white&c={type:%27pie%27,data:{labels:[%27January%27,%27February%27,%27March%27,%27April%27,%20%27May%27],datasets:[{data:[50,60,70,180,190]}]}} "doughnut") 
