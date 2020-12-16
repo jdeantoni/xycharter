@@ -1,8 +1,10 @@
 const axios = require('axios').default;
 
+
 const renderFromQC = async (id, charas) => {
     //Get all the data of the graph
-    const graphDatas = await (await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + id)).data;
+    const graphDatas = await (await axios.get(process.env.DBREADER_ADDR + "/graphs/" + id + "/data")).data;
+
 
     //Initialization of the labels
     var labels = new Set();

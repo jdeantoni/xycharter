@@ -3,7 +3,7 @@ const writeDataRouter = express.Router();
 const deleteDataSetController = require('../controllers/deleteDataSet');
 const { body,param, validationResult } = require('express-validator');
 
-writeDataRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+writeDataRouter.delete('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
