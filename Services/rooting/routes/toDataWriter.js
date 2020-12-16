@@ -3,7 +3,7 @@ const axios = require('axios').default;
 const dataWriterRouter = express.Router();
 const { body,param, validationResult } = require('express-validator');
 
-dataWriterRouter.post('/datawriter', [body("points").isArray()]
+dataWriterRouter.post('/dataSets', [body("points").isArray()]
    , async(req, res, next) => {	
 
    const errors = validationResult(req);	
@@ -13,7 +13,7 @@ dataWriterRouter.post('/datawriter', [body("points").isArray()]
 
 
    try {
-      const reponse = await axios.post(process.env.DATAWRITER_ADDR + "/datawriter", req.body )
+      const reponse = await axios.post(process.env.DATAWRITER_ADDR + "/dataSets", req.body )
 
       res.status(200).send(reponse.data.toString());	      
    } catch (error) {      	
@@ -23,14 +23,14 @@ dataWriterRouter.post('/datawriter', [body("points").isArray()]
    next();	
 });
 
-dataWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+dataWriterRouter.delete('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
    const errors = validationResult(req);	
    if (!errors.isEmpty()) {	
       return res.status(400).json({ errors: errors.array() });	
    }	
 
    try {
-      const reponse = await axios.delete(process.env.DATAWRITER_ADDR + "/datawriter/" + req.params.id);
+      const reponse = await axios.delete(process.env.DATAWRITER_ADDR + "/dataSets/" + req.params.id);
 
       res.status(200).send(reponse.data.toString());	      
    } catch (error) {      	
@@ -41,7 +41,7 @@ dataWriterRouter.delete('/datawriter/:id', [param('id').isInt()], async (req, re
 });
 
 
-dataWriterRouter.put('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+dataWriterRouter.put('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -49,7 +49,7 @@ dataWriterRouter.put('/datawriter/:id', [param('id').isInt()], async (req, res, 
    }
 
    try {
-      const reponse = await axios.put(process.env.DATAWRITER_ADDR + "/datawriter/" + req.params.id, req.body)
+      const reponse = await axios.put(process.env.DATAWRITER_ADDR + "/dataSets/" + req.params.id, req.body)
    
       res.status(201).send("MODIFY");
    } catch (error) {
@@ -57,19 +57,19 @@ dataWriterRouter.put('/datawriter/:id', [param('id').isInt()], async (req, res, 
    }
 });
 
-dataWriterRouter.get('/datas/timeseries', async (req, res, next) => {
+dataWriterRouter.get('/dataSets/timeseries', async (req, res, next) => {
 
    try {
-      const reponse = await axios.get(process.env.DATAWRITER_ADDR + "/datawriter/timeseries")
-      return res.status(201).send(reponse.data)
+      const reponse = await axios.get(process.env.DATAWRITER_ADDR + "/dataSets/timeseries")
+      return res.status(201).json(reponse.data)
    } catch (error) {
-      return res.status(501).send(error)
+      return res.status(501).json(error)
    }
 });
 
 
 
-dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString()], async (req, res, next) => {
+dataWriterRouter.post('/dataSets/timeseries', async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -77,10 +77,10 @@ dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString()], async (r
    }
    
    try {
-      const reponse = await axios.get(process.env.DATAWRITER_ADDR + "/datawriter/timeseries", {"id" : req.param.id, "timestamp" : req.body.timestamp, "value" : req.body.data})
-      return res.status(201).send(reponse.data)
+      const reponse = await axios.post(process.env.DATAWRITER_ADDR + "/dataSets/timeseries", req.body)
+      return res.status(201).json(reponse.data)
    } catch (error) {
-      return res.status(501).send(error)
+      return res.status(501).json(error)
    }
 });
 
