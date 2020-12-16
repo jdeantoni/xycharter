@@ -31,7 +31,7 @@ const graphAddDataSet = async (graphId, dataSetId) => {
 
 const graphRemoveDataSet = async (graphId, dataSetId) => {
     try {
-        //Suppression du lien entre le graph et le dataSet
+        //Delete the link between the graph and the dataset
         await pool.query('DELETE FROM linkDataSetGraph WHERE idgraph = ($1) AND iddataset = ($2)', [graphId, dataSetId]);
     } catch (err) {
         throw SQLUnknowError(err);
