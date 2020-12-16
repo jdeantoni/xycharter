@@ -57,19 +57,19 @@ dataWriterRouter.put('/dataSets/:id', [param('id').isInt()], async (req, res, ne
    }
 });
 
-dataWriterRouter.get('/datas/timeseries', async (req, res, next) => {
+dataWriterRouter.get('/dataSets/timeseries', async (req, res, next) => {
 
    try {
       const reponse = await axios.get(process.env.DATAWRITER_ADDR + "/dataSets/timeseries")
-      return res.status(201).send(reponse.data)
+      return res.status(201).json(reponse.data)
    } catch (error) {
-      return res.status(501).send(error)
+      return res.status(501).json(error)
    }
 });
 
 
 
-dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString()], async (req, res, next) => {
+dataWriterRouter.post('/dataSets/timeseries', async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -77,10 +77,10 @@ dataWriterRouter.post('/datas/timeseries/:id',[param("id").isString()], async (r
    }
    
    try {
-      const reponse = await axios.get(process.env.DATAWRITER_ADDR + "/dataSets/timeseries", {"id" : req.param.id, "timestamp" : req.body.timestamp, "value" : req.body.data})
-      return res.status(201).send(reponse.data)
+      const reponse = await axios.post(process.env.DATAWRITER_ADDR + "/dataSets/timeseries", req.body)
+      return res.status(201).json(reponse.data)
    } catch (error) {
-      return res.status(501).send(error)
+      return res.status(501).json(error)
    }
 });
 
