@@ -15,14 +15,22 @@ This API has been created to be able to render 2D graphs, you can use it to rend
 ##  Chart
 
 There is four different types of chart that you can create with the API 
+
+#### histogramme
+<img src="./ressources/histogramme.jpeg" style="width:800px;"/>
+
+
 #### connectedLine
--- image
+<img src="./ressources/connectedLine.jpeg" style="width:800px;"/>
+
 #### bezierCurve
 -- image
+
 #### circlePoint
--- image
+<img src="./ressources/circlePoint.jpg" style="width:800px;"/>
+
 #### doughnut
--- image
+<img src="./ressources/doughnut.png" style="width:800px;"/>
 
 ## Example of how to create a new chart 
 **URL**
@@ -87,7 +95,7 @@ There is four different types of chart that you can create with the API
 ### 1 - Get a key
 - **URL**
     ```json
-        HTTP : POST http://URLAPI/dataSets/timeseries
+        HTTP : GET http://URLAPI/dataSets/timeseries
     ```
     **Response** 
     ```json
@@ -215,4 +223,8 @@ In this section we will do a complete example with the creation of a doughnut an
         "{jpg in base64}"
     ```
     Here is the doughnut that we have created 
-    ![Image](https://quickchart.io/chart?bkg=white&c={type:%27pie%27,data:{labels:[%27January%27,%27February%27,%27March%27,%27April%27,%20%27May%27],datasets:[{data:[50,60,70,180,190]}]}} "doughnut") 
+
+    ![Image](https://quickchart.io/chart?bkg=white&c={type:'doughnut',data:{labels:['January','February','March','April','May'],datasets:[{data:[50,60,70,180,190]}]},options:{plugins:{doughnutlabel:{}}}} "doughnut") 
+
+
+    Don't forget, a graph can have several datasets and a dataset several graphs.
