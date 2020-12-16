@@ -5,20 +5,20 @@ const writeDataSetController = require('../controllers/writeDataSet');
 const { body, param, validationResult } = require('express-validator');
 
 //Création d'un jeux de donnée
-writeDataRouter.post('/datawriter',[body("name").isString(),body("points").isArray()]
+writeDataRouter.post('/dataSets',[body("points").isArray()]
    , async (req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
          return res.status(400).json({ errors: errors.array() });
    }
-   let id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points);
+   let id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points, false);
    return res.status(201).send(id);
 
 });
    
 //modification d'un jeux de donnée
-writeDataRouter.put('/datawriter/:id', [param('id').isInt()], async (req, res, next) => {
+writeDataRouter.put('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 
 const renderFromQC = async (id, charas) => {    
-    const graphDatas = await (await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + id)).data;
+    const graphDatas = await (await axios.get(process.env.DBREADER_ADDR + "/graphs/" + id + "/data")).data;
 
     var labels = new Set();
     for (var dataSet of graphDatas){

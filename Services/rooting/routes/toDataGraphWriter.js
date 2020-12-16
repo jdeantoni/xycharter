@@ -13,7 +13,7 @@ dataGraphWriterRouter.post('/graphs/:graphId/points', [param('graphId').isInt(),
    }
 
    try {
-      const dataSetId = await (await axios.post(process.env.DATAWRITER_ADDR + "/datawriter", req.body )).data;
+      const dataSetId = await (await axios.post(process.env.DATAWRITER_ADDR + "/dataSets", req.body )).data;
       const reponse = await axios.post(process.env.GRAPHWRITER_ADDR + "/graphs/" + req.params.graphId + "/dataSet/" + dataSetId)
       
 

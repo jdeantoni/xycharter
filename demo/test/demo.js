@@ -30,12 +30,12 @@ const sendData = () => {
     }
 
     console.log(MAGENTA_COLOR, "Le client envoie des données : ", YELLOW_COLOR, dataClient)
-    axios.post(rooting + "/datawriter/timeseries", dataClient);
+    axios.post(rooting + "/dataSets/timeseries", dataClient);
 
 }
 
 
-axios.get(rooting + "/datawriter/timeseries")
+axios.get(rooting + "/dataSets/timeseries")
     .then((response) => {
         console.log(MAGENTA_COLOR, "Le client récupère la clè du dataset : ", YELLOW_COLOR, response.data)
         idDataSet = response.data

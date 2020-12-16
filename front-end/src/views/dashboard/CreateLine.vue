@@ -88,7 +88,7 @@ axios.get("http://localhost:4000/datas").then((response) => {
     idItemD.push({ name: name, id: id });
   });
 });
-axios.get("http://localhost:4000/graph/types").then((response) => {
+axios.get("http://localhost:4000/typesOfGraph").then((response) => {
   for (let i = 0; i < response.data.length; i++) {
     itemTypeG.push(response.data[i].graphtype);
   }

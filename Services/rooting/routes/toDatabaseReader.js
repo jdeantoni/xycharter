@@ -50,14 +50,14 @@ databaseReaderRouter.get('/datas/:id'
 //Toute les data pour le graph id
 databaseReaderRouter.get('/graphs/:id/datas'
     , async (req, res, next) => {
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datareader/data/" + req.params.id);
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/data");
 
         return res.status(200).send(reponse.data);
     });
 
-databaseReaderRouter.get('/graph/types'
+databaseReaderRouter.get('/typesOfGraph'
     , async (req, res, next) => {
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/graph/types");
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/typesOfGraph");
 
         return res.status(200).send(reponse.data);
     });

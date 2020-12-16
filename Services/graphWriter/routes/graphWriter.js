@@ -6,7 +6,7 @@ const { body, param, validationResult } = require('express-validator');
 //Création d'un graph
 graphWriterRouter.post('/graphs', [body('type').matches(
    "histogramme|connectedLine|doughnut|circlePoint|bezierCurve"
-),body("name").isString()], async(req, res, next) => {
+)], async(req, res, next) => {
 
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
@@ -61,12 +61,5 @@ graphWriterRouter.delete('/graphs/:id', [param('id').isInt()], async (req, res, 
 
    next();
 });
-
-graphWriterRouter.get('/ping'
-   , async (req, res, next) => {
-
-      return res.status(200).send("ok");
-
-   });
 
 module.exports = graphWriterRouter;
