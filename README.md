@@ -5,6 +5,7 @@
 This API has been created to be able to render 2D graphs, you can use it to render different type of graphs !
 
 # User Manual
+- [Type of graph](#Chart)
 - [How to create a new chart](#Example-of-how-to-create-a-new-chart) 
 - [How to create a new data](#Example-of-how-to-add-new-data) 
 - [How to create a timeseries data](#Example-of-how-to-add-timeseries-data) 
@@ -132,7 +133,7 @@ We should see in the response "ADDED" to be sure that the datasets has been adde
     ```
     **Response** 
     ```json
-        {jpg in base64}  
+        "{jpg in base64}"  
     ```
 The response will be the image jpg encoded in base 64
 
@@ -196,7 +197,7 @@ In this section we will do a complete example with the creation of a doughnut an
 ### 3- Associate the dataset and the graph doughnut 
 - **URL**
     ```json
-        HTTP : POST http://URLAPI//graphs/1/dataSet/1
+        HTTP : POST http://URLAPI/graphs/1/dataSet/1
     ```
  
     **Response** 
