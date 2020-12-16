@@ -26,9 +26,9 @@ databaseReaderRouter.get('/graphs/:id'
 
     });
 //Tout les jeux de données
-databaseReaderRouter.get('/datas'
+databaseReaderRouter.get('/data'
     , async (req, res, next) => {
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datas");
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/data");
 
         var tab = [];
 
@@ -40,24 +40,28 @@ databaseReaderRouter.get('/datas'
     });
 
 //Jeu de donnée id
-databaseReaderRouter.get('/datas/:id'
+databaseReaderRouter.get('/data/:id'
     , async (req, res, next) => {
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/datas/" + req.params.id);
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/data/" + req.params.id);
 
         return res.status(200).send(reponse.data);
     });
 
 //Toute les data pour le graph id
-databaseReaderRouter.get('/graphs/:id/datas'
+databaseReaderRouter.get('/graphs/:id/data'
     , async (req, res, next) => {
+<<<<<<< HEAD
         const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/datas");
+=======
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/data");
+>>>>>>> dev
 
         return res.status(200).send(reponse.data);
     });
 
-databaseReaderRouter.get('/graph/types'
+databaseReaderRouter.get('/typesOfGraph'
     , async (req, res, next) => {
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/graph/types");
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/typesOfGraph");
 
         return res.status(200).send(reponse.data);
     });

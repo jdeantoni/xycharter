@@ -3,8 +3,7 @@ const writeDataRouter = express.Router();
 const deleteDataSetController = require('../controllers/deleteDataSet');
 const { body,param, validationResult } = require('express-validator');
 
-writeDataRouter.delete('/datawriter/:idd', [param('idd').isInt()], async (req, res, next) => {
-  // #swagger start
+writeDataRouter.delete('/dataSets/:id', [param('id').isInt()], async (req, res, next) => {
 
   /*
     #swagger.path = '/datawriter/{idd}'

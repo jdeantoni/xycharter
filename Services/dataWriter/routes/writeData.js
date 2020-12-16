@@ -30,7 +30,7 @@ writeDataRouter.post('/dataSets',[body("points").isArray()]
       }
 
       try {
-            let id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points);
+            let id = await writeDataSetController.writeDataSet(req.body.name, req.body.description, req.body.points, false);
 
             /*
             #swagger.responses[201] = {

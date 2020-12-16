@@ -14,7 +14,11 @@ renderRouter.get('/graphs/:id/render', [query('type').matches(
       }
 
       if (req.query.type === "JSON") {
+<<<<<<< HEAD
          const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/datas");
+=======
+         const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id + "/data");
+>>>>>>> dev
 
          return res.status(200).send(reponse.data[0].datajson);
       } else {
@@ -22,13 +26,5 @@ renderRouter.get('/graphs/:id/render', [query('type').matches(
          return res.status(200).send(response.data);
       }
    });
-
-renderRouter.get('/ping'
-   , async (req, res, next) => {
-
-      return res.status(200).send("ok");
-
-   });
-
 
 module.exports = renderRouter;

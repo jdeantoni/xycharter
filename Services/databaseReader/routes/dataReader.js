@@ -70,7 +70,7 @@ dataReaderRouter.get('/graphs'
 
 });
 //Tout ids des jeux de données
-dataReaderRouter.get('/datas'
+dataReaderRouter.get('/dataSets'
     , async(req, res, next) => {
     /* 
     #swagger.description = 'Get the id of all dataSets'
@@ -90,7 +90,7 @@ dataReaderRouter.get('/datas'
 });
 
 //Jeu de donnée id
-dataReaderRouter.get('/datas/:id'
+dataReaderRouter.get('/dataSets/:id'
     , async(req, res, next) => {
     /* 
     #swagger.description = 'Get all information about a dataSet'
@@ -102,7 +102,6 @@ dataReaderRouter.get('/datas/:id'
         }
     #swagger.tags = ['DataSets']
     */
-
 
     /*
     #swagger.responses[200] = {
@@ -147,17 +146,10 @@ dataReaderRouter.get('/graphs/:id/datas'
 
 
 //Toute les types de graphes
-dataReaderRouter.get('/graph/types'
+dataReaderRouter.get('/typesOfGraph'
     , async (req, res, next) => {
 
         return res.status(200).send(await dataReaderController.getAllTypeOfGraph());
-
-    });
-
-dataReaderRouter.get('/ping'
-    , async (req, res, next) => {
-
-        return res.status(200).send("ok");
 
     });
 
