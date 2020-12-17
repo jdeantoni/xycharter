@@ -60,7 +60,7 @@ There is four different types of chart that you can create with the API
 
 #### bezierCurve
 
-<img src="./ressources/bezier.jpeg" style="width:800px;"/>
+<img src="./ressources/bezier.jpg" style="width:800px;"/>
 
 #### circlePoint
 <img src="./ressources/circlePoint.jpg" style="width:800px;"/>
