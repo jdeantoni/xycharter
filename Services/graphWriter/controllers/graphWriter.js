@@ -17,6 +17,8 @@ const modifyGraph = async (id, graph) => {
     delete graphCara.description;
     delete graphCara.type;
 
+    console.log(graphCara);
+
     await graphWriterSQL.modifyGraph(id, graph.type, graph.name, graph.description, graphCara);
 }
 

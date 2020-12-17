@@ -1,0 +1,56 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Graph Writer",
+    "description": "This service render a image for graphs who using a quickChart graph"
+  },
+  "host": "localhost:3050",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/jpg"
+  ],
+  "paths": {
+    "/graphs/{id}": {
+      "get": {
+        "tags": [
+          "Render"
+        ],
+        "description": "Get a render for the graph",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "param",
+            "required": true,
+            "description": "The id of the graph",
+            "type": "integer"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "type of render (JPG|PNG)",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Return the image in jpg type"
+          },
+          "400": {
+            "description": "Return the validation error array from express validator"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}

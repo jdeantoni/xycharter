@@ -9,8 +9,31 @@ renderRouter.get('/graphs/:id', [query('type').matches(
 ), param('id').isInt()]
    , async(req, res, next) => {
 
+   /* 
+      #swagger.description = 'Get a render for the graph'
+      #swagger.parameters['id'] = {
+         in: 'param',
+         description: 'The id of the graph',
+         required: true,
+         type: 'integer'
+        }
+      #swagger.parameters['type'] = {
+         in: 'query',
+         description: 'type of render (JPG|PNG)',
+         required: true,
+         type: 'string'
+        }
+      #swagger.tags = ['Render']
+   */
+
+
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
+      /*
+      #swagger.responses[400] = {
+         description: 'Return the validation error array from express validator'
+      }
+      */
       return res.status(400).json({ errors: errors.array() });
    }
 
@@ -27,10 +50,23 @@ renderRouter.get('/graphs/:id', [query('type').matches(
    
 
    res.setHeader("Content-Type", "image/jpg");
+   /*
+   #swagger.responses[201] = {
+      description: 'Return the image in jpg type'
+   }
+   */
    res.status(201).send(reponse);
    
    next();
 });
 
+
+
+renderRouter.get('/ping'
+   , async (req, res, next) => {
+
+      return res.status(200).send("ok");
+
+   });
 
 module.exports = renderRouter;

@@ -61,6 +61,19 @@ public class Renderer {
     }
 
 
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    public @ResponseBody String ping() throws ParseException {
+        return "ok";
+
+    }
+
+
+    /**
+     *
+     * @param figure Figure of the graph
+     * @param points Array of all the points to add to the figure
+     * @author Fabrice SIMON
+     */
     public void addPoints(Figure figure,JSONArray points){
         for (Object o : points) {
             JSONObject point = (JSONObject) o;

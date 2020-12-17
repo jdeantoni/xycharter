@@ -14,6 +14,12 @@
           required
         ></v-text-field>
 
+        
+        <v-text-field
+          v-model="description"
+          label="Description"
+        ></v-text-field>
+
         <validation-provider v-slot="{ errors }" name="select" rules="required">
           <v-select
             :items="itemsTypeGraph"
@@ -41,7 +47,7 @@
           class="mr-4"
           type="submit"
           @click="
-            save(typeGraphSelected, dataSetSelected, name);
+            save(typeGraphSelected, description,dataSetSelected, name);
             snackbar = true;
           "
           :disabled="invalid"
@@ -80,7 +86,7 @@ var itemD = [];
 var itemTypeG = [];
 var idItemD = [];
 var itemGraph = [];
-axios.get("http://localhost:4000/datas").then((response) => {
+axios.get(process.env.VUE_APP_ROOTING_ADDR + "/dataSets").then((response) => {
   response.data.forEach((dataset) => {
     itemD.push(dataset.name);
     let name = dataset.name;
@@ -88,7 +94,7 @@ axios.get("http://localhost:4000/datas").then((response) => {
     idItemD.push({ name: name, id: id });
   });
 });
-axios.get("http://localhost:4000/graph/types").then((response) => {
+axios.get(process.env.VUE_APP_ROOTING_ADDR + "/typesOfGraph").then((response) => {
   for (let i = 0; i < response.data.length; i++) {
     itemTypeG.push(response.data[i].graphtype);
   }
@@ -116,36 +122,45 @@ export default {
     labelEdit: "Modify options",
     padding: 8,
     radius: 10,
+    description:"",
     value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
     width: 800,
-    save: async function (typeGraphSelected, dataSetSelected, name) {
+    save: async function (typeGraphSelected, description, dataSetSelected, name) {
       const graphCreation = {
         type: typeGraphSelected,
         name: name,
-        description: "No description available",
+        description: description,
       };
-      axios.post("http://localhost:4000/graphs", graphCreation).then((response) => {
-        axios.get("http://localhost:4000/graphs").then((response) => {
-          response.data.forEach((graph) => {
-            let name = graph.name;
-            let id = graph.idgraph;
-            itemGraph.push({ name: name, id: id });
-          });
-          let idDataSet=[]
-          
-          if (dataSetSelected !== undefined) {
-            idDataSet = idItemD.filter(dataset => dataSetSelected.indexOf(dataset.name) !== -1);
-          }
-          let idGraph = itemGraph.find(graph => graph.name === name)
-          
-          if (dataSetSelected !== undefined) {
-            for (let i = 0; i < idDataSet.length; i++) {
-               axios.post(
-                "http://localhost:4000/graphs/" + idGraph.id + "/dataSet/" + idDataSet[i].id
-              );
-            }
-          }
+       await axios.post(
+        process.env.VUE_APP_ROOTING_ADDR + "/graphs",
+        graphCreation
+      );
+      await axios.get(process.env.VUE_APP_ROOTING_ADDR + "/graphs").then((response) => {
+        response.data.forEach((graph) => {
+          let name = graph.name;
+          let id = graph.idgraph;
+          itemGraph.push({ name: name, id: id });
         });
+        let idDataSet = [];
+
+        if (dataSetSelected !== undefined) {
+          idDataSet = idItemD.filter(
+            (dataset) => dataSetSelected.indexOf(dataset.name) !== -1
+          );
+        }
+        let idGraph = itemGraph.find((graph) => graph.name === name);
+
+        if (dataSetSelected !== undefined) {
+          for (let i = 0; i < idDataSet.length; i++) {
+              axios.post(
+                process.env.VUE_APP_ROOTING_ADDR +
+                  "/graphs/" +
+                  idGraph.id +
+                  "/dataSet/" +
+                  idDataSet[i].id
+              );
+          }
+        }
       });
     },
   }),

@@ -48,7 +48,7 @@ public class Graph {
                 figure.rendererList.add(new CirclePointRenderer(i -> 5));
                 break;
             case BEZIERCURVE:
-                figure.rendererList.add(new ConnectedLineFigureRenderer());
+                figure.rendererList.add(new CirclePointRenderer(i -> 5));
                 figure.rendererList.add(new BezierCurveFigureRenderer());
                 break;
         }

@@ -47,7 +47,8 @@ public class DBReader {
     public static JSONArray getAllDataForGraph(String idGraphe){
         try {
             System.out.println("Demande de toutes les data des différents dataset associé au graphe");
-            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/datareader/data/" + idGraphe);
+            //Get query to DatabaseReader service
+            URL url = new URL(dotenv.get("DBREADER_ADDR") + "/graphs/" + idGraphe + "/datas");
             URLConnection urlConnection = url.openConnection();
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(

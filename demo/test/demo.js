@@ -11,31 +11,32 @@ var uniqid  = require('uniqid')
 const { timeStamp } = require('console');
 
 
-const rooting = "http://localhost:4020"
+const rooting = "http://localhost:4000"
 
-console.log("**************** DEMO *****************")
+console.log("**************** Demo client send integer data timeseries *****************")
 
 var idDataSet;
 var dataClient;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
+
 const sendData = () => {
     
     dataClient = {
-        name: "dataSet2",
+        name: "dataSetTimeSeries",
         id: idDataSet.toString(),
         timestamp: parseInt(Date.now() / 1000),
         value: getRandomInt(1000)
     }
 
     console.log(MAGENTA_COLOR, "Le client envoie des données : ", YELLOW_COLOR, dataClient)
-    axios.post(rooting + "/datawriter/timeseries", dataClient);
+    axios.post(rooting + "/dataSets/timeseries", dataClient);
 
 }
 
 
-axios.get(rooting + "/datawriter/timeseries")
+axios.get(rooting + "/dataSets/timeseries")
     .then((response) => {
         console.log(MAGENTA_COLOR, "Le client récupère la clè du dataset : ", YELLOW_COLOR, response.data)
         idDataSet = response.data

@@ -10,7 +10,7 @@ const pool = new Pool({
     port: configPostgre.port
 })
 
-const writeDataSet = async (name, description, date, points) => {
+const writeDataSet = async (name, description, date, points, isTimeSeries) => {
     if (name == undefined){
         name = "";
     }
@@ -20,7 +20,7 @@ const writeDataSet = async (name, description, date, points) => {
     }
 
     try {
-        const result = await pool.query('INSERT INTO datasets (name, description, creationDate, datajson) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, date, JSON.stringify(points)]);
+        const result = await pool.query('INSERT INTO datasets (name, description, creationDate,timeseries, datajson) VALUES ($1, $2, $3, $4,$5) RETURNING *', [name, description, date,isTimeSeries, JSON.stringify(points)]);
 
         return result.rows[0].iddataset.toString();
     } catch (err) {
@@ -50,20 +50,7 @@ const modifyDataSet = async (id, name, description, points) => {
 }
 
 
-const writeDataSetIdTimeSeries = async (isTimeSeries) => {
-    try {
-        const result = await pool.query('INSERT INTO datasets (timeseries,name) VALUES ($1,$2) RETURNING *',[isTimeSeries,""]);
-
-        return result.rows[0].iddataset.toString();
-    } catch (err) {
-        console.log(err)
-        throw SQLUnknowError(err);
-    }
-}
-
-
 module.exports = {
     writeDataSet,
-    modifyDataSet,
-    writeDataSetIdTimeSeries
+    modifyDataSet
 }

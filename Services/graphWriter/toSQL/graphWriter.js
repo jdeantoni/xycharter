@@ -2,6 +2,7 @@ const { SQLUnknowError } = require('../exceptions/SQLUnknowError');
 const configPostgre = require('../postgreConfig.json')
 const { modifyCharas } = require('./graphCharaWriter');
 
+//Initialization of PostgreSQL
 const Pool = require('pg').Pool
 const pool = new Pool({
     user: configPostgre.user,
@@ -21,8 +22,9 @@ const createGraph = async (type, name, description, date, chara) => {
     }
 
     try {
-        const resultsType = await pool.query('SELECT idgraphtype FROM graphtype WHERE graphtype = $1', [type])
+        const resultsType = await pool.query('SELECT idgraphtype FROM graphtype WHERE graphtype = $1', [type]) //Get the id of the GraphType
         const idType = resultsType.rows[0].idgraphtype
+        //Insert the new graph into the Database
         const result = await pool.query('INSERT INTO Graphs (name, description, creationDate, idgraphtype, characteristics) VALUES ($1, $2, $3, $4, $5) RETURNING *', [name, description, date, idType, JSON.stringify(chara)]);
         return result.rows[0].idgraph.toString();
     } catch (err) {
@@ -58,11 +60,11 @@ const modifyGraph = async (id, type, name, description, chara) => {
 
 const deleteGraph = async (graphId) => {
     try {
-        //Suppression de tout les graphs
-        await pool.query('DELETE FROM Graphs WHERE idgraph = ($1)', [graphId]);
-
-        //Suppression de tout les liens en lien avec ce graph
+        //Delete all the links between the graph and the datasets
         await pool.query('DELETE FROM LinkDataSetGraph WHERE idgraph = ($1)', [graphId]);
+
+        //Delete the graph from the Graphs table
+        await pool.query('DELETE FROM Graphs WHERE idgraph = ($1)', [graphId]);
 
         return "DELETED";
     } catch (err) {
