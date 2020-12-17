@@ -8,6 +8,7 @@ This API has been created to be able to render 2D graphs, you can use it to rend
 - [User Manual](#User-Manual)
 - [Documentation](#Documentation)
 - [Docker](#Docker)
+- [Setup the project](#Setup-the-project)
 
 
 # User Manual
@@ -45,7 +46,14 @@ $ docker network connect ter-xycharter_default $name
 ```
 
 
+# Setup the project with docker
 
+Take a coffee it will take a little bit of time before all dockers are ready to be used ;) 
+
+```bash
+$ sh setup-config-before-run
+$ sh run-all-docker 
+```
 
 ##  Chart
 
