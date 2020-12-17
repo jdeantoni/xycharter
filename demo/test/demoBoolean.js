@@ -11,7 +11,7 @@ var uniqid  = require('uniqid')
 const { timeStamp } = require('console');
 
 
-const rooting = "http://localhost:4020"
+const rooting = "http://localhost:4000"
 
 console.log("**************** Demo client send boolean data timeseries*****************")
 
