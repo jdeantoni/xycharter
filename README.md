@@ -46,7 +46,7 @@ $ docker network connect ter-xycharter_default $name
 ```
 
 
-# Setup the project with docker
+# Setup the project
 
 Take a coffee it will take a little bit of time before all dockers are ready to be used ;) 
 
