@@ -27,7 +27,7 @@ function getBoolean(value){
 const sendData = () => {
     
     dataClient = {
-        name: "dataSetTimeSeries",
+        name: "dataSetBoolean",
         id: idDataSet.toString(),
         timestamp: parseInt(Date.now() / 1000),
         value: getBoolean(getRandomInt(1000))

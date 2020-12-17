@@ -24,7 +24,7 @@ function getRandomInt(max) {
 const sendData = () => {
     
     dataClient = {
-        name: "dataSetBoolean",
+        name: "dataSetTimeSeries",
         id: idDataSet.toString(),
         timestamp: parseInt(Date.now() / 1000),
         value: getRandomInt(1000)

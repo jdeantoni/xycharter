@@ -62,5 +62,5 @@ services:
     build: ./front-end
     container_name: front-end
     ports:
-      - "8080:8080"
+      - "4080:4080"
 
