@@ -1,9 +1,5 @@
 package io.github.ter_xycharter.render.config;
 
-/**
- * Bounds for the axes
- * @author Fabrice SIMON
- */
 public class Bounds {
     public Double lowerBound, upperBound;
 

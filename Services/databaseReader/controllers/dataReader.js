@@ -77,7 +77,7 @@ async function getDataForGraph(idGraph) {
         let datasets = []
         for(let i =0;i<resp.length;i++){
             let dataTimeSeries =[]
-            const datas = datasetsSet[i]
+            const datas = await dataTimeSeriesReader.getTimeSeriesByIdDataSet(resp[i].iddataset)
             let initialTime = datas.length === 0 ? 0 : Date.parse(datas[0].time)/1000
             for (let j = 0; j < datas.length; j++) {
                 var data;
@@ -104,7 +104,9 @@ async function getDataForGraph(idGraph) {
             datasets.push({name:resp[i].name,datajson:JSON.stringify(dataTimeSeries)})
         }
 
+
         return datasets
+        
 
     } else {
         let datasets=[]
