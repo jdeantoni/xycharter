@@ -1,3 +1,7 @@
+# Front end
+
+This front end is an example of usecase of the API, it is in VueJS
+
 ## Run local
 - Install Nodejs from [Nodejs Official Page](https://nodejs.org/en/)
 - Open your terminal
