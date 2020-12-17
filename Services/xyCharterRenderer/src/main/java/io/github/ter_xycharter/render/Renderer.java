@@ -40,26 +40,23 @@ public class Renderer {
             //Create a new graph from the graph JSON
             Graph graph = Graph.createGraph(graphJSON);
             DistinctColors distinctColors = new DistinctColors();
-            int count = 0;
             for (Object o : datasets) {
                 JSONObject dataset = (JSONObject) o;
                 JSONParser jsonParser = new JSONParser();
                 //Parse all the points of the dataset
                 JSONArray pointsArray = (JSONArray) jsonParser.parse((String)dataset.get("datajson"));
                 //Parse the name of the datasate
-                String nameDataSet = (String) dataset.get("name");
-                if (nameDataSet==null)nameDataSet = ""+count;
+                String id = (String) dataset.get("idDataset");
                 if (pointsArray!=null){
                     Figure figure = new Figure();
                     //Associate the name to the figure (VERY IMPORTANT TO ASSOCIATE A NAME TO A FIGURE TO HAVE MULTIPLE DATASETS ON THE SAME GRAPH)
-                    figure.name= nameDataSet;
+                    figure.name= id;
                     addPoints(figure,pointsArray); //Add all the points of the dataset to the figure
                     graph.initializeRenderer(figure); //Add the renderer to the figure
                     figure.setColor(distinctColors.getNextColor());
                     plot.addFigure(figure); //Add the figure to the plot
                     graph.getGraphConfig().applyConfigToGraph(plot); //Apply the graph configuration to the graph
                 }
-                count ++;
             }
 
             switch(type){

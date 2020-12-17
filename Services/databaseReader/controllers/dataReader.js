@@ -109,7 +109,7 @@ async function getDataForGraph(idGraph) {
     } else {
         let datasets=[]
         //Send a SQL query to have all the informations of the datasets linked to the graph
-        const resp =  await pool.query('SELECT datasets.datajson,datasets.name FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
+        const resp =  await pool.query('SELECT datasets.datajson,datasets.idDataset FROM datasets,linkdatasetgraph WHERE datasets.iddataset = linkdatasetgraph.iddataset and linkdatasetgraph.idgraph = $1', [idGraph])
         console.log("Renvois toute les data associées au graph "+idGraph)
         for(i=0;i<resp.rows.length;i++){
             datasets.push({name:resp.rows[i].name,datajson:resp.rows[i].datajson})
