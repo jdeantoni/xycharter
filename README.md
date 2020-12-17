@@ -24,7 +24,8 @@ There is four different types of chart that you can create with the API
 <img src="./ressources/connectedLine.jpeg" style="width:800px;"/>
 
 #### bezierCurve
--- image
+
+<img src="./ressources/bezier.jpeg" style="width:800px;"/>
 
 #### circlePoint
 <img src="./ressources/circlePoint.jpg" style="width:800px;"/>
