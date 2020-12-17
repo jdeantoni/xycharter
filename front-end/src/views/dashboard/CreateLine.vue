@@ -14,6 +14,12 @@
           required
         ></v-text-field>
 
+        
+        <v-text-field
+          v-model="description"
+          label="Description"
+        ></v-text-field>
+
         <validation-provider v-slot="{ errors }" name="select" rules="required">
           <v-select
             :items="itemsTypeGraph"
@@ -41,7 +47,7 @@
           class="mr-4"
           type="submit"
           @click="
-            save(typeGraphSelected, dataSetSelected, name);
+            save(typeGraphSelected, description,dataSetSelected, name);
             snackbar = true;
           "
           :disabled="invalid"
@@ -116,13 +122,14 @@ export default {
     labelEdit: "Modify options",
     padding: 8,
     radius: 10,
+    description:"",
     value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
     width: 800,
-    save: async function (typeGraphSelected, dataSetSelected, name) {
+    save: async function (typeGraphSelected, description, dataSetSelected, name) {
       const graphCreation = {
         type: typeGraphSelected,
         name: name,
-        description: "No description available",
+        description: description,
       };
        await axios.post(
         process.env.VUE_APP_ROOTING_ADDR + "/graphs",
