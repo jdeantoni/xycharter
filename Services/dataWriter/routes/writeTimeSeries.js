@@ -33,7 +33,7 @@ writeTimeSeriesDataRouter.get('/dataSets/timeseries',
     }
 });
 
-writeTimeSeriesDataRouter.post('/dataSets/timeseries',[body("id").isString(),body("timestamp").isInt(), body("value").isInt() || body("value".isBoolean())], async (req, res, next) => {
+writeTimeSeriesDataRouter.post('/dataSets/timeseries',[body("id").isString(),body("timestamp").isInt()], async (req, res, next) => {
 
    // #swagger start
     /* 

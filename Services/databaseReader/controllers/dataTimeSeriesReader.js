@@ -1,5 +1,8 @@
 const { InfluxDB } = require('@influxdata/influxdb-client')
 
+const dotenv = require('dotenv');
+dotenv.config()
+
 var configInflux = null;
 var token;var org; var bucket; var client;
 
@@ -11,11 +14,12 @@ try {
         token = configInflux.auth.token
         org = configInflux.org.name
         bucket = configInflux.bucket.name
-        url = 'http://influx:8086'
+        url = process.env.INFLUX_ADDR
         client = new InfluxDB({ url: url, token: token })
 
     }
 } catch (error) {
+    console.log(process.env.INFLUX_ADDR)
     console.error("config de influx invalide")
 }
 

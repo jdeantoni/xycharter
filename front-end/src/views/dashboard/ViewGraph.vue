@@ -88,15 +88,6 @@
                   ></v-select>
                   <v-row>
                     <v-col cols="12" sm="4" md="4">
-                      <h3>Background color</h3>
-                      <v-color-picker
-                        v-model="color"
-                        dot-size="16"
-                        mode="hexa"
-                        swatches-max-height="167"
-                      ></v-color-picker>
-                    </v-col>
-                    <v-col cols="12" sm="4" md="4">
                       <h2>Grid</h2>
                       <v-checkbox
                         v-model="showX"
@@ -132,7 +123,7 @@
                       <v-slider
                         v-model="minX"
                         label="Min"
-                        :min="0"
+                        :min="minXInput"
                         :thumb-color="blue"
                         thumb-label="always"
                       ></v-slider>
@@ -140,29 +131,37 @@
                       <v-slider
                         v-model="maxX"
                         label="Max"
-                        :max="1000"
+                        :max="maxXInput"
                         :thumb-color="red"
                         thumb-label="always"
                       ></v-slider>
+                      
+                      
+                      <v-text-field v-model="maxXInput" label="Max X Limit"></v-text-field>
+                      
                     </v-col>
                     <v-col cols="12" sm="4" md="4">
                       <h2>Y Bounds</h2>
 
                       <v-slider
                         v-model="minY"
-                        label="MinY"
-                        :min="0"
+                        label="Min"
+                        :min="minYInput"
                         :thumb-color="blue"
                         thumb-label="always"
                       ></v-slider>
 
                       <v-slider
                         v-model="maxY"
-                        label="MaxY"
-                        :max="1000"
+                        label="Max"
+                        :max="maxYInput"
                         :thumb-color="red"
                         thumb-label="always"
                       ></v-slider>
+                      
+                      
+                      <v-text-field v-model="maxYInput" label="Max Y Limit"></v-text-field>
+                      
                     </v-col>
                     <v-col cols="12" sm="4" md="4">
                       <h2>Title graph</h2>
@@ -220,6 +219,10 @@ export default {
     reveal: false,
     editIcon: mdiPencil,
     viewIcon: mdiChartLine,
+    maxXInput:500,
+    maxYInput:500,
+    minXInput:0,
+    minYInput:0,
     labelEdit: "Modify options",
     graphs: [],
     graphsSelected: [],
@@ -237,7 +240,7 @@ export default {
         let handle = setInterval(
           async () =>
             await axios
-              .get("http://localhost:4000/graphs/" + graph.idgraph + "/render?type=JPG")
+              .get(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + graph.idgraph + "/render?type=JPG")
               .then((response) => {
                 if (
                   !graphsSel.includes(graphsSel.find((el) => el.id === graph.idgraph))
@@ -254,12 +257,12 @@ export default {
     setGraphId() {
       if (this.graphNameSelected !== undefined) {
         this.idGraph = allGraphs.find((el) => el.name === this.graphNameSelected).idgraph;
-        console.log(this.idGraph)
       }
     },
     async showXGrid(showXGrid) {
+      console.log(this.idGraph)
       const showX = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { showX: showXGrid })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { showX: showXGrid })
         .then((response) => {
           console.log(response.data);
         });
@@ -267,7 +270,7 @@ export default {
     },
     async showYGrid(showYGrid) {
       const showY = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { showY: showYGrid })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { showY: showYGrid })
         .then((response) => {
           console.log(response.data);
         });
@@ -275,7 +278,7 @@ export default {
     },
     async showCGrid(showCGrid) {
       const showC = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { showGrid: showCGrid })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { showGrid: showCGrid })
         .then((response) => {
           console.log(response.data);
         });
@@ -283,7 +286,7 @@ export default {
     },
     async setMinXBounds(minX) {
       const minXD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, {
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, {
           xBounds: { lowerBound: minX, upperBound: this.maxX },
         })
         .then((response) => {
@@ -293,7 +296,7 @@ export default {
     },
     async addLegendX(legendX) {
       const legendXD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { xLegend: this.legendX })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { xLegend: this.legendX })
         .then((response) => {
           console.log(response.data);
         });
@@ -301,7 +304,7 @@ export default {
     },
     async addLegendY(legendY) {
       const legendYD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { yLegend: this.legendY })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { yLegend: this.legendY })
         .then((response) => {
           console.log(response.data);
         });
@@ -309,48 +312,15 @@ export default {
     },
     async addTitle(title) {
       const titleD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, { graphLegend: this.title })
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, { graphLegend: this.title })
         .then((response) => {
           console.log(response.data);
         });
       return titleD;
     },
-    async addColor(h) {
-      let r = 0,
-        g = 0,
-        b = 0,
-        a = 100;
-
-      // 3 digits
-      if (h.length == 4) {
-        r = "0x" + h[1] + h[1];
-        g = "0x" + h[2] + h[2];
-        b = "0x" + h[3] + h[3];
-
-        // 6 digits
-      } else if (h.length == 9) {
-        r = "0x" + h[1] + h[2];
-        g = "0x" + h[3] + h[4];
-        b = "0x" + h[5] + h[6];
-      }
-
-      let rC = +(+(+r));
-      let gC = +(+(+g));
-      let bC = +(+(+b));
-      let rgb = [rC, gC, bC, a];
-
-      const colorD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, {
-          backgroundColor: { r: rgb.rC, g: rgb.gC, b: rgb.bC, a: rgb.a },
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
-      return colorD;
-    },
     async addMinX(minX) {
       const minXD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, {
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, {
           xBounds: { lowerBound: this.minX, upperBound: this.maxX },
         })
         .then((response) => {
@@ -360,7 +330,7 @@ export default {
     },
     async addMinY(minY) {
       const minYD = await axios
-        .put("http://localhost:4000/graphs/" + this.idGraph, {
+        .put(process.env.VUE_APP_ROOTING_ADDR+"/graphs/" + this.idGraph, {
           yBounds: { lowerBound: this.minY, upperBound: this.maxY },
         })
         .then((response) => {
@@ -379,10 +349,9 @@ export default {
       await this.addMinX(this.minX);
 
       await this.addMinY(this.minY);
-      //await this.addColor(this.color);
     },
     async viewGraphs(graphs) {
-      await axios.get("http://localhost:4000/graphs").then((response) => {
+      await axios.get(process.env.VUE_APP_ROOTING_ADDR+"/graphs").then((response) => {
         const graphsSet = new Set();
         const allGraphsSet = new Set();
         response.data.forEach((graph) => {

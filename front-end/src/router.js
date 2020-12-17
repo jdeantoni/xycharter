@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 Vue.use(Router)
 
 export default new Router({
+  
   mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
@@ -17,12 +19,12 @@ export default new Router({
           component: () => import('@/views/dashboard/Dashboard'),
         },
         {
-          name: 'View graph',
+          name: 'ViewGraph',
           path: '/graph',
           component: () => import('@/views/dashboard/ViewGraph'),
         },
         {
-          name: 'Create line graph',
+          name: 'CreateLineGraph',
           path: '/line',
           component: () => import('@/views/dashboard/CreateLine'),
         }
