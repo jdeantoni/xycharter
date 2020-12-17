@@ -63,7 +63,7 @@ databaseReaderRouter.get('/dataSets'
     #swagger.description = 'Get the id of all dataSets'
     #swagger.tags = ['DataSets']
     */
-    const reponse = await axios.get(process.env.DBREADER_ADDR + "/data");
+    const reponse = await axios.get(process.env.DBREADER_ADDR + "/dataSets");
 
     var tab = [];
 
@@ -94,7 +94,7 @@ databaseReaderRouter.get('/dataSets/:id'
             }
         #swagger.tags = ['DataSets']
         */
-        const reponse = await axios.get(process.env.DBREADER_ADDR + "/data/" + req.params.id);
+        const reponse = await axios.get(process.env.DBREADER_ADDR + "/dataSets/" + req.params.id);
 
 
     /*

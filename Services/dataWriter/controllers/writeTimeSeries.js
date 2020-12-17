@@ -2,7 +2,8 @@ const { InfluxDB } = require('@influxdata/influxdb-client')
 const { Point } = require('@influxdata/influxdb-client')
 const dataSetWriterSQL = require('../toSQL/dataSetWriter')
 var configInflux;
-
+const dotenv = require('dotenv');
+dotenv.config()
 try { //Initialisation of the influx parameters
     configInflux = require("../influxConfig.json");
 
@@ -13,7 +14,7 @@ try { //Initialisation of the influx parameters
         token = configInflux.auth.token
         org = configInflux.org.name
         bucket = configInflux.bucket.name
-        url = 'http://influx:8086'
+        url = process.env.INFLUX_ADDR
         client = new InfluxDB({ url: url, token: token })
 
     }

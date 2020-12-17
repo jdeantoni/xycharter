@@ -80,7 +80,7 @@ var itemD = [];
 var itemTypeG = [];
 var idItemD = [];
 var itemGraph = [];
-axios.get("http://localhost:4000/dataSets").then((response) => {
+axios.get(process.env.VUE_APP_ROOTING_ADDR + "/dataSets").then((response) => {
   response.data.forEach((dataset) => {
     itemD.push(dataset.name);
     let name = dataset.name;
@@ -88,7 +88,7 @@ axios.get("http://localhost:4000/dataSets").then((response) => {
     idItemD.push({ name: name, id: id });
   });
 });
-axios.get("http://localhost:4000/typesOfGraph").then((response) => {
+axios.get(process.env.VUE_APP_ROOTING_ADDR + "/typesOfGraph").then((response) => {
   for (let i = 0; i < response.data.length; i++) {
     itemTypeG.push(response.data[i].graphtype);
   }
@@ -124,28 +124,36 @@ export default {
         name: name,
         description: "No description available",
       };
-      axios.post("http://localhost:4000/graphs", graphCreation).then((response) => {
-        axios.get("http://localhost:4000/graphs").then((response) => {
-          response.data.forEach((graph) => {
-            let name = graph.name;
-            let id = graph.idgraph;
-            itemGraph.push({ name: name, id: id });
-          });
-          let idDataSet=[]
-          
-          if (dataSetSelected !== undefined) {
-            idDataSet = idItemD.filter(dataset => dataSetSelected.indexOf(dataset.name) !== -1);
-          }
-          let idGraph = itemGraph.find(graph => graph.name === name)
-          
-          if (dataSetSelected !== undefined) {
-            for (let i = 0; i < idDataSet.length; i++) {
-               axios.post(
-                "http://localhost:4000/graphs/" + idGraph.id + "/dataSet/" + idDataSet[i].id
-              );
-            }
-          }
+       await axios.post(
+        process.env.VUE_APP_ROOTING_ADDR + "/graphs",
+        graphCreation
+      );
+      await axios.get(process.env.VUE_APP_ROOTING_ADDR + "/graphs").then((response) => {
+        response.data.forEach((graph) => {
+          let name = graph.name;
+          let id = graph.idgraph;
+          itemGraph.push({ name: name, id: id });
         });
+        let idDataSet = [];
+
+        if (dataSetSelected !== undefined) {
+          idDataSet = idItemD.filter(
+            (dataset) => dataSetSelected.indexOf(dataset.name) !== -1
+          );
+        }
+        let idGraph = itemGraph.find((graph) => graph.name === name);
+
+        if (dataSetSelected !== undefined) {
+          for (let i = 0; i < idDataSet.length; i++) {
+              axios.post(
+                process.env.VUE_APP_ROOTING_ADDR +
+                  "/graphs/" +
+                  idGraph.id +
+                  "/dataSet/" +
+                  idDataSet[i].id
+              );
+          }
+        }
       });
     },
   }),
