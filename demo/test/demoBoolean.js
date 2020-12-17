@@ -13,7 +13,7 @@ const { timeStamp } = require('console');
 
 const rooting = "http://localhost:4000"
 
-console.log("**************** Demo client send integer data timeseries *****************")
+console.log("**************** Demo client send boolean data timeseries*****************")
 
 var idDataSet;
 var dataClient;
@@ -21,13 +21,16 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+function getBoolean(value){
+    return value%2==0;
+}
 const sendData = () => {
     
     dataClient = {
-        name: "dataSetBoolean",
+        name: "dataSetTimeSeries",
         id: idDataSet.toString(),
         timestamp: parseInt(Date.now() / 1000),
-        value: getRandomInt(1000)
+        value: getBoolean(getRandomInt(1000))
     }
 
     console.log(MAGENTA_COLOR, "Le client envoie des données : ", YELLOW_COLOR, dataClient)

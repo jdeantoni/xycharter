@@ -174,7 +174,7 @@ dataWriterRouter.get('/dataSets/timeseries', async (req, res, next) => {
 
 
 
-dataWriterRouter.post('/dataSets/timeseries', [body("id").isString(),body("timestamp").isInt(), body("value").isInt() || body("value".isBoolean())], async (req, res, next) => {
+dataWriterRouter.post('/dataSets/timeseries', [body("id").isString(),body("timestamp").isInt()], async (req, res, next) => {
 
    // #swagger start
     /* 
