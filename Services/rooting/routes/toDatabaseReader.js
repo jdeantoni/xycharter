@@ -42,9 +42,9 @@ databaseReaderRouter.get('/graphs/:id'
         }
     #swagger.tags = ['Graphs']
     */
-
+        console.log("databaseReaderRoute: get graphs/", req.params.id)
     const reponse = await axios.get(process.env.DBREADER_ADDR + "/graphs/" + req.params.id);
-    
+        console.log("databaseReaderRoute: construct answer with",reponse.data)
     
     /*
     #swagger.responses[200] = {
@@ -63,6 +63,7 @@ databaseReaderRouter.get('/dataSets'
     #swagger.description = 'Get the id of all dataSets'
     #swagger.tags = ['DataSets']
     */
+    console.log("databaseReaderRoute: get dataSets/")
     const reponse = await axios.get(process.env.DBREADER_ADDR + "/dataSets");
 
     var tab = [];
@@ -136,8 +137,9 @@ databaseReaderRouter.get('/typesOfGraph'
         #swagger.description = 'Get all types of graph'
         #swagger.tags = ['GraphTypes']
         */
+        try{
         const reponse = await axios.get(process.env.DBREADER_ADDR + "/typesOfGraph");
-
+        
 
         /*
         #swagger.responses[200] = {
@@ -146,6 +148,9 @@ databaseReaderRouter.get('/typesOfGraph'
         }
         */
         return res.status(200).send(reponse.data);
+         } catch (e) {
+            console.log(e, 'errorrrrrrrrrrrrr');
+        }
     });
 
 

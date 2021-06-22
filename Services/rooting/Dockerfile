@@ -1,10 +1,20 @@
-FROM keymetrics/pm2:latest-alpine
+FROM node:16.3-alpine3.13
+
+
+RUN npm install npm -g
+RUN npm install pm2 -g
 
 COPY . ./
 COPY package.json .
 COPY pm2.json .
 
-RUN npm install --production
+# RUN apk --no-cache add curl
+# RUN apk --no-cache add npm
+# ADD https://www.npmjs.com/install.sh ./install.sh
+# RUN sh install.sh
+
+# RUN pm2 update
+RUN npm install
 
 COPY . ./
 

@@ -84,7 +84,7 @@
         }
       }
     },
-    "/datas": {
+    "/dataSets": {
       "get": {
         "tags": [
           "DataSets"
@@ -101,7 +101,7 @@
         }
       }
     },
-    "/datas/{id}": {
+    "/dataSets/{id}": {
       "get": {
         "tags": [
           "DataSets"
@@ -126,7 +126,7 @@
         }
       }
     },
-    "/datareader/data/{id}": {
+    "/graphs/{id}/datas": {
       "get": {
         "tags": [
           "Graphs",
@@ -147,6 +147,26 @@
             "description": "Return all data of dataSets of the graph",
             "schema": {
               "$ref": "#/definitions/allDatas"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/typesOfGraph": {
+      "get": {
+        "tags": [
+          "GraphTypes"
+        ],
+        "description": "Get all types of graph",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all types of graph",
+            "schema": {
+              "$ref": "#/definitions/graphTypes"
             }
           }
         }
@@ -257,6 +277,29 @@
       },
       "xml": {
         "name": "allDatas"
+      }
+    },
+    "graphTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "idgraphtype": {
+            "type": "number",
+            "example": 3
+          },
+          "graphtype": {
+            "type": "string",
+            "example": "doughnut"
+          },
+          "servicename": {
+            "type": "string",
+            "example": "QuickChart"
+          }
+        }
+      },
+      "xml": {
+        "name": "graphTypes"
       }
     }
   }

@@ -1,5 +1,5 @@
 {
-    "name": "rooting",
+    "name": "routing",
     "script": "./server.js",
     "instances": "1",
     "env": {

@@ -17,6 +17,9 @@ console.log("**************** Demo client send integer data timeseries *********
 
 var idDataSet=1;
 var dataClient;
+
+var t=1;
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -26,7 +29,7 @@ const sendData = () => {
     dataClient = {
         name: "dataSetTimeSeries",
         id: idDataSet.toString(),
-        timestamp: parseInt(Date.now() / 1000),
+        timestamp: t++,
         value: getRandomInt(1000)
     }
 

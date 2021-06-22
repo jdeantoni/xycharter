@@ -1,0 +1,278 @@
+{
+	"user": {
+		"links": {
+			"self": "/api/v2/users/07b8bda9c1d70000"
+		},
+		"id": "07b8bda9c1d70000",
+		"name": "admin",
+		"status": "active"
+	},
+	"bucket": {
+		"id": "65ffad878a9ff0ab",
+		"orgID": "d05924c0bdeab6d1",
+		"type": "user",
+		"name": "datagraph",
+		"retentionRules": [],
+		"createdAt": "2021-06-22T09:07:14.416253666Z",
+		"updatedAt": "2021-06-22T09:07:14.416253728Z",
+		"links": {
+			"labels": "/api/v2/buckets/65ffad878a9ff0ab/labels",
+			"members": "/api/v2/buckets/65ffad878a9ff0ab/members",
+			"org": "/api/v2/orgs/d05924c0bdeab6d1",
+			"owners": "/api/v2/buckets/65ffad878a9ff0ab/owners",
+			"self": "/api/v2/buckets/65ffad878a9ff0ab",
+			"write": "/api/v2/write?org=d05924c0bdeab6d1\u0026bucket=65ffad878a9ff0ab"
+		},
+		"labels": []
+	},
+	"org": {
+		"links": {
+			"buckets": "/api/v2/buckets?org=data-org",
+			"dashboards": "/api/v2/dashboards?org=data-org",
+			"labels": "/api/v2/orgs/d05924c0bdeab6d1/labels",
+			"logs": "/api/v2/orgs/d05924c0bdeab6d1/logs",
+			"members": "/api/v2/orgs/d05924c0bdeab6d1/members",
+			"owners": "/api/v2/orgs/d05924c0bdeab6d1/owners",
+			"secrets": "/api/v2/orgs/d05924c0bdeab6d1/secrets",
+			"self": "/api/v2/orgs/d05924c0bdeab6d1",
+			"tasks": "/api/v2/tasks?org=data-org"
+		},
+		"id": "d05924c0bdeab6d1",
+		"name": "data-org",
+		"description": "",
+		"createdAt": "2021-06-22T09:07:14.405488775Z",
+		"updatedAt": "2021-06-22T09:07:14.405488897Z"
+	},
+	"auth": {
+		"id": "07b8bda9dd170000",
+		"token": "n-hPgA79FjhSw5f4CkmZbCCyBIXTJj0N-D0OlE4XEAWYSDd6NHgm_yEiky2pszaLMtz7bfKM0VsnBQObkR--ag==",
+		"status": "active",
+		"description": "admin's Token",
+		"orgID": "d05924c0bdeab6d1",
+		"userID": "07b8bda9c1d70000",
+		"permissions": [
+			{
+				"action": "read",
+				"resource": {
+					"type": "authorizations"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "authorizations"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "buckets"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "buckets"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "dashboards"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "dashboards"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "orgs"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "orgs"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "sources"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "sources"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "tasks"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "tasks"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "telegrafs"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "telegrafs"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "users"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "users"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "variables"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "variables"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "scrapers"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "scrapers"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "secrets"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "secrets"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "labels"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "labels"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "views"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "views"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "documents"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "documents"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "notificationRules"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "notificationRules"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "notificationEndpoints"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "notificationEndpoints"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "checks"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "checks"
+				}
+			},
+			{
+				"action": "read",
+				"resource": {
+					"type": "dbrp"
+				}
+			},
+			{
+				"action": "write",
+				"resource": {
+					"type": "dbrp"
+				}
+			}
+		],
+		"createdAt": "2021-06-22T09:07:14.420000137Z",
+		"updatedAt": "2021-06-22T09:07:14.420000137Z",
+		"links": {
+			"self": "/api/v2/authorizations/07b8bda9dd170000",
+			"user": "/api/v2/users/07b8bda9c1d70000"
+		}
+	}
+}

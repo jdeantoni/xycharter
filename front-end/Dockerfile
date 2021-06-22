@@ -1,10 +1,10 @@
-FROM keymetrics/pm2:latest-alpine
+FROM keymetrics/pm2:15-alpine
 
 COPY . ./
 COPY package.json .
 COPY pm2.json .
 
-RUN npm install --production
+RUN npm install
 
 COPY . ./
 

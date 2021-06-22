@@ -86,6 +86,8 @@ var itemD = [];
 var itemTypeG = [];
 var idItemD = [];
 var itemGraph = [];
+
+console.log("log JD:", process.env.VUE_APP_ROOTING_ADDR)
 axios.get(process.env.VUE_APP_ROOTING_ADDR + "/dataSets").then((response) => {
   response.data.forEach((dataset) => {
     itemD.push(dataset.name);

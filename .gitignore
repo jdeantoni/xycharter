@@ -26,3 +26,5 @@ hs_err_pid*
 Services/*/.env
 Services/*/influxConfig.json
 Services/*/postgreConfig.json
+
+node_modules/

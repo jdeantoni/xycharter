@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/demoBoolean.js"
+    "testBool": "mocha test/demoBoolean.js",
+    "testNum": "mocha test/demo.js",
+    "testNum2": "mocha test/demo2.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "cors": "^2.8.5",

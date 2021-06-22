@@ -30,29 +30,38 @@ $ cd databaseReader
 $ npm install
 $ npm run swagger-autogen
 ```
+# Dependencies
 
-# Docker
-Each service can be run on docker, to build and setup all dockers run the file "run-all-docker"
+processes are managed with pm2. Please intall it globally
 ```bash
-$ sh run-all-docker
+$ npm install -g pm2
 ```
-**Important :** Influx db need to be run independently and before building other services, it is not in the docker compose by default.
+
+# Easy Start
+Each service can be run on docker, to clean, build and setup all dockers run the file "clean-build-and-run-all-docker"
+```bash
+$ sh clean-build-and-run-all-docker
+```
+
+note that the IP address of the front-end should be shown on the console once everything is running.
+to create a demo data set,
+```bash
+$ cd demo
+$ npm install
+$ npm run testNum
+```
+you can then go to the front end or use the createGraph script with the id of the dataSet as argument
+```bash
+$ sh createGraph.sh 1
+```
+
+**Important :** If you run the docker containers manually, Influx db needs to be run independently and before building other services, it is not in the docker compose by default.
 
 You can run each service independently by running these commands
 ```bash
 $ docker build --tag $container_name .
 $ docker run --publish $port:$port --detach --name $name $container_name  
-$ docker network connect ter-xycharter_default $name
-```
-
-
-# Setup the project
-
-Take a coffee it will take a little bit of time before all dockers are ready to be used ;) 
-
-```bash
-$ sh setup-config-before-run
-$ sh run-all-docker 
+$ docker network connect xycharter_default $name
 ```
 
 ##  Chart

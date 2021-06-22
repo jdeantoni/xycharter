@@ -1,16 +1,6 @@
 {
-  "name": "rooting",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha test/tests.js",
-    "swagger-autogen": "node ./swagger/swagger.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "pm2": "^5.1.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "chai": "^4.3.4",
@@ -20,7 +10,6 @@
     "express-validator": "^6.12.0",
     "mocha": "^9.0.1",
     "nock": "^13.1.0",
-    "pm2": "^5.1.0",
     "swagger-autogen": "^2.10.0",
     "swagger-ui-express": "^4.1.6"
   }
