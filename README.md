@@ -43,15 +43,15 @@ Each service can be run on docker, to clean, build and setup all dockers run the
 $ sh clean-build-and-run-all-docker
 ```
 
-note that the IP address of the front-end should be shown on the console once everything is running.
-to create a demo data set,
+to create a demo data set, a corresponding graph and get an image from it, two solutions:
+```bash
+$ sh createGraph.sh
+```
+or
 ```bash
 $ cd demo
 $ npm install
 $ npm run testNum
-```
-you can then go to the front end or use the createGraph script with the id of the dataSet as argument
-```bash
 $ sh createGraph.sh 1
 ```
 
