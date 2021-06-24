@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Create basic config in the db
 touch influxConfig.json 

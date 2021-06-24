@@ -29,7 +29,7 @@ cd ../
 cd ../
 
 cd PostgreSQL
-sh setup-postgres-config.sh
+./setup-postgres-config.sh
 
 # cd ../influxdb
 # docker build --tag influxdb .

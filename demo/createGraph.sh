@@ -1,3 +1,5 @@
+#!/bin/bash
+
 dataSetId=$1
 
 rootAddr="http://localhost:4000"

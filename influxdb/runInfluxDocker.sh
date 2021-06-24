@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 docker build --tag influx .
 docker run -p 8086:8086 --detach --name influx influx
 

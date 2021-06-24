@@ -1,15 +1,18 @@
-sh stop-and-remove-all-docker.sh
+#!/bin/bash
 
-sh setup-config-before-run.sh
+
+./stop-and-remove-all-docker.sh
+
+./setup-config-before-run.sh
 
 
 echo "#### CONFIGURE AND RUN Influxdb  ####"
 cd influxdb
-sh runInfluxDocker.sh
+./runInfluxDocker.sh
 
 sleep 20
 
-sh setup-config.sh
+./setup-config.sh
 
 cd ..
 

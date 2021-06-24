@@ -1,4 +1,4 @@
-
+#!/bin/bash
 services_list=$(ls ../Services/)
 mapfile -t services_array <<< "$services_list"
 
